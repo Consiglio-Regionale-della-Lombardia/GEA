@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Dati Consultazione</shortname>
+  <description>Memorizza i dati di una consultazione dell'atto</description>
+  <url>/crl/atto/consultazione</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

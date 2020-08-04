@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Upload testo atto in aula</shortname>
+  <description>Upload del testo atto aula</description>
+  <url>/crl/atto/esameaula/attorecord</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

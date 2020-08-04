@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Lettura relatori commissione di un atto</shortname>
+  <description>Restituisce l'elenco dei metadati dei relatori relativi ad una commissione di un atto</description>
+  <url>/crl/atto/esamecommissioni/relatori?idAtto={idAtto}&amp;commissione={commissione}&amp;passaggio={passaggio}</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

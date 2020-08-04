@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<pe:tooltip value="Click per Espandere / Comprimere"
+	forSelector="legend" shared="true" targetPosition="top center"
+	position="left center" />
+
+
+<div id="blockedPareri">
+<p:fieldset legend="Pareri org. statutari" toggleable="true" toggleSpeed="500">
+
+	<p:panelGrid styleClass="infoTable" id="pareripanel">
+		<p:row>
+			<p:column colspan="5">
+
+				<!-- Messaggio azioni -->
+				<p:growl id="pareriMsg" showDetail="true" sticky="false" />
+				
+				<!-- Confirm dialog -->
+				<p:confirmDialog id="confirmAllegatoParereDialog"
+				message="Sei sicuro di voler eliminare l'allegato ?"
+				header="Cancellazione Allegato" severity="alert"
+				widgetVar="allegatoParereDialog">
+				
+				<p:commandButton id="confirmAllegatoParereComponente"
+					value="Conferma" oncomplete="allegatoParereDialog.hide()"
+					action="#{consultazioniPareriController.removeAllegatoParere}"
+					update="listaDocumentazioneParere" />
+				<p:commandButton id="declineAllegatoParere" value="Annulla"
+					onclick="allegatoParereDialog.hide()" type="button" />
+
+			</p:confirmDialog>
+				
+				<p:confirmDialog id="uploadFileParereAttributes" header="Caricamento"
+					widgetVar="uploadFileParereAttributesDialog" style="width:450px" message="Allega Testo">
+					<p:panelGrid id="uploadpanelParere">
+						<p:row>
+							<p:column>
+								<h:outputLabel for="ispubblicoParere" value="Pubblica su Internet: " />
+								<p:selectBooleanCheckbox id="ispubblicoParere" 
+									value="#{consultazioniPareriController.currentFilePubblico}">
+									<p:ajax event="change" immediate="true" ></p:ajax>
+								</p:selectBooleanCheckbox>
+							</p:column>
+							</p:row>
+							<p:row>
+							<p:column>
+								<p:fileUpload label="Sfoglia"  uploadLabel="Carica" cancelLabel="Cancella"
+									oncomplete="uploadFileParereAttributesDialog.hide()" auto="false"
+									update="dettagliparerepanel, pareriMsg"
+									fileUploadListener="#{consultazioniPareriController.uploadAllegatoParere}" />
+							</p:column>
+							</p:row>
+							<p:row>
+							<p:column>
+								<p:commandButton id="declineUploadFileParere" value="Annulla"
+									onclick="uploadFileParereAttributesDialog.hide()" type="button" />
+							</p:column>
+							</p:row>
+					</p:panelGrid>
+				</p:confirmDialog>
+
+				<p:dataTable id="listaPareri"
+					value="#{consultazioniPareriController.organismiList}" var="organismo"
+					styleClass="generalInfoTab grey-text">
+
+					<p:column>
+						<p:commandButton value="Mostra dettaglio" icon="detail-icon"
+							action="#{consultazioniPareriController.showParereDetail}"
+							update=":consultazioniPareriForm:tabView:dettagliparerepanel">
+							<f:setPropertyActionListener value="#{organismo.descrizione}"
+								target="#{consultazioniPareriController.descrizioneOrganismoSelected}" />
+						</p:commandButton>
+					</p:column>
+
+					<p:column sortBy="#{organismo.descrizione}">
+						<f:facet name="header">Organismo Statutario</f:facet>
+							<h:outputText value="#{organismo.descrizione}" />
+    			       </p:column>
+
+					<p:column sortBy="#{organismo.dataAssegnazione}">
+						<f:facet name="header">Assegnato</f:facet>
+						<h:outputText value="#{organismo.dataAssegnazione}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+
+					</p:column>
+
+					<p:column sortBy="#{organismo.parere.dataRicezioneOrgano}">
+						<f:facet name="header">Reso</f:facet>
+						<h:outputText value="#{organismo.parere.dataRicezioneOrgano}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+
+					</p:column>
+
+					<p:column sortBy="#{organismo.parere.esito}">
+						<f:facet name="header">Esito</f:facet>
+							<h:outputText value="#{organismo.parere.esito}" />
+						</p:column>
+
+                     
+
+					<p:column>
+					    <c:set value="#{organismo.parere.allegati.size() >0}" var="allegati" />
+						<f:facet name="header">Allegati</f:facet>
+                        <p:graphicImage rendered="#{allegati}" value="/resources/img/document.jpeg" />    
+					</p:column>
+
+
+
+				</p:dataTable>
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column colspan="6">
+				<p:fieldset legend="Dettagli parere" collapsed="false"
+					toggleable="true" toggleSpeed="500">
+					<p:panelGrid styleClass="infoTable" id="dettagliparerepanel">
+						<p:row>
+							<p:column>
+								<h:outputText style="font-weight: bold;"
+									value="Organismo Statutario: " />
+							</p:column>
+							<p:column>
+								<p:inputText
+									value="#{consultazioniPareriController.organismoSelected.descrizione}"
+									readonly="true" />
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<h:outputText style="font-weight: bold;"
+									value="Data Assegnazione: " />
+							</p:column>
+							<p:column>
+								<p:inputText size="10"
+									value="#{consultazioniPareriController.organismoSelected.dataAssegnazione}"
+									readonly="true">
+									<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+								</p:inputText>
+							</p:column>
+							<p:column>
+								<b> <h:outputLabel for="dataricezioneorgano"
+										value="Data ricezione organo: " />
+								</b>
+							</p:column>
+							<p:column>
+								<p:calendar size="10" locale="it" id="dataricezioneorgano" pattern="dd/MM/yyyy"
+									value="#{consultazioniPareriController.dataRicezioneOrgano}">
+									<p:ajax event="dateSelect"
+										listener="#{consultazioniPareriController.updatePareriHandler}" />
+								</p:calendar>
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<b> <h:outputLabel for="dataricezioneparere"
+										value="Data deliberazione parere: " />
+								</b>
+							</p:column>
+							<p:column>
+								<p:calendar size="10" locale="it" id="dataricezioneparere" pattern="dd/MM/yyyy"
+									value="#{consultazioniPareriController.dataRicezioneParere}">
+									<p:ajax event="dateSelect"
+										listener="#{consultazioniPareriController.updatePareriHandler}" />
+								</p:calendar>
+							</p:column>
+							<p:column>
+							<b>
+							<h:outputLabel for="commissioneDestinataria" value="Commissione Destinataria: " />
+							</b>
+							</p:column>
+							<p:column>
+							 <p:selectOneMenu id="commissioneDestinataria" value="#{consultazioniPareriController.commissioneDestinataria}">
+												<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
+												
+												<f:selectItems var="commissione" itemLabel="#{fn:substring(commissione,0,15)}" itemValue="#{commissione}" 
+													value="#{consultazioniPareriController.commissioniDestinatarie}" />
+											</p:selectOneMenu>
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<h:outputText style="font-weight: bold;" value="Esito: " />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu value="#{consultazioniPareriController.esito}">
+									<f:selectItem itemLabel="Scegli esito" itemValue="" />
+									<f:selectItem itemLabel="Positivo" itemValue="Positivo" />
+									<f:selectItem itemLabel="Positivo con osservazioni" itemValue="Positivo con osservazioni" />
+									<f:selectItem itemLabel="Negativo" itemValue="Negativo" />
+									<p:ajax event="change"
+										listener="#{consultazioniPareriController.updatePareriHandler}" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<h:outputText style="font-weight: bold;" value="Note: " />
+							</p:column>
+							<p:column colspan="3">
+								<p:inputTextarea rows="2" cols="82"
+									value="#{consultazioniPareriController.noteParere}">
+									<p:ajax event="change"
+										listener="#{consultazioniPareriController.updatePareriHandler}" />
+								</p:inputTextarea>
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column colspan="4">
+							
+							
+							<p:commandButton value="Carica Allegato"
+					oncomplete="uploadFileParereAttributesDialog.show()">
+				</p:commandButton>
+				
+				
+				</p:column>
+		</p:row>
+		<p:row>
+			<p:column colspan="4">
+
+				<p:dataTable id="listaDocumentazioneParere"
+					value="#{consultazioniPareriController.organismoSelected.parere.allegati}"
+					var="allegato" styleClass="generalInfoTab grey-text" editable="true">
+					
+					<p:ajax event="rowEdit" update="@this" listener="#{fileDownloadController.fileUpdate}" />
+
+					<p:column sortBy="#{allegato.nome}">
+						<f:facet name="header">Documentazione allegata</f:facet>
+							<h:outputText value="#{allegato.nome}" />
+						</p:column>
+
+					<p:column sortBy="#{allegato.mimetype}">
+						<f:facet name="header">Formato</f:facet>
+						 <h:outputText value="#{allegato.mimetype}" />
+					</p:column>
+
+					<p:column sortBy="#{allegato.pubblico}">
+						<f:facet name="header">Pubblico</f:facet>
+						<p:cellEditor >
+								<f:facet name="output">
+									<h:outputText value="si"
+								rendered="#{allegato.pubblico}" />
+							<h:outputText value="no"
+								rendered="#{!allegato.pubblico}" />
+								</f:facet>
+								<f:facet  name="input">
+									<p:selectBooleanCheckbox 
+									value="#{allegato.pubblico}" />
+								</f:facet>
+							</p:cellEditor> 
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Elimina</f:facet>
+						<p:commandButton oncomplete="allegatoParereDialog.show()"
+							icon="delete-icon">
+
+							<f:setPropertyActionListener value="#{allegato.id}"
+								target="#{consultazioniPareriController.allegatoParereToDelete}" />
+						</p:commandButton>
+					</p:column>
+					
+					<p:column>
+							<f:facet name="header">Scarica</f:facet>
+
+							<p:commandButton id="downloadLinkemendamento" icon="detail-icon"
+								ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
+								<f:setPropertyActionListener value="#{allegato.id}"
+									target="#{fileDownloadController.fileId}" />
+								<f:setPropertyActionListener value="#{allegato.nome}"
+									target="#{fileDownloadController.fileName}" />
+								<f:setPropertyActionListener value="#{allegato.mimetype}"
+									target="#{fileDownloadController.fileMimetype}" />
+								<p:fileDownload value="#{fileDownloadController.file}" />
+							</p:commandButton>
+
+						</p:column>
+						
+						<p:column headerText="Modifica" style="width:50px">
+							<p:rowEditor   />
+						</p:column>
+
+
+				</p:dataTable>
+			
+							
+								
+								
+							</p:column>
+						</p:row>
+						
+
+						<p:row>
+							<p:column colspan="2">
+								<p:commandButton value="Salva Pareri"
+									action="#{consultazioniPareriController.salvaParere}"
+									update="pareriMsg, listaPareri" />
+							</p:column>
+						</p:row>
+
+					</p:panelGrid>
+				</p:fieldset>
+			</p:column>
+		</p:row>
+
+	</p:panelGrid>
+</p:fieldset>
+</div>
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+<script>
+		
+if (#{navigationBean.isGuest()}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#blockedPareri').block({ message: null } );}
+</script>
+</html>

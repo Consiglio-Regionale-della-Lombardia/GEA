@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test lettura testo atto</shortname>
+  <description>Test per il reperimento del testo di un atto</description>
+  <url>/crl/test/get/records</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

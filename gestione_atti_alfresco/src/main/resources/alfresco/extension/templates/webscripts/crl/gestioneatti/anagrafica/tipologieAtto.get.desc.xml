@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Tipologie di atto</shortname>
+  <description>Restituisce l'elenco delle tipologie di un determinato tipo di atto</description>
+  <url>/crl/anagrafica/atto/tipologie?tipoAtto={tipoAtto}</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

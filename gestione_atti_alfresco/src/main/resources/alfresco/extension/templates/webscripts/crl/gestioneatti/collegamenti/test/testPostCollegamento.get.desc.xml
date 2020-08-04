@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test aggiornamento/inserimento collegamenti atto</shortname>
+  <description>Test per l'inserimento e l'aggiornamento dei collegamento ad un atto</description>
+  <url>/crl/test/post/atto/collegamento</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

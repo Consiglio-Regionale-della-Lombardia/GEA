@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>DataLists - Download a Data List</shortname>
+  <description>Data Lists Component - Download a Data List</description>
+  <url>/crl/atto/exportexcel</url>
+  <format default="xls">argument</format>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <lifecycle>internal</lifecycle>
+</webscript>

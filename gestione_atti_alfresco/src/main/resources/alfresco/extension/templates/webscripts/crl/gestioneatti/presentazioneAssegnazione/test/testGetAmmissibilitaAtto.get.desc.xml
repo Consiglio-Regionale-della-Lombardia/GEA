@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test lettura ammissibilità atto</shortname>
+  <description>Test per il reperimento dei metadati di ammissibilità di un atto</description>
+  <url>/crl/test/get/atto/ammissibilita</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

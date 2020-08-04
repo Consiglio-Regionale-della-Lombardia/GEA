@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Allegati consultazione di un atto</shortname>
+  <description>Restituisce l'elenco degli allegati alla consultazione di un atto</description>
+  <url>/crl/atto/consultazioni/allegati?idAtto={idAtto}&amp;tipologiaAllegati={tipologiaAllegati}&amp;consultazione={consultazione}</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

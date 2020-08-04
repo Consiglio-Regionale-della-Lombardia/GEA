@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Creazione / modifica firmatario per un atto</shortname>
+  <description>Aggiunge o aggiorna un firmatario di un determinato atto</description>
+  <url>/crl/atto/firmatario</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

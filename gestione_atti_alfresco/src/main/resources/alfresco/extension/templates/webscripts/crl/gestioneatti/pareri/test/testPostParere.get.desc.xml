@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test Parere</shortname>
+  <description>Test Parere Organismo statutario</description>
+  <url>/crl/test/post/atto/parere</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

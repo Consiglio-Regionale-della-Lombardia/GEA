@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+
+<style type="text/css">
+
+.ui-growl{
+	
+	margin-left: 640px !important;
+	margin-right: 580px !important;
+	margin-top: 3% !important;
+}
+
+</style>
+
+</h:head>
+
+
+<h:form>
+
+	<p:ajaxStatus onstart="statusDialog.show();"
+		onsuccess="statusDialog.hide();" />
+
+	<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
+		draggable="false" closable="false">
+		<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
+	</p:dialog>
+
+	<p:panelGrid
+		style="align:center;width:70%;margin-bottom:7px;border:1px solid #4F4F4F;"
+		id="loginpanel">
+
+
+
+		<f:facet name="header">
+			<p:row>
+				<p:column style="text-align:left" colspan="4">
+						Effettua Login:
+			    </p:column>
+			</p:row>
+		</f:facet>
+
+
+
+		<p:row rendered="#{param.reason == 'expired'}">
+			<p:column colspan="3">
+				<h:outputText value="Sessione Utente scaduta " />
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column colspan="3">
+				<p:messages id="msgs" />
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column>
+				<h:outputLabel for="username" value="Username: *" />
+			</p:column>
+
+			<p:column>
+				<p:inputText id="username" value="#{loginController.username}"
+					label="Username" />
+
+			</p:column>
+
+			<p:column>
+				<p:message for="username" display="icon" />
+			</p:column>
+		</p:row>
+
+		<p:row>
+
+			<p:column>
+				<h:outputLabel value="domain: *" />
+			</p:column>
+
+			<p:column style="width:20%">
+
+				<p:selectOneMenu id="domain" style="width:250px"
+								 value="#{loginController.domain}">
+					<f:selectItem itemLabel="CONSIGLIO REGIONE LOMBARDIA IT" itemValue="@consiglio.regione.lombardia.it" />
+					<f:selectItem itemLabel="" itemValue="" />
+				</p:selectOneMenu>
+			</p:column>
+
+		</p:row>
+
+		<p:row>
+			<p:column>
+				<h:outputLabel for="password" value="Password: *" />
+			</p:column>
+
+			<p:column>
+				<p:password id="password" value="#{loginController.password}"
+					label="Password" />
+
+			</p:column>
+			<p:column>
+				<p:message for="password" display="icon" />
+			</p:column>
+
+		</p:row>
+
+		<p:row>
+
+			<p:column colspan="3" style="align:center">
+
+				<p:commandButton id="insertattobtn" value="Accedi"
+					update="loginpanel,errorMsg" action="#{loginController.login()}" />
+
+				<p:growl id="errorMsg" showDetail="true" sticky="false" />	
+				
+				&nbsp;&nbsp;&nbsp;&nbsp;	
+			
+
+				<p:commandButton id="readbtn" value="Accesso sola Lettura"
+					update="loginpanel" action="#{loginController.readOnlyLogin()}" />
+
+				<p:growl id="errorroMsg" showDetail="true" sticky="false" />
+
+
+			</p:column>
+		</p:row>
+
+
+	</p:panelGrid>
+
+
+
+</h:form>
+</html>

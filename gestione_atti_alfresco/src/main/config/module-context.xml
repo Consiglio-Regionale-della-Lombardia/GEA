@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+
+<beans>   
+
+    <bean id="${artifactId}_properties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:nga.properties" />
+        <property name="placeholderPrefix" value="${nga:" />
+        <property name="placeholderSuffix" value="}" />
+    </bean>
+    
+    <import resource="classpath:alfresco/module/${artifactId}/context/service-context.xml" />
+    <import resource="classpath:alfresco/module/${artifactId}/context/lettere-web-script-context.xml" />
+    <import resource="classpath:alfresco/module/${artifactId}/context/report-web-script-context.xml" />
+    <import resource="classpath:alfresco/module/${artifactId}/context/odg-web-script-context.xml" />
+    <import resource="classpath:alfresco/module/${artifactId}/context/opendata-web-script-context.xml" />
+    <import resource="classpath:alfresco/module/${artifactId}/context/script-context.xml" />
+    <import resource="classpath:alfresco/module/${artifactId}/context/behaviour-context.xml" />
+	 
+	
+	
+    <!-- Modulo per l'integrazione del sistema di gestione Anagrafica -->
+    <import resource="classpath:alfresco/module/${artifactId}/context/anagrafica-import-job-script-context.xml" />
+	
+	
+	
+    <!-- Moduli per l'integrazione del sistema di gestione degli Atti di Indirizzo -->
+    <import resource="classpath:alfresco/module/${artifactId}/context/atti-indirizzo-export-job-script-context.xml" />
+    <import resource="classpath:alfresco/module/${artifactId}/context/atti-indirizzo-import-job-script-context.xml" />
+	
+    <!-- Moduli per l'integrazione del sistema di Protocollo -->
+    <import resource="classpath:alfresco/module/${artifactId}/context/protocollo-import-job-script-context.xml" />
+        
+</beans>

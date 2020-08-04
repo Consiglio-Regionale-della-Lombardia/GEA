@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Firmatari - All</shortname>
+  <description>Restituisce l'elenco di tutti i firmatari correnti e storici afferenti ad una legislatura</description>
+  <url>/crl/anagrafica/atto/firmatari/all?legislatura={legislatura}</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

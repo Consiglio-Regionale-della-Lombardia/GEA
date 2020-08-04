@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test creazione / modifica delle consultazioni</shortname>
+  <description>Test per la creazione e modifica delle consultazioni associate ad un atto</description>
+  <url>/crl/test/post/atto/consultazioni</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

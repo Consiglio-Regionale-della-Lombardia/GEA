@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test lettura relatori commissione di un atto</shortname>
+  <description>Test per la restituzione dell'elenco dei metadati dei relatori relativi ad una commissione di un atto</description>
+  <url>/crl/test/get/atto/esamecommissioni/relatori</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

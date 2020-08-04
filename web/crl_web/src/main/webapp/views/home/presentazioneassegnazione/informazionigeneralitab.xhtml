@@ -1,0 +1,815 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:of="http://omnifaces.org/functions">
+
+
+<p:panelGrid styleClass="infoTable" id="informazionigeneralipanel">
+
+
+	<p:row>
+		<p:column colspan="3">
+			<div id="presaInCaricoDiv">
+				<p>
+					<!-- Messaggio azioni -->
+					<p:growl id="presaCaricoMsg" showDetail="true" sticky="false" />
+
+
+
+					<!-- Confirm dialog -->
+
+
+					<p:confirmDialog id="confirmDialog"
+						message="Sei sicuro di voler eliminare il Firmatario?"
+						header="Cancellazione Firmatario" severity="alert"
+						widgetVar="firmatarioDialog">
+
+						<p:commandButton id="confirm" value="Conferma"
+							oncomplete="firmatarioDialog.hide()"
+							action="#{presentazioneAssegnazioneAttoController.removeFirmatario}"
+							actionListener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}"
+							update=":presAssForm:tabView:" />
+						<p:commandButton id="decline" value="Annulla"
+							onclick="firmatarioDialog.hide()" type="button" />
+
+					</p:confirmDialog>
+
+
+					<p:confirmDialog id="confirmPromotoreDialog"
+									 message="Sei sicuro di voler eliminare il Promotore?"
+									 header="Cancellazione Promotore" severity="alert"
+									 widgetVar="promotoreDialog">
+
+						<p:commandButton id="confirmPromotore" value="Conferma"
+										 oncomplete="promotoreDialog.hide()"
+										 action="#{presentazioneAssegnazioneAttoController.removePromotore}"
+										 actionListener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}"
+										 update=":presAssForm:tabView:" />
+						<p:commandButton id="declinePromotore" value="Annulla"
+										 onclick="promotoreDialog.hide()" type="button" />
+
+					</p:confirmDialog>
+
+
+					<p:confirmDialog id="confirmRitiroFirmatari"
+					message="Sei sicuro di voler confermare Ritiro per mancanza firmatari?"
+					header="Conferma Ritiro" severity="alert"
+					widgetVar="rititrofirmatarioDialog">
+
+					<p:commandButton id="confirmRitiro" value="Conferma"
+						oncomplete="rititrofirmatarioDialog.hide()"
+						action="#{presentazioneAssegnazioneAttoController.ritiraPerMancanzaFirmatari}"/>
+					<p:commandButton id="declineRitiroFirmatari" value="Annulla"
+						onclick="rititrofirmatarioDialog.hide()" type="button" />
+
+					</p:confirmDialog>
+					
+			
+
+					<b> <h:outputLabel for="datapresaincarico"
+							value="Data presa in carico: " /> <p:calendar size="10"
+							locale="it" id="datapresaincarico" pattern="dd/MM/yyyy"
+							value="#{presentazioneAssegnazioneAttoController.dataPresaInCarico}" />
+					</b>
+					<p:commandButton value="Presa in Carico"
+						disabled="#{navigationBean.isSessionAttoChiuso()}"
+						update="presaCaricoMsg ,:informationForm:informationBar"
+						actionListener="#{presentazioneAssegnazioneAttoController.presaInCarico}"
+						oncomplete="unblockDiv()" />
+				</p>
+			</div>
+		</p:column>
+	</p:row>
+</p:panelGrid>
+<div id="blockedInfoGen">
+	<p:fieldset legend="Dati dell'Atto" collapsed="false" toggleable="true"
+		toggleSpeed="500">
+
+		<p:panelGrid styleClass="infoTable" id="datiattopanel">
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Numero Atto: " />
+				</p:column>
+				<p:column>
+					<p:inputText readonly="true" id="inputnumeroatto"
+						value="#{presentazioneAssegnazioneAttoController.numeroAtto}" />
+				</p:column>
+
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Estensione Atto: " />
+				</p:column>
+				<p:column>
+					<p:inputText readonly="false" id="inputestensioneatto"
+						value="#{presentazioneAssegnazioneAttoController.estensioneAtto}" />
+				</p:column>
+				
+
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Classificazione: " />
+				</p:column>
+				<p:column>
+					<p:inputText readonly="false" id="inputclassificazione"
+						value="#{presentazioneAssegnazioneAttoController.classificazione}">
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:inputText>
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Oggetto: " />
+				</p:column>
+				<p:column colspan="3">
+
+					<!-- <c:set var="oggetto" value="#{presentazioneAssegnazioneAttoController.oggetto}"/>
+				    <c:if test="#{not empty presentazioneAssegnazioneAttoController.atto.oggettoOriginale}">
+				       <c:set var="oggetto" value="#{presentazioneAssegnazioneAttoController.atto.oggettoOriginale}"/>
+				    </c:if>-->
+
+					<p:inputTextarea readonly="false" rows="2" cols="82"
+						value="#{presentazioneAssegnazioneAttoController.oggetto}">
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:inputTextarea>
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Numero Fascicolo: " />
+				</p:column>
+				<p:column>
+					<p:inputText readonly="false" id="inputnumrepertorio"
+						value="#{presentazioneAssegnazioneAttoController.numeroRepertorio}">
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:inputText>
+				</p:column>
+
+				<p:column>
+					<b> <h:outputLabel for="datarepertorio"
+							value="Data Fascicolo: " />
+					</b>
+				</p:column>
+
+				<p:column>
+
+					<p:calendar disabled="false" readonly="false" size="10" locale="it"
+						id="datarepertorio" pattern="dd/MM/yyyy"
+						value="#{presentazioneAssegnazioneAttoController.dataRepertorio}">
+
+					</p:calendar>
+				</p:column>
+
+
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<b> <h:outputText style="font-weight: bold;"
+							value="Tipo Iniziativa: " />
+					</b>
+				</p:column>
+
+				<p:column>
+					<p:selectOneMenu id="tipoiniziativa"
+						value="#{presentazioneAssegnazioneAttoController.tipoIniziativa}">
+						<f:selectItem itemLabel="Scegli tipo" itemValue="" />
+
+						<f:selectItem itemLabel="Altra Iniziativa"
+							itemValue="08_ATTO DI ALTRA INIZIATIVA" />
+
+						<f:selectItem itemLabel="Commissioni"
+							itemValue="04_ATTO DI INIZIATIVA COMMISSIONI" />
+
+						<f:selectItem itemLabel="Consiglio delle Autonomie locali"
+							itemValue="07_ATTO DI INIZIATIVA AUTONOMIE LOCALI" />
+
+						<f:selectItem itemLabel="Consiliare"
+							itemValue="01_ATTO DI INIZIATIVA CONSILIARE" />
+
+						<f:selectItem itemLabel="Giunta"
+							itemValue="02_ATTO DI INIZIATIVA DI GIUNTA" />
+
+						<f:selectItem itemLabel="Popolare"
+							itemValue="03_ATTO DI INIZIATIVA POPOLARE" />
+
+						<f:selectItem itemLabel="Presidente della Giunta"
+							itemValue="06_ATTO DI INIZIATIVA PRESIDENTE GIUNTA" />
+
+						<f:selectItem itemLabel="Ufficio di Presidenza"
+							itemValue="05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA" />
+
+
+
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column>
+					<b><h:outputLabel for="datainiziativa"
+							value="Data iniziativa: " /> </b>
+				</p:column>
+
+				<p:column>
+
+
+					<p:calendar size="10" locale="it" id="datainiziativa"
+						pattern="dd/MM/yyyy"
+						value="#{presentazioneAssegnazioneAttoController.dataIniziativa}">
+
+					</p:calendar>
+				</p:column>
+
+
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+						value="Descrizione iniziativa: " />
+				</p:column>
+				<p:column colspan="3">
+					<p:inputTextarea readonly="false" rows="2" cols="82"
+						value="#{presentazioneAssegnazioneAttoController.descrizioneIniziativa}">
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:inputTextarea>
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Numero DGR: " />
+
+				</p:column>
+
+				<p:column>
+					<p:inputText readonly="false" id="inputnumerodgr"
+						value="#{presentazioneAssegnazioneAttoController.numeroDgr}">
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:inputText>
+				</p:column>
+
+				<p:column>
+					<b> <h:outputLabel for="datadgr" value="Data DGR: " />
+					</b>
+				</p:column>
+
+				<p:column>
+
+
+					<p:calendar size="10" locale="it" id="datadgr" pattern="dd/MM/yyyy"
+						value="#{presentazioneAssegnazioneAttoController.dataDgr}">
+
+					</p:calendar>
+				</p:column>
+
+			</p:row>
+
+
+
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+						value="Pubblica su Internet: " />
+				</p:column>
+
+				<p:column colspan="3">
+					<p:selectBooleanCheckbox readonly="false" id="ispubblico"
+						value="#{presentazioneAssegnazioneAttoController.attoPubblico}">
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:selectBooleanCheckbox>
+				</p:column>
+
+			</p:row>
+
+			<p:row rendered="#{navigationBean.sessionAttoPAR}">
+
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Tipologia: " />
+				</p:column>
+
+				<p:column>
+					<p:selectOneMenu readonly="false" id="tipologia"
+						value="#{presentazioneAssegnazioneAttoController.atto.tipologia}">
+						<f:selectItem itemLabel="Scegli Tipologia" itemValue="" />
+						<f:selectItem itemLabel="Intesa" itemValue="Intesa" />
+						<f:selectItem itemLabel="Parere" itemValue="Parere" />
+						<f:selectItem itemLabel="Parere su Regolamento"
+							itemValue="Parere su Regolamento" />
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Scadenza 60gg: " />
+				</p:column>
+
+				<p:column>
+					<p:selectBooleanCheckbox readonly="false" id="isscadenza60gg"
+						value="#{presentazioneAssegnazioneAttoController.atto.scadenza60gg}">
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:selectBooleanCheckbox>
+				</p:column>
+
+			</p:row>
+
+			<p:row rendered="#{navigationBean.sessionAttoDOC}">
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Iter Aula: " />
+				</p:column>
+
+				<p:column colspan="3">
+					<p:selectBooleanCheckbox readonly="false" id="isiteraula"
+						value="#{presentazioneAssegnazioneAttoController.atto.iterAula}">
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateInfoGenHandler}" />
+					</p:selectBooleanCheckbox>
+				</p:column>
+
+			</p:row>
+
+		</p:panelGrid>
+
+	</p:fieldset>
+
+
+	<p:fieldset rendered="#{navigationBean.isFirmatariEnabled()}"
+		legend="Firmatari" toggleable="true" collapsed="false"
+		toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="firmataripanel">
+
+
+			<p:row>
+				<p:column colspan="6">
+					<p:panelGrid id="addFirmatarioPanel" styleClass="tableAppend">
+
+						<f:facet name="header">
+							<p:row>
+								<p:column>Firmatario</p:column>
+								<p:column>Gruppo Cons.</p:column>
+								<p:column>Data Firma</p:column>
+								<p:column>Data Ritiro</p:column>
+								<p:column>Primo Firm.</p:column>
+								<p:column></p:column>
+							</p:row>
+						</f:facet>
+						<p:row>
+							<p:column>
+								<p:selectOneMenu id="firmatario"
+									value="#{presentazioneAssegnazioneAttoController.nomeFirmatario}">
+									<f:selectItem itemLabel="Scegli Firmatario" itemValue="" />
+									<f:selectItems var="firmatario"
+										itemLabel="#{firmatario.cognomeNome}"
+										itemValue="#{firmatario.descrizione}"
+										value="#{presentazioneAssegnazioneAttoController.firmatari}" />
+									<p:ajax update="gruppoconsiliare"
+										listener="#{presentazioneAssegnazioneAttoController.handleFirmatarioChange}" />
+								</p:selectOneMenu>
+							</p:column>
+
+							<p:column>
+								<p:selectOneMenu id="gruppoconsiliare"
+									value="#{presentazioneAssegnazioneAttoController.gruppoConsiliare}">
+									<f:selectItem itemLabel="Scegli Gruppo" itemValue="" />
+									<f:selectItems
+										value="#{presentazioneAssegnazioneAttoController.gruppiConsiliari}" />
+								</p:selectOneMenu>
+							</p:column>
+
+							<p:column>
+								<p:calendar size="10" locale="it" id="datafirma"
+									pattern="dd/MM/yyyy"
+									value="#{presentazioneAssegnazioneAttoController.dataFirma}" />
+							</p:column>
+
+							<p:column>
+								<p:calendar size="10" locale="it" id="dataritiro"
+									pattern="dd/MM/yyyy"
+									value="#{presentazioneAssegnazioneAttoController.dataRitiro}" />
+							</p:column>
+
+							<p:column style="text-align:center">
+								<p:selectBooleanCheckbox id="primofirmatario"
+									value="#{presentazioneAssegnazioneAttoController.primoFirmatario}" />
+							</p:column>
+
+							<p:column>
+								<p:commandButton value="Aggiungi"
+									action="#{presentazioneAssegnazioneAttoController.addFirmatario}"
+									id="addFirmatario"
+									update=":presAssForm:tabView , presaCaricoMsg" icon="new-icon" />
+							</p:column>
+
+						</p:row>
+					</p:panelGrid>
+
+
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column colspan="6">
+
+					<p:dataTable id="listaFirmatari" widgetVar="tableFirmatari"
+						value="#{presentazioneAssegnazioneAttoController.firmatariList}"
+						var="firmatarioAdd" styleClass="generalInfoTab grey-text"
+						editable="true">
+
+						<p:column headerText="" style="width:20px">
+							<p:graphicImage value="/resources/img/dad.jpeg" />
+						</p:column>
+
+						<p:column headerText="Nome" style="width:125px"
+							sortBy="#{firmatarioAdd.descrizione}">
+							<h:outputText value="#{firmatarioAdd.descrizione}" />
+						</p:column>
+
+						<p:column headerText="Gruppo Consiliare"
+							sortBy="#{firmatarioAdd.gruppoConsiliare}">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{firmatarioAdd.gruppoConsiliare}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectOneMenu value="#{firmatarioAdd.gruppoConsiliare}">
+										<f:selectItems
+											value="#{presentazioneAssegnazioneAttoController.gruppiConsiliari}" />
+									</p:selectOneMenu>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Data Firma"
+							sortBy="#{of:formatDate(firmatarioAdd.dataFirma,'dd/MM/yyyy')}">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										value="#{of:formatDate(firmatarioAdd.dataFirma,'dd/MM/yyyy')}">
+
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
+										value="#{firmatarioAdd.dataFirma}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Data Ritiro" style="width:100px"
+							sortBy="#{firmatarioAdd.dataRitiro}">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{firmatarioAdd.dataRitiro}">
+										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
+										value="#{firmatarioAdd.dataRitiro}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="1° firm." style="width:100px"
+							sortBy="#{firmatarioAdd.primoFirmatario}">
+
+
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="si"
+										rendered="#{firmatarioAdd.primoFirmatario}" />
+									<h:outputText value="no"
+										rendered="#{!firmatarioAdd.primoFirmatario}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox
+										value="#{firmatarioAdd.primoFirmatario}" />
+								</f:facet>
+							</p:cellEditor>
+
+
+
+						</p:column>
+
+						<p:column headerText="Elimina" style="width:50px">
+
+							<p:commandButton oncomplete="firmatarioDialog.show()"
+								icon="delete-icon">
+
+								<f:setPropertyActionListener
+									value="#{firmatarioAdd.descrizione}"
+									target="#{presentazioneAssegnazioneAttoController.firmatarioToDelete}" />
+							</p:commandButton>
+						</p:column>
+
+						<p:column headerText="Modifica" style="width:50px">
+							<p:rowEditor />
+						</p:column>
+
+
+					</p:dataTable>
+
+					<p:inputText type="hidden" id="hidOrderPromotore"
+						value="#{presentazioneAssegnazioneAttoController.firmatariOrder}">
+					</p:inputText>
+
+					<script type="text/javascript">
+                         $(function() {
+			
+								$('#presAssForm\\:tabView\\:listaFirmatari_data').sortable(
+												{
+													update : function() {
+														dragSortTable('presAssForm:tabView:listaFirmatari_data',
+																'presAssForm:tabView:hidOrder','1');
+													}
+												});
+					
+							});
+					</script>
+				</p:column>
+
+
+
+
+			</p:row>
+
+
+
+
+
+			<p:row>
+				<p:column>
+					
+						<p:commandButton value="Ritiro per mancanza firmatari" oncomplete="rititrofirmatarioDialog.show()" />
+				</p:column>
+
+				<p:column colspan="5">
+
+				</p:column>
+			</p:row>
+
+
+		</p:panelGrid>
+
+	</p:fieldset>
+
+
+
+	<p:fieldset rendered="#{navigationBean.isFirmatariPopolariEnabled()}"
+				legend="Promotori" toggleable="true" collapsed="false"
+				toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="promotoripanel">
+
+
+			<p:row>
+				<p:column colspan="6">
+					<p:panelGrid id="addPromotorePanel" styleClass="tableAppend">
+
+						<f:facet name="header">
+							<p:row>
+								<p:column>Promotore</p:column>
+								<p:column>Data Firma</p:column>
+								<p:column>Data Ritiro</p:column>
+								<p:column>Primo Prom.</p:column>
+								<p:column></p:column>
+							</p:row>
+						</f:facet>
+						<p:row>
+							<p:column>
+								<p:inputText id="promotore" value="#{presentazioneAssegnazioneAttoController.nomePromotore}" style="width:170px">
+									<f:validateLength minimum="2" />
+								</p:inputText>
+							</p:column>
+
+
+							<p:column>
+								<p:calendar size="10" locale="it" id="datafirmaPromotore"
+											pattern="dd/MM/yyyy"
+											value="#{presentazioneAssegnazioneAttoController.dataFirmaPromotore}" />
+							</p:column>
+
+							<p:column>
+								<p:calendar size="10" locale="it" id="dataritiroPromotore"
+											pattern="dd/MM/yyyy"
+											value="#{presentazioneAssegnazioneAttoController.dataRitiroPromotore}" />
+							</p:column>
+
+							<p:column style="text-align:center">
+								<p:selectBooleanCheckbox id="primofirmatarioPromotore"
+														 value="#{presentazioneAssegnazioneAttoController.primoPromotore}" />
+							</p:column>
+
+							<p:column>
+								<p:commandButton value="Aggiungi"
+												 action="#{presentazioneAssegnazioneAttoController.addPromotore}"
+												 id="addPromotore"
+												 update=":presAssForm:tabView , presaCaricoMsg" icon="new-icon" />
+							</p:column>
+
+						</p:row>
+					</p:panelGrid>
+
+
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column colspan="6">
+
+					<p:dataTable id="listaPromotori" widgetVar="tablePromotori"
+								 value="#{presentazioneAssegnazioneAttoController.promotoriList}"
+								 var="promotoreAdd" styleClass="generalInfoTab grey-text"
+								 editable="true">
+
+						<p:column headerText="" style="width:20px">
+							<p:graphicImage value="/resources/img/dad.jpeg" />
+						</p:column>
+
+						<p:column headerText="Nome" style="width:125px"
+								  sortBy="#{promotoreAdd.descrizione}">
+							<h:outputText value="#{promotoreAdd.descrizione}" />
+						</p:column>
+
+						<p:column headerText="Data Firma" style="width:100px"
+								  sortBy="#{of:formatDate(promotoreAdd.dataFirma,'dd/MM/yyyy')}">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+											value="#{of:formatDate(promotoreAdd.dataFirma,'dd/MM/yyyy')}">
+
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
+												value="#{promotoreAdd.dataFirma}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Data Ritiro" style="width:100px"
+								  sortBy="#{promotoreAdd.dataRitiro}">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{promotoreAdd.dataRitiro}">
+										<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
+												value="#{promotoreAdd.dataRitiro}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="1° firm." style="width:100px"
+								  sortBy="#{promotoreAdd.primoFirmatario}">
+
+
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="si"
+												  rendered="#{promotoreAdd.primoFirmatario}" />
+									<h:outputText value="no"
+												  rendered="#{!promotoreAdd.primoFirmatario}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox
+											value="#{promotoreAdd.primoFirmatario}" />
+								</f:facet>
+							</p:cellEditor>
+
+
+
+						</p:column>
+
+						<p:column headerText="Elimina" style="width:50px">
+
+							<p:commandButton oncomplete="promotoreDialog.show()"
+											 icon="delete-icon">
+
+								<f:setPropertyActionListener
+										value="#{promotoreAdd.descrizione}"
+										target="#{presentazioneAssegnazioneAttoController.promotoreToDelete}" />
+							</p:commandButton>
+						</p:column>
+
+						<p:column headerText="Modifica" style="width:50px">
+							<p:rowEditor />
+						</p:column>
+
+
+					</p:dataTable>
+
+					<p:inputText type="hidden" id="hidOrderPromotori"
+								 value="#{presentazioneAssegnazioneAttoController.promotoriOrder}">
+					</p:inputText>
+
+					<script type="text/javascript">
+                        $(function() {
+
+                            $('#presAssForm\\:tabView\\:listaPromotori_data').sortable(
+                                {
+                                    update : function() {
+                                        dragSortTable('presAssForm:tabView:listaPromotori_data',
+                                            'presAssForm:tabView:hidOrderPromotori','1');
+                                    }
+                                });
+
+                        });
+					</script>
+				</p:column>
+
+
+
+
+			</p:row>
+
+
+
+		</p:panelGrid>
+
+	</p:fieldset>
+
+
+
+
+
+
+	<p>
+		<p:commandButton value="Salva"
+			update="presaCaricoMsg, :menuFasiProcessoForm:menuFasiProcesso"
+			actionListener="#{presentazioneAssegnazioneAttoController.salvaInfoGenerali}" />
+
+	</p>
+</div>
+
+
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+
+
+<script type="text/javascript">
+
+
+
+
+
+	if (!("#{presentazioneAssegnazioneAttoController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {
+		
+		$('#blockedInfoGen')
+				.block(
+						{
+							message : 'Pagina bloccata!<br />Prendere in carico per sbloccare.',
+							css : {
+								width : '350px',
+								top : '10px',
+								left : '',
+								right : '10px',
+								border : 'none',
+								padding : '5px',
+								opacity : 0.6,
+								cursor : 'default',
+								color : '#fff',
+								backgroundColor : '#000',
+								'-webkit-border-radius' : '10px',
+								'-moz-border-radius' : '10px',
+								'border-radius' : '10px'
+							},
+						});
+
+	}
+
+	function unblockDiv() {
+		$('#blockedInfoGen').unblock();
+		$('#blockedAmmissibilita').unblock();
+		$('#blockedAssegnazione').unblock();
+		$('#blockedNote').unblock();
+		location.reload();
+	};
+	
+	if ( #{navigationBean.presentazioneAssegnazioneDisabled()}==true) {  
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+   $('#presaInCaricoDiv').block({ message: null } );
+   $('#blockedInfoGen').block({ message: null } );}
+	
+	if (#{navigationBean.isGuest()}==true){
+		$.blockUI.defaults.overlayCSS.opacity = 0; 
+		   $('#presaInCaricoDiv').block({ message: null } );
+		   $('#blockedInfoGen').block({ message: null } );
+		
+	}
+
+	
+</script>
+</html>

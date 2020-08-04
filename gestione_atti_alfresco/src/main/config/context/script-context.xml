@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+
+<beans>
+
+	<bean id="templateScript" parent="baseJavaScriptExtension" class="com.sourcesense.crl.script.TemplateScript">
+        <property name="extensionName">
+            <value>template</value>
+        </property>
+        <property name="serviceRegistry">
+            <ref bean="ServiceRegistry"/>
+        </property>
+    </bean>    
+    
+    <bean id="protocolloLoggerScript" parent="baseJavaScriptExtension" class="com.sourcesense.crl.script.ProtocolloLoggerScript">
+        <property name="extensionName">
+            <value>protocolloLogger</value>
+        </property>
+    </bean>
+    
+    <bean id="attiIndirizzoExportLoggerScript" parent="baseJavaScriptExtension" class="com.sourcesense.crl.script.AttiIndirizzoExportLoggerScript">
+        <property name="extensionName">
+            <value>attiIndirizzoExportLogger</value>
+        </property>
+    </bean>
+    
+    <bean id="attiIndirizzoImportLoggerScript" parent="baseJavaScriptExtension" class="com.sourcesense.crl.script.AttiIndirizzoImportLoggerScript">
+        <property name="extensionName">
+            <value>attiIndirizzoImportLogger</value>
+        </property>
+    </bean>
+    
+    <bean id="crlUtilityScript" parent="baseJavaScriptExtension" class="com.sourcesense.crl.script.CRLUtilityScript">
+        <property name="extensionName">
+            <value>crlUtility</value>
+        </property>
+         <property name="serviceRegistry">
+            <ref bean="ServiceRegistry"/>
+        </property>
+    </bean>
+	
+</beans>

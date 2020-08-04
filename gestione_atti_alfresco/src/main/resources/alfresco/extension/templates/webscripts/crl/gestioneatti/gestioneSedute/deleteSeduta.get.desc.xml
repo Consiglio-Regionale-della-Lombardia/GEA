@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Eliminazione di una seduta</shortname>
+  <description>Elimina il nodo relativo ad una seduta</description>
+  <url>/crl/seduta/delete?idSeduta={idSeduta}</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

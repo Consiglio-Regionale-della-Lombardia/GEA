@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Lettura relatori di un atto</shortname>
+  <description>Restituisce l'elenco dei metadati dei relatori relativi ad un atto</description>
+  <url>/crl/atto/relatori?idAtto={idAtto}</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

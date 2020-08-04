@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Emendamenti e clausole commissione</shortname>
+  <description>Emendamenti e clausole commissione</description>
+  <url>/crl/atto/esamecommissioni/emendamenticlausole</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

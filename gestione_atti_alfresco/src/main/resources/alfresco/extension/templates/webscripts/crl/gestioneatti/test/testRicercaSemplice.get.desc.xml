@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test ricerca semplice atti</shortname>
+  <description>Test per la ricerca semplice degli atti</description>
+  <url>/crl/test/atto/ricerca/semplice</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

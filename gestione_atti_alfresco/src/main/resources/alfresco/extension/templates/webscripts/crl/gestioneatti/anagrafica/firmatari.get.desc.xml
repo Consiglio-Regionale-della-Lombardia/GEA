@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Firmatari</shortname>
+  <description>Restituisce l'elenco di tutti i firmatari</description>
+  <url>/crl/anagrafica/atto/firmatari</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

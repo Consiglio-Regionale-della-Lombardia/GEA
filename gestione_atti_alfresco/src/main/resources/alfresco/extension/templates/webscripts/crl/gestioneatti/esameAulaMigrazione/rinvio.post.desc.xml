@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>rinvio aula</shortname>
+  <description>rinvio aula</description>
+  <url>/crl/atto/esameaulamigrazione/rinvio</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

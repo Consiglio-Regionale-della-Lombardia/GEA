@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<pe:tooltip value="Click per Espandere / Comprimere"
+	forSelector="legend" shared="true" targetPosition="top center"
+	position="left center" />
+
+<div id="blockedEmendamenti">
+	<p:panelGrid styleClass="infoTable" id="emendamentiPanel">
+		<p:row>
+			<p:column>
+				<p:fieldset styleClass="fieldSetTab" legend="Emendamenti:"
+					collapsed="false" toggleable="true" toggleSpeed="500">
+					<p:panelGrid styleClass="infoTable" id="emendamentiClausoleGrid">
+
+						<p:row>
+							<p:column>
+								<!-- Messaggio azioni -->
+								<p:growl id="emendamentoMsg" showDetail="true" sticky="false" />
+
+
+
+								<!-- Confirm dialog -->
+								<p:confirmDialog id="confirmEmendamentoDialog"
+									message="Sei sicuro di voler eliminare il File ?"
+									header="Cancellazione Emendamento" severity="alert"
+									widgetVar="emendamentoDialog">
+
+									<p:commandButton id="confirmEmendamento" value="Conferma"
+										oncomplete="emendamentoDialog.hide()"
+										action="#{esameCommissioniController.removeEmendamento}"
+										update="listaEmendamenti" />
+									<p:commandButton id="declineEmendamento" value="Annulla"
+										onclick="emendamentoDialog.hide()" type="button" />
+
+								</p:confirmDialog>
+
+								<p:confirmDialog id="confirmTestiClausoleDialog"
+									message="Sei sicuro di voler eliminare il File ?"
+									header="Cancellazione Testo Clausola" severity="alert"
+									widgetVar="testoClausolaDialog">
+
+									<p:commandButton id="confirmTestoClausola" value="Conferma"
+										oncomplete="testoClausolaDialog.hide()"
+										action="#{esameCommissioniController.removeTestoClausola}"
+										update="listaTestiClausola" />
+									<p:commandButton id="declineTestoClausola" value="Annulla"
+										onclick="testoClausolaDialog.hide()" type="button" />
+
+								</p:confirmDialog>
+
+								<p:confirmDialog id="uploadEmendamentoAttributes"
+									header="Caricamento"
+									widgetVar="uploadEmendamentoAttributesDialog"
+									style="width:450px" message="Allega file">
+									<p:panelGrid id="uploadpanelEmendamento">
+										<p:row>
+											<p:column>
+												<h:outputLabel for="isPubblicoEmendamento"
+													value="Pubblica su Internet: " />
+												<!-- <p:selectBooleanCheckbox id="isPubblicoEmendamentoAllegato"
+													value="#{presentazioneAssegnazioneAttoController.currentFilePubblico}">
+													<p:ajax event="change" immediate="true"></p:ajax>
+												</p:selectBooleanCheckbox> -->
+												
+												<p:selectBooleanCheckbox id="isPubblicoEmendamentoAllegato"
+													value="#{esameCommissioniController.currentFilePubblico}">
+													<p:ajax event="change" immediate="true"></p:ajax>
+												</p:selectBooleanCheckbox>
+											</p:column>
+										</p:row>
+										<p:row>
+											<p:column>
+												<p:fileUpload label="Sfoglia"  uploadLabel="Carica" cancelLabel="Cancella"
+												mode="advanced"
+													oncomplete="uploadEmendamentoAttributesDialog.hide()"
+													auto="false" update="listaEmendamenti ,emendamentoMsg"
+													fileUploadListener="#{esameCommissioniController.uploadEmendamento}" />
+											</p:column>
+										</p:row>
+										<p:row>
+											<p:column>
+												<p:commandButton id="declineuploadEmendamento"
+													value="Annulla"
+													onclick="uploadEmendamentoAttributesDialog.hide()"
+													type="button" />
+											</p:column>
+										</p:row>
+									</p:panelGrid>
+								</p:confirmDialog>
+
+								<p:confirmDialog id="uploadClausolaAttributes"
+									header="Caricamento" widgetVar="uploadClausolaAttributesDialog"
+									style="width:450px" message="Allega file">
+									<p:panelGrid id="uploadpanelClausola">
+										<p:row>
+											<p:column>
+												<h:outputLabel for="isPubblicoClausola" value="Pubblica su Internet: " />
+												<p:selectBooleanCheckbox id="isPubblicoClausolaAllegato"
+													value="#{esameCommissioniController.currentFilePubblico}">
+													<p:ajax event="change" immediate="true"></p:ajax>
+												</p:selectBooleanCheckbox>
+											</p:column>
+										</p:row>
+										<p:row>
+											<p:column>
+												<p:fileUpload label="Sfoglia"  uploadLabel="Carica" cancelLabel="Cancella"
+												       
+													oncomplete="uploadClausolaAttributesDialog.hide()"
+													auto="false" update="listaTestiClausola ,emendamentoMsg"
+													fileUploadListener="#{esameCommissioniController.uploadTestoClausola}" />
+											</p:column>
+										</p:row>
+										<p:row>
+											<p:column>
+												<p:commandButton id="declineUploadClausola" value="Annulla"
+													onclick="uploadClausolaAttributesDialog.hide()"
+													type="button" />
+											</p:column>
+										</p:row>
+									</p:panelGrid>
+								</p:confirmDialog>
+							</p:column>
+						</p:row>
+						<p:row>
+							<!-- <p:column>
+					<h:graphicImage alt="add" value="/resources/img/add.png" />
+				</p:column>-->
+							<p:column colspan="3">
+
+								<p:commandButton value="Carica Emendamento"
+									oncomplete="uploadEmendamentoAttributesDialog.show()">
+								</p:commandButton>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="4">
+								<p:dataTable id="listaEmendamenti"
+									value="#{esameCommissioniController.emendamentiList}"
+									var="emendamento" styleClass="generalInfoTab grey-text"
+									editable="true">
+
+									<p:ajax event="rowEdit" update="@this"
+										listener="#{esameCommissioniController.updateAllegato}" />
+										
+
+									<p:column sortBy="#{emendamento.nome}">
+										<f:facet name="header">Emendamento</f:facet>
+										<h:outputText value="#{emendamento.nome}" />
+									</p:column>
+
+									<p:column sortBy="#{emendamento.mimetype}">
+										<f:facet name="header">Formato</f:facet>
+										<h:outputText value="#{emendamento.mimetype}" />
+
+									</p:column>
+
+									<p:column sortBy="#{emendamento.pubblico}">
+										<f:facet name="header">Pubblico</f:facet>
+
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="si" rendered="#{emendamento.pubblico}" />
+												<h:outputText value="no" rendered="#{!emendamento.pubblico}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:selectBooleanCheckbox value="#{emendamento.pubblico}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Elimina</f:facet>
+										<p:commandButton oncomplete="emendamentoDialog.show()"
+											icon="delete-icon">
+
+											<f:setPropertyActionListener value="#{emendamento.id}"
+												target="#{esameCommissioniController.emendamentoToDelete}" />
+										</p:commandButton>
+									</p:column>
+									<p:column>
+										<f:facet name="header">Scarica</f:facet>
+
+										<p:commandButton id="downloadLinkemendamento"
+											icon="detail-icon" ajax="false"
+											onclick="PrimeFaces.monitorDownload(start, stop)">
+											<f:setPropertyActionListener value="#{emendamento.id}"
+												target="#{fileDownloadController.fileId}" />
+											<f:setPropertyActionListener value="#{emendamento.nome}"
+												target="#{fileDownloadController.fileName}" />
+											<f:setPropertyActionListener value="#{emendamento.mimetype}"
+												target="#{fileDownloadController.fileMimetype}" />
+											<p:fileDownload value="#{fileDownloadController.file}" />
+										</p:commandButton>
+
+									</p:column>
+
+									<p:column headerText="Modifica" style="width:50px">
+										<p:rowEditor />
+									</p:column>
+
+
+								</p:dataTable>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+
+								<table class="generalInfoTab" id="numEmendamenti"
+									style="width: 100%;" border="0">
+
+									<tbody>
+										<tr>
+											<td align="left"></td>
+											<td align="left">Maggior.</td>
+											<td align="left">Minor.</td>
+											<td align="left">Giunta</td>
+											<td align="left">Misto</td>
+											<td align="left">Comm. cons.</td>
+											<td align="left"><b>Totale</b></td>
+										</tr>
+
+										<tr>
+											<td align="left">Num. Emend. Presentati</td>
+
+											<td align="left"><p:inputText size="5" maxlength="5"
+													value="#{esameCommissioniController.numEmendPresentatiMaggior}">
+													<p:ajax event="change" update="totEmendPresentati"
+														listener="#{esameCommissioniController.totaleEmendPresentati}" />
+													<p:ajax event="change"
+														listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+												</p:inputText></td>
+
+											<td align="left"><p:inputText size="5" maxlength="5"
+													value="#{esameCommissioniController.numEmendPresentatiMinor}">
+													<p:ajax event="change" update="totEmendPresentati"
+														listener="#{esameCommissioniController.totaleEmendPresentati}" />
+													<p:ajax event="change"
+														listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+												</p:inputText></td>
+
+											<td align="left"><p:inputText size="5" maxlength="5"
+													value="#{esameCommissioniController.numEmendPresentatiGiunta}">
+													<p:ajax event="change" update="totEmendPresentati"
+														listener="#{esameCommissioniController.totaleEmendPresentati}" />
+													<p:ajax event="change"
+														listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+												</p:inputText></td>
+
+											<td align="left"><p:inputText size="5" maxlength="5"
+													value="#{esameCommissioniController.numEmendPresentatiMisto}">
+													<p:ajax event="change" update="totEmendPresentati"
+														listener="#{esameCommissioniController.totaleEmendPresentati}" />
+													<p:ajax event="change"
+														listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+												</p:inputText></td>
+
+											<td align="left"><p:inputText size="5" maxlength="5"
+													value="#{esameCommissioniController.numEmendPresentatiCommissione}">
+													<p:ajax event="change" update="totEmendPresentati"
+														listener="#{esameCommissioniController.totaleEmendPresentati}" />
+													<p:ajax event="change"
+														listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+												</p:inputText></td>
+
+
+											<td align="left"><p:inputText id="totEmendPresentati"
+													value="#{esameCommissioniController.numEmendPresentatiTotale}"
+													readonly="true" size="5" maxlength="5" /></td>
+										</tr>
+
+										<tr>
+											<td align="left">Num. Emend. Approvati</td>
+
+											<td align="left"><p:inputText size="5" maxlength="5"
+													value="#{esameCommissioniController.numEmendApprovatiMaggior}">
+													<p:ajax event="change" update="totEmendApprovati"
+														listener="#{esameCommissioniController.totaleEmendApprovati}" />
+													<p:ajax event="change"
+														listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+												</p:inputText></td>
+
+											<td align="left"><p:inputText size="5" maxlength="5"
+													value="#{esameCommissioniController.numEmendApprovatiMinor}">
+													<p:ajax event="change" update="totEmendApprovati"
+														listener="#{esameCommissioniController.totaleEmendApprovati}" />
+													<p:ajax event="change"
+														listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+												</p:inputText></td>
+
+											<td align="left"><p:inputText size="5" maxlength="5"
+													value="#{esameCommissioniController.numEmendApprovatiGiunta}">
+													<p:ajax event="change" update="totEmendApprovati"
+														listener="#{esameCommissioniController.totaleEmendApprovati}" />
+													<p:ajax event="change"
+														listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+												</p:inputText></td>
+
+											<td align="left"><p:inputText size="5" maxlength="5"
+													value="#{esameCommissioniController.numEmendApprovatiMisto}">
+													<p:ajax event="change" update="totEmendApprovati"
+														listener="#{esameCommissioniController.totaleEmendApprovati}" />
+													<p:ajax event="change"
+														listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+												</p:inputText></td>
+
+											<td align="left"><p:inputText size="5" maxlength="5"
+													value="#{esameCommissioniController.numEmendApprovatiCommissione}">
+													<p:ajax event="change" update="totEmendApprovati"
+														listener="#{esameCommissioniController.totaleEmendApprovati}" />
+													<p:ajax event="change"
+														listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+												</p:inputText></td>
+
+											<td align="left"><p:inputText id="totEmendApprovati"
+													value="#{esameCommissioniController.numEmendApprovatiTotale}"
+													readonly="true" size="5" maxlength="5" /></td>
+										</tr>
+
+									</tbody>
+								</table>
+
+							</p:column>
+						</p:row>
+
+					</p:panelGrid>
+					<p:panelGrid styleClass="infoTable" id="nonApprovati">
+						<p:row>
+
+							<p:column>Non ammissibili</p:column>
+							<p:column>Decaduti</p:column>
+							<p:column>Ritirati</p:column>
+							<p:column>Respinti</p:column>
+							<p:column>
+								<b>Totale non approvati</b>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:inputText size="5" maxlength="5"
+									value="#{esameCommissioniController.nonAmmissibili}">
+									<p:ajax event="change" update="totNonApprovati"
+										listener="#{esameCommissioniController.totaleNonApprovati}" />
+									<p:ajax event="change"
+										listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+								</p:inputText>
+							</p:column>
+
+							<p:column>
+								<p:inputText size="5" maxlength="5"
+									value="#{esameCommissioniController.decaduti}">
+									<p:ajax event="change" update="totNonApprovati"
+										listener="#{esameCommissioniController.totaleNonApprovati}" />
+									<p:ajax event="change"
+										listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+								</p:inputText>
+							</p:column>
+
+							<p:column>
+								<p:inputText size="5" maxlength="5"
+									value="#{esameCommissioniController.ritirati}">
+									<p:ajax event="change" update="totNonApprovati"
+										listener="#{esameCommissioniController.totaleNonApprovati}" />
+									<p:ajax event="change"
+										listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+								</p:inputText>
+							</p:column>
+
+							<p:column>
+								<p:inputText size="5" maxlength="5"
+									value="#{esameCommissioniController.respinti}">
+									<p:ajax event="change" update="totNonApprovati"
+										listener="#{esameCommissioniController.totaleNonApprovati}" />
+									<p:ajax event="change"
+										listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+								</p:inputText>
+							</p:column>
+
+							<p:column>
+								<p:inputText id="totNonApprovati"
+									value="#{esameCommissioniController.totaleNonApprovati}"
+									readonly="true" size="5" maxlength="5" />
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+								Note emendamenti: 
+								</p:column>
+
+							<p:column colspan="4">
+								<p:inputTextarea rows="5" cols="101"
+									value="#{esameCommissioniController.noteEmendamenti}">
+									<p:ajax event="change"
+										listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+								</p:inputTextarea>
+							</p:column>
+						</p:row>
+
+					</p:panelGrid>
+
+				</p:fieldset>
+
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+
+				<p:fieldset styleClass="fieldSetTab" legend="Clausola Valutativa:"
+					collapsed="false" toggleable="true" toggleSpeed="500"
+					rendered="#{navigationBean.isClausoleEnabled()}">
+
+					<p:panelGrid styleClass="infoTable" id="clausolaValutativaGrid">
+						<p:row>
+							<p:column>
+							Data arrivo proposta: 
+						</p:column>
+							<p:column>
+								<p:calendar size="10" locale="it" id="dataPresaInCarico" pattern="dd/MM/yyyy"
+									value="#{esameCommissioniController.dataPresaInCaricoProposta}">
+									<p:ajax event="dateSelect"
+										listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+								</p:calendar>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+							Data votazione intesa:
+						</p:column>
+							<p:column>
+								<p:calendar size="10" locale="it" id="dataIntesa" pattern="dd/MM/yyyy"
+									value="#{esameCommissioniController.dataIntesa}">
+									<p:ajax event="dateSelect"
+										listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+								</p:calendar>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+							Esito votazione intesa: 
+						</p:column>
+							<p:column>
+								<p:selectOneMenu id="esitoVotazioneIntesa"
+									value="#{esameCommissioniController.esitoVotazioneIntesa}">
+									<f:selectItem itemLabel="Scegli esito" itemValue="" />
+
+									<f:selectItem itemLabel="Approvata" itemValue="Approvata" />
+									<f:selectItem itemLabel="Approvata con modifiche"
+										itemValue="Approvata con modifiche" />
+									<f:selectItem itemLabel="Non approvata"
+										itemValue="Non approvata" />
+
+
+									<p:ajax event="change"
+										listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+
+
+						<p:row>
+							<p:column>
+					
+				Note: 
+				
+				</p:column>
+
+							<p:column colspan="3">
+								<p:inputTextarea rows="5" cols="80"
+									value="#{esameCommissioniController.noteClausolaValutativa}">
+									<p:ajax event="change"
+										listener="#{esameCommissioniController.updateEmendamentiClausoleHandler}" />
+								</p:inputTextarea>
+
+
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<!-- <p:column>
+					<h:graphicImage alt="add" value="/resources/img/add.png" />
+				</p:column>-->
+							<p:column colspan="3">
+
+								<p:commandButton value="Carica proposta di clausola"
+									oncomplete="uploadClausolaAttributesDialog.show()">
+								</p:commandButton>
+
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="4">
+
+
+								<p:dataTable id="listaTestiClausola"
+									value="#{esameCommissioniController.testiClausolaList}"
+									var="testoClausola" styleClass="generalInfoTab grey-text"
+									editable="true">
+
+									
+									<p:ajax event="rowEdit" update="@this"
+										listener="#{esameCommissioniController.updateAllegato}" />
+
+
+									<p:column sortBy="#{testoClausola.nome}">
+										<f:facet name="header">Testo Dell'Atto</f:facet>
+										<h:outputText value="#{testoClausola.nome}" />
+									</p:column>
+
+									<p:column sortBy="#{testoClausola.mimetype}">
+										<f:facet name="header">Formato</f:facet>
+										<h:outputText
+											value="#{fn:substring(testoClausola.nome, fn:indexOf(testoClausola.nome,'.') ,fn:length(testoClausola.nome) )}" />
+
+										<h:outputText value="#{testoAtto.mimetype}" />
+
+
+									</p:column>
+
+									<p:column sortBy="#{testoClausola.pubblico}">
+										<f:facet name="header">Pubblico</f:facet>
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="si"
+													rendered="#{testoClausola.pubblico}" />
+												<h:outputText value="no"
+													rendered="#{!testoClausola.pubblico}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:selectBooleanCheckbox value="#{testoClausola.pubblico}" />
+											</f:facet>
+										</p:cellEditor>
+
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Scarica</f:facet>
+
+										<p:commandButton id="downloadLinkestoClausola"
+											icon="detail-icon" ajax="false"
+											onclick="PrimeFaces.monitorDownload(start, stop)">
+											<f:setPropertyActionListener value="#{testoClausola.id}"
+												target="#{fileDownloadController.fileId}" />
+											<f:setPropertyActionListener value="#{testoClausola.nome}"
+												target="#{fileDownloadController.fileName}" />
+											<f:setPropertyActionListener
+												value="#{testoClausola.mimetype}"
+												target="#{fileDownloadController.fileMimetype}" />
+											<p:fileDownload value="#{fileDownloadController.file}" />
+										</p:commandButton>
+
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Elimina</f:facet>
+										<p:commandButton oncomplete="testoClausolaDialog.show()"
+											icon="delete-icon">
+
+											<f:setPropertyActionListener value="#{testoClausola.id}"
+												target="#{esameCommissioniController.testoClausolaToDelete}" />
+										</p:commandButton>
+									</p:column>
+
+									<p:column headerText="Modifica" style="width:50px">
+										<p:rowEditor />
+									</p:column>
+
+
+								</p:dataTable>
+
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:fieldset>
+				<p>
+					<p:commandButton value="Salva"
+						action="#{esameCommissioniController.salvaEmendamentiClausole}"
+						update="emendamentoMsg" />
+				</p>
+			</p:column>
+		</p:row>
+
+
+	</p:panelGrid>
+
+</div>
+
+
+<script>
+
+
+if (! ("#{esameCommissioniController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {
+$('#blockedEmendamenti').block({ message: 'Pagina bloccata!<br />Prendere in carico per sbloccare.', css: {
+	width:		'350px',
+	top:		'10px',
+	left:		'',
+	right:		'10px',
+	border:		'none',
+	padding:	'5px',
+	opacity:	0.6,
+	cursor:		'default',
+	color:		'#fff',
+	backgroundColor: '#000',
+	'-webkit-border-radius':'10px',
+	'-moz-border-radius':	'10px',
+	'border-radius':		'10px'
+}, });
+
+
+
+};
+
+if ( #{esameCommissioniController.readonly}==true || #{navigationBean.isGuest()}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#blockedEmendamenti').block({ message: null } );}
+</script>
+</html>

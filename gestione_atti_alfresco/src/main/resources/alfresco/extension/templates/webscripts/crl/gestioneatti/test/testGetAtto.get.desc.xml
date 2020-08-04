@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test get dettagli atto</shortname>
+  <description>Test per la lettura dei metadati di un atto</description>
+  <url>/crl/test/atto/get</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

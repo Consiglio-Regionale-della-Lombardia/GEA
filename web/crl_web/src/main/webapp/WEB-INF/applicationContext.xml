@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop 
+	WEB-INF/xsd/spring-aop-3.0.xsd 
+	http://www.springframework.org/schema/beans 
+	WEB-INF/xsd/spring-beans-3.0.xsd 
+	http://www.springframework.org/schema/context 
+	WEB-INF/xsd/spring-context-3.0.xsd 
+	http://www.springframework.org/schema/jee 
+	WEB-INF/xsd/spring-jee-3.0.xsd 
+	http://www.springframework.org/schema/tx 
+	WEB-INF/xsd/spring-tx-3.0.xsd">
+
+	<!-- This will automatically locate any and all property files you have 
+		within your classpath, provided they fall under the META-INF/spring directory. 
+		The located property files are parsed and their values can then be used within 
+		application context files in the form of ${propertyKey}. -->
+	<context:property-placeholder location="classpath*:META-INF/spring/*.properties" />
+	<context:annotation-config />
+
+	<!-- This declaration will cause Spring to locate every @Component, @Repository 
+		and @Service in your application. In practical terms this allows you to write 
+		a POJO and then simply annotate the new POJO as an @Service and Spring will 
+		automatically detect, instantiate and dependency inject your service at startup 
+		time. Importantly, you can then also have your new service injected into 
+		any other class that requires it simply by declaring a field for your service 
+		inside the relying class and Spring will inject it. Note that two exclude 
+		filters are declared. Refer to web.xml for more details about the web tier 
+		application context setup services. Furthermore, this turns on @Autowired, 
+		@PostConstruct etc support. These annotations allow you to use common Spring 
+		and Java Enterprise Edition annotations in your classes without needing to 
+		do any special configuration. The most commonly used annotation is @Autowired, 
+		which instructs Spring to dependency inject an object into your class. -->
+	<context:component-scan base-package="com.sourcesense.crl" />
+
+	<!-- <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"> 
+		<property name="basename" value="/WEB-INF/messages/ext_resources" /> </bean> -->
+
+	<aop:aspectj-autoproxy proxy-target-class="true">
+
+	</aop:aspectj-autoproxy>
+
+	<bean
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+		id="messageSource" p:basenames="file:${catalina.base}/conf/ext_resources"
+		p:fallbackToSystemLocale="false" />
+
+	<bean factory-method="create" class="com.sun.jersey.api.client.Client"
+		id="client">
+	</bean>
+
+	<bean class="org.codehaus.jackson.map.ObjectMapper" id="objectMapper"
+		scope="request">
+		<aop:scoped-proxy />
+	</bean>
+
+
+	<bean class="com.sourcesense.crl.util.URLBuilder" id="urlBuilder"
+		scope="session">
+		<aop:scoped-proxy />
+	</bean>
+
+	<bean class="com.sourcesense.crl.business.security.AlfrescoSessionTicket"
+		id="alfrescoSessionTicket" scope="session">
+		<aop:scoped-proxy />
+	</bean>
+
+
+
+
+
+</beans>

@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<pe:tooltip value="Click per Espandere / Comprimere"
+	forSelector="legend" shared="true" targetPosition="top center"
+	position="left center" />
+	
+
+<p:panelGrid styleClass="infoTable" id="votazionePanel1">
+	<p:row>
+		<p:column>
+			<!-- Messaggio azioni -->
+			<p:growl id="votazioneMsg" showDetail="true" sticky="false" />
+
+
+
+			<!-- Confirm dialog -->
+			<p:confirmDialog id="confirmAttoDialog"
+				message="Sei sicuro di voler eliminare il File ?"
+				header="Cancellazione Testo Atto" severity="alert"
+				widgetVar="testoAttoDialog">
+
+				<p:commandButton id="confirmTestoAtto" value="Conferma"
+					oncomplete="testoAttoDialog.hide()"
+					action="#{esameAulaController.removeTestoAttoVotato}"
+					update="listaTestiAtto" />
+				<p:commandButton id="declineTestoAtto" value="Annulla"
+					onclick="testoAttoDialog.hide()" type="button" />
+
+			</p:confirmDialog>
+			
+			<p:confirmDialog id="uploadFileAttributesVotazione" header="Caricamento"
+				widgetVar="uploadFileAttributesVotazioneDialog" style="width:450px"
+				message="Allega Testo">
+				<p:panelGrid id="uploadpanelVotazione">
+					<p:row>
+						<p:column>
+							<h:outputLabel for="isPubblicoVotazione" value="Pubblica su Internet: " />
+							<p:selectBooleanCheckbox id="isPubblicoVotazione"
+								value="#{esameAulaController.currentFilePubblico}">
+								<p:ajax event="change" immediate="true"></p:ajax>
+							</p:selectBooleanCheckbox>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:fileUpload label="Sfoglia"  uploadLabel="Carica" cancelLabel="Cancella"
+								oncomplete="uploadFileAttributesVotazioneDialog.hide()" auto="false"
+								update="listaTestiAtto ,votazioneMsg"
+								fileUploadListener="#{esameAulaController.uploadTestoAttoVotato}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:commandButton id="declineUploadFileVotazione" value="Annulla"
+								onclick="uploadFileAttributesVotazioneDialog.hide()" type="button" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:confirmDialog>
+		</p:column>
+	</p:row>
+	
+  <p:row rendered="#{!navigationBean.sessionAttoPDA_UDP and !navigationBean.isSessionAttoORG()}">
+	
+		<p:column>
+		
+		
+		Data presa in carico:
+		</p:column>
+		<p:column><div id="DataPresaInCaricoDiv">
+			<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
+				value="#{esameAulaController.dataPresaInCarico}">
+				<p:ajax event="dateSelect"
+					listener="#{esameAulaController.updateVotazioneHandler}" />
+			</p:calendar>
+			</div>
+		</p:column>
+		<p:column><div id="presaInCaricoDiv">
+			<p:commandButton disabled="#{navigationBean.presaCaricoAulaDisabled()}" value="Presa in carico" 
+			action="#{esameAulaController.presaInCarico}"
+			update="votazioneMsg , :informationForm:informationBar" oncomplete="unblockDiv()"/>
+			</div>
+		</p:column>
+		
+	</p:row>
+	<p:row rendered="#{!navigationBean.sessionAttoPDA_UDP and !navigationBean.isSessionAttoORG()}">
+		<p:column>
+		Relazione scritta:
+		</p:column>
+		<p:column><div id="relazioneScrittaDiv">
+			<p:selectOneMenu id="relazioneScritta"
+				value="#{esameAulaController.relazioneScritta}">
+				<f:selectItem itemLabel="Sì" itemValue="Si" />
+				<f:selectItem itemLabel="No" itemValue="No" />
+				<p:ajax event="change"
+					listener="#{esameAulaController.updateVotazioneHandler}" />
+			</p:selectOneMenu></div>
+		</p:column>
+	</p:row>
+	
+</p:panelGrid>
+<div  id="blockedVotazione">
+<p:panelGrid styleClass="infoTable" id="votazionePanel2">
+	<p:row>
+		<p:column>
+		
+			<p:fieldset styleClass="fieldSetTab" legend="Esame in assemblea: "
+				collapsed="false" toggleable="true" toggleSpeed="500">
+				<p:panelGrid styleClass="infoTable" id="esameinassemblea">
+					<p:row>
+					<p:column>
+
+					Tipologia votazione: 
+
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="tipologiaVotazione"
+								value="#{esameAulaController.tipologiaVotazione}">
+								<f:selectItem itemLabel="Scegli tipologia votazione"
+									itemValue="" />
+								<f:selectItem itemLabel="Palese per alzata di mano"
+									itemValue="Palese per alzata di mano" />
+								<f:selectItem itemLabel="Palese per appello nominale"
+									itemValue="Palese per appello nominale" />
+								<f:selectItem itemLabel="Segreta" itemValue="Segreta" />
+								<p:ajax event="change"
+									listener="#{esameAulaController.updateVotazioneHandler}" />
+							</p:selectOneMenu>
+						</p:column>
+					
+					</p:row>
+					<p:row>
+						<p:column>
+					Esito votazione:</p:column>
+						<p:column>
+							<p:selectOneMenu id="esitoVotazione"
+								value="#{esameAulaController.esitoVotazione}" >
+								<f:selectItem itemLabel="Scegli votazione" itemValue="" />
+								<f:selectItem itemLabel="Approvato"  itemValue="Approvato" />
+								<f:selectItem itemLabel="Approvato non passaggio all'esame"
+									itemValue="Approvato non passaggio all'esame" />
+								<f:selectItem itemLabel="Respinto dall'aula"
+									itemValue="Respinto dall'aula" />
+								<p:ajax event="change"
+									listener="#{esameAulaController.updateVotazioneHandler}" />
+							</p:selectOneMenu>
+						</p:column>
+						
+						
+						<!-- <p:column rendered="#{navigationBean.isSessionAttoPDL()}">
+					Quorum:</p:column>
+						<p:column rendered="#{navigationBean.isSessionAttoPDL()}">
+							<p:selectOneMenu id="quorumVotazione"
+								value="#{esameAulaController.quorum}" >
+								<f:selectItem itemLabel="Scegli quorum" itemValue="" />
+								<f:selectItem itemLabel="Sì"  itemValue="Sì" />
+								<f:selectItem itemLabel="No" itemValue="No" />
+								<p:ajax event="change"
+									listener="#{esameAulaController.updateVotazioneHandler}" />
+							</p:selectOneMenu>
+						</p:column> -->
+					
+						
+					</p:row>
+
+					<p:row>
+						<p:column>
+
+					Data seduta: 
+
+						</p:column>
+						<p:column>
+							<p:calendar size="10" locale="it" id="dataSedutaVotazione" pattern="dd/MM/yyyy"
+								value="#{esameAulaController.dataSedutaVotazione}">
+								<p:ajax event="dateSelect"
+									listener="#{esameAulaController.updateVotazioneHandler}" />
+							</p:calendar>
+						</p:column>
+
+					</p:row>
+					<p:row>
+						<p:column>Numero DCR:</p:column>
+						<p:column>
+							<p:inputMask  id="numeroDcr"
+								value="#{esameAulaController.numeroDcr}" mask="#{esameAulaController.atto.legislatura}/99999">
+								<p:ajax event="change"
+									listener="#{esameAulaController.updateVotazioneHandler}" />
+							</p:inputMask>
+						</p:column>
+						<p:column rendered="#{navigationBean.isSessionAttoPDL()}">Numero LCR:</p:column>
+						<p:column rendered="#{navigationBean.isSessionAttoPDL()}">
+							<p:column>
+								<p:inputText size="5" maxlength="5" id="numeroLcr"
+									value="#{esameAulaController.numeroLcr}">
+									<p:ajax event="change"
+										listener="#{esameAulaController.updateVotazioneHandler}" />
+								</p:inputText>
+							</p:column>
+						</p:column>
+						
+						<p:column rendered="#{navigationBean.isSessionAttoPRE()}">Numero REG:</p:column>
+						<p:column rendered="#{navigationBean.isSessionAttoPRE()}">
+							<p:column>
+								<p:inputText  id="numeroReg"
+									value="#{esameAulaController.numeroReg}">
+									<p:ajax event="change"
+										listener="#{esameAulaController.updateVotazioneHandler}" />
+								</p:inputText>
+							</p:column>
+						</p:column>
+						
+					</p:row>
+					
+					
+
+					<p:row>
+						<p:column>
+
+					Emendato: 
+
+						</p:column>
+
+
+						<p:column>
+							<p:selectBooleanCheckbox id="emendatoChk" value="#{esameAulaController.emendato}" >
+								
+							</p:selectBooleanCheckbox>
+						</p:column>
+
+
+					</p:row>
+
+					<p:row>
+						<p:column>
+
+					Note: 
+
+						</p:column>
+
+						<p:column>
+							<p:inputTextarea rows="3" cols="60"
+								value="#{esameAulaController.noteVotazione}">
+								<p:ajax event="change"
+									listener="#{esameAulaController.updateVotazioneHandler}" />
+							</p:inputTextarea>
+						</p:column>
+
+
+						<p:column>
+
+							<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}" value="Salva"
+								action="#{esameAulaController.salvaVotazione}"
+								update="votazioneMsg, :informationForm:informationBar" />
+
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:fieldset>
+		</p:column>
+	</p:row>
+
+	<p:row>
+		<p:column>
+			<p:fieldset styleClass="fieldSetTab"
+				legend="Testo dell'Atto votato: " collapsed="false"
+				toggleable="true" toggleSpeed="500">
+
+				<p:row>
+					<!-- <p:column>
+					<h:graphicImage alt="add" value="/resources/img/add.png" />
+				</p:column>-->
+					<p:column colspan="3">
+						
+							<p:commandButton value="Carica Testo dell'Atto"
+						oncomplete="uploadFileAttributesVotazioneDialog.show()">
+					</p:commandButton>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column colspan="4">
+					
+						<p:dataTable id="listaTestiAtto"
+							value="#{esameAulaController.testiAttoVotatoList}"
+							var="testoAttoVotato" styleClass="generalInfoTab grey-text" editable="true">
+					
+							<p:ajax event="rowEdit" update="@this"
+										listener="#{esameAulaController.updateTestoAtto}" />
+
+							<p:column sortBy="#{testoAttoVotato.nome}">
+								<f:facet name="header">Testo Dell'Atto</f:facet>
+							<h:outputText value="#{testoAttoVotato.nome}" />
+						</p:column>
+
+							<p:column sortBy="#{testoAttoVotato.mimetype}">
+								<f:facet name="header">Formato</f:facet>
+								<h:outputText
+									value="#{testoAttoVotato.mimetype}" />
+
+							</p:column>
+
+							<p:column sortBy="#{testoAttoVotato.pubblico}">
+								<f:facet name="header">Pubblico</f:facet>
+								
+								<p:cellEditor >
+								<f:facet name="output">
+									<h:outputText value="si"
+								rendered="#{testoAttoVotato.pubblico}" />
+							<h:outputText value="no"
+								rendered="#{!testoAttoVotato.pubblico}" />
+								</f:facet>
+								<f:facet  name="input">
+									<p:selectBooleanCheckbox 
+									value="#{testoAttoVotato.pubblico}" />
+								</f:facet>
+							</p:cellEditor> 
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">Elimina</f:facet>
+								<p:commandButton oncomplete="testoAttoDialog.show()"
+									icon="delete-icon">
+
+									<f:setPropertyActionListener value="#{testoAttoVotato.id}"
+										target="#{esameAulaController.testoAttoVotatoToDelete}" />
+								</p:commandButton>
+							</p:column>
+							
+							<p:column>
+							<f:facet name="header">Scarica</f:facet>
+
+							<p:commandButton id="downloadLink" icon="detail-icon"
+								ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
+								<f:setPropertyActionListener value="#{testoAttoVotato.id}"
+									target="#{fileDownloadController.fileId}" />
+								<f:setPropertyActionListener value="#{testoAttoVotato.nome}"
+									target="#{fileDownloadController.fileName}" />
+								<f:setPropertyActionListener value="#{testoAttoVotato.mimetype}"
+									target="#{fileDownloadController.fileMimetype}" />
+								<p:fileDownload value="#{fileDownloadController.file}" />
+							</p:commandButton>
+
+						</p:column>
+						
+						<p:column headerText="Modifica" style="width:50px">
+							<p:rowEditor   />
+						</p:column>
+
+
+						</p:dataTable>
+					</p:column>
+				</p:row>
+
+			</p:fieldset>
+		</p:column>
+	</p:row>
+</p:panelGrid>
+
+
+</div>
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+<script>
+
+
+if (! ("#{esameAulaController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {
+$('#blockedVotazione').block({ message: 'Pagina bloccata!<br />Prendere in carico per sbloccare.', css: {
+	width:		'350px',
+	top:		'10px',
+	left:		'',
+	right:		'10px',
+	border:		'none',
+	padding:	'5px',
+	opacity:	0.6,
+	cursor:		'default',
+	color:		'#fff',
+	backgroundColor: '#000',
+	'-webkit-border-radius':'10px',
+	'-moz-border-radius':	'10px',
+	'border-radius':		'10px'
+}, });
+};
+
+
+function unblockDiv() { 
+    $('#blockedDati').unblock(); 
+    $('#blockedVotazione').unblock(); 
+    $('#blockedEmendamenti').unblock(); 
+    $('#blockedRinvioStralci').unblock(); 
+    $('#blockedNote').unblock(); 
+    location.reload();
+   };
+   
+if ( #{navigationBean.esameAulaDisabled()}==true) {
+   $.blockUI.defaults.overlayCSS.opacity = 0; 
+   $('#presaInCaricoDiv').block({ message: null } );
+   $('#DataPresaInCaricoDiv').block({ message: null } );
+   $('#relazioneScrittaDiv').block({ message: null } );}
+   
+if ( #{esameAulaController.readonly}==true || #{navigationBean.isGuest()}==true) {
+	   $.blockUI.defaults.overlayCSS.opacity = 0; 
+	   $('#presaInCaricoDiv').block({ message: null } );
+	   $('#DataPresaInCaricoDiv').block({ message: null } );
+	   $('#relazioneScrittaDiv').block({ message: null } );
+	   $('#blockedVotazione').block({ message: null } );}
+</script>
+
+</html>

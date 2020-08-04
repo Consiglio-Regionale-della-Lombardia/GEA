@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test upload record atto</shortname>
+  <description>Test per l'upload del record di un atto</description>
+  <url>/crl/test/post/attorecord</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

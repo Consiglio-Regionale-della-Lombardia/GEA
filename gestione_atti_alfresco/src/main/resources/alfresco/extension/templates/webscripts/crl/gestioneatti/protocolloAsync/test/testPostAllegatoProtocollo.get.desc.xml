@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Protocollo - Test upload allegato</shortname>
+  <description>Protocollo - Test per l'upload di un allegato</description>
+  <url>/crl/test/protocollo/post/allegato</url>
+  <format default="html"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti - Protocollo - Asynch</family>
+</webscript>

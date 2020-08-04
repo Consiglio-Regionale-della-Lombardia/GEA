@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Upload allegato aula atto</shortname>
+  <description>Upload allegato aula</description>
+  <url>/crl/atto/esameaula/allegato</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

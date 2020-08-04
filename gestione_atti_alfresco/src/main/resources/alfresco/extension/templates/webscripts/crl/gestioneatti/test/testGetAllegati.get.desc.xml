@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test lettura allegati</shortname>
+  <description>Test per il reperimento degli allegati di un atto</description>
+  <url>/crl/test/get/allegati</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

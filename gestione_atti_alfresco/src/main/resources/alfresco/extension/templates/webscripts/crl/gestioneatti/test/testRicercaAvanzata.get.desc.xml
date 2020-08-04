@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test ricerca avanzata atti</shortname>
+  <description>Test per la ricerca avanzata degli atti</description>
+  <url>/crl/test/atto/ricerca/avanzata</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

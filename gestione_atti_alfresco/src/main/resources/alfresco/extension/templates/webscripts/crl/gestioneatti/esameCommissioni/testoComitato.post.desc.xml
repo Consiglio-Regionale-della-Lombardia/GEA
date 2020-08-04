@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Upload testo comitato commissione atto</shortname>
+  <description>Upload del testo comitato per una commissione di un atto specifico</description>
+  <url>/crl/atto/esamecommissioni/testocomitato</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Lettura note e links commissione</shortname>
+  <description>Legge i metadati relativi alle note e ai link nella commissione</description>
+  <url>/crl/atto/esamecommissioni/noteallegati?id={id}&amp;commissione={commissione}&amp;passaggio={passaggio}</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

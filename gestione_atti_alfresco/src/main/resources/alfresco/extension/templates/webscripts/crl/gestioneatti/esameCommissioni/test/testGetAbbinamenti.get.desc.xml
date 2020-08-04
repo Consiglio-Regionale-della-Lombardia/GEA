@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test lettura abbinamenti</shortname>
+  <description>Test per la lettura degli abbinamenti di un atto</description>
+  <url>/crl/test/get/atto/abbinamenti</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

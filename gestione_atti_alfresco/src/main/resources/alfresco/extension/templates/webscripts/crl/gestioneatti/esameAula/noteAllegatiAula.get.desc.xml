@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Lettura note e links aula</shortname>
+  <description>Legge i metadati relativi alle note e ai link nell'aula</description>
+  <url>/crl/atto/esameaula/noteallegati?id={id}&amp;passaggio={passaggio}</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<pe:tooltip value="Click per Espandere / Comprimere"
+	forSelector="legend" shared="true" targetPosition="top center"
+	position="left center" />
+
+<div id="blockedVotazione">
+
+	<p:fieldset legend="Registrazione votazione" toggleable="true"
+		toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="registrazionevotazionepanel">
+
+			<p:row>
+				<p:column>
+					<!-- Messaggio azioni -->
+					<p:growl id="votazioneMsg" showDetail="true" sticky="false" />
+
+
+
+					<!-- Confirm dialog -->
+					<p:confirmDialog id="confirmAttoDialog"
+						message="Sei sicuro di voler eliminare il File ?"
+						header="Cancellazione Testo Atto" severity="alert"
+						widgetVar="testoAttoDialog">
+
+						<p:commandButton id="confirmTestoAtto" value="Conferma"
+							oncomplete="testoAttoDialog.hide()"
+							action="#{esameCommissioniController.removeTestoAttoVotato}"
+							update="listaTestiAtto" />
+						<p:commandButton id="declineTestoAtto" value="Annulla"
+							onclick="testoAttoDialog.hide()" type="button" />
+
+					</p:confirmDialog>
+
+
+					<p:confirmDialog id="confirmTrasmissioneDialog"
+						message="Conferma trasmissione" header="Trasmissione "
+						severity="alert" widgetVar="trsmissioneAttoDialog">
+
+						<p:commandButton id="confirmTrasmDialog" value="Conferma"
+							oncomplete="trsmissioneAttoDialog.hide()"
+							action="#{esameCommissioniController.confermaTrasmissione}"
+							update="votazioneMsg, :informationForm:informationBar" />
+
+						<p:commandButton id="declineTrasmAtto" value="Annulla"
+							onclick="trsmissioneAttoDialog.hide()" type="button" />
+
+					</p:confirmDialog>
+
+
+					<p:confirmDialog id="confirmCambiaRuoloDialog"
+						message="Conferma passaggio in Referente" header="Cambio Ruolo "
+						severity="alert" widgetVar="confirmCambiaRuoloDialg">
+
+						<p:commandButton id="confirmCambiaRuoloBtn" value="Conferma"
+							oncomplete="confirmCambiaRuoloDialg.hide()"
+							action="#{esameCommissioniController.cambiaRuoloInReferente}"
+							update="votazioneMsg" />
+
+						<p:commandButton id="declineCambiaRuoloDialog" value="Annulla"
+							onclick="confirmCambiaRuoloDialg.hide()" type="button" />
+
+					</p:confirmDialog>
+
+
+
+					<p:confirmDialog id="uploadFileAttributesVotazione"
+						header="Caricamento"
+						widgetVar="uploadFileAttributesVotazioneDialog"
+						style="width:450px" message="Allega Testo">
+						<p:panelGrid id="uploadpanelPanelVotazione">
+							<p:row>
+								<p:column>
+									<h:outputLabel for="isPubblicoVotazione" value="Pubblica su Internet: " />
+									<p:selectBooleanCheckbox id="isPubblicoVotazione"
+										value="#{esameCommissioniController.currentFilePubblico}">
+										<p:ajax event="change" immediate="true"></p:ajax>
+									</p:selectBooleanCheckbox>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel for="isPubblicoOpendata" value="Pubblica su Opendata " />
+									<p:selectBooleanCheckbox id="isPubblicoOpendata"
+										value="#{esameCommissioniController.currentFilePubblicoOpendata}">
+										<p:ajax event="change" immediate="true"></p:ajax>
+									</p:selectBooleanCheckbox>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:fileUpload label="Sfoglia" uploadLabel="Carica"
+										cancelLabel="Cancella"
+										oncomplete="uploadFileAttributesVotazioneDialog.hide()"
+										auto="false" update="listaTestiAtto ,votazioneMsg"
+										fileUploadListener="#{esameCommissioniController.uploadTestoAttoVotato}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:commandButton id="declineUploadFileVotazione"
+										value="Annulla"
+										onclick="uploadFileAttributesVotazioneDialog.hide()"
+										type="button" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:confirmDialog>
+
+				</p:column>
+			</p:row>
+			
+
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Esito votazione: " />
+				</p:column>
+				<p:column>
+					<p:selectOneMenu
+						value="#{esameCommissioniController.esitoVotazione}">
+						<f:selectItem itemLabel="Scegli votazione" itemValue="" />
+
+						<f:selectItems value="#{esameCommissioniController.esitiVotazione}" />
+
+
+						<p:ajax event="change"
+							listener="#{esameCommissioniController.updateRegistrazioneVotazioneHandler}" />
+					</p:selectOneMenu>
+					&nbsp;&nbsp;
+					<p:selectOneMenu value="#{esameCommissioniController.quorum}">
+						<f:selectItem itemLabel="Scegli tipo" itemValue=" " />
+						
+						<f:selectItems value="#{esameCommissioniController.quorumVotazione}" />
+						
+						
+						<p:ajax event="change"
+							listener="#{esameCommissioniController.updateRegistrazioneVotazioneHandler}" />
+					</p:selectOneMenu>
+				</p:column>
+				
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<b> <h:outputLabel for="dataseduta1" value="Data seduta: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p:calendar size="10" locale="it" id="dataseduta1"
+						pattern="dd/MM/yyyy"
+						value="#{esameCommissioniController.dataSedutaRegistrazioneVotazione}">
+						<p:ajax event="dateSelect"
+							listener="#{esameCommissioniController.updateRegistrazioneVotazioneHandler}" />
+					</p:calendar>
+				</p:column>
+			</p:row>
+
+
+           <p:row rendered="#{navigationBean.isCalendarizzazioneEnabled()}">
+				<p:column>
+					<b> <h:outputLabel for="datacalend" value="Data calendarizzazione: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p:calendar size="10" locale="it" id="datacalend"
+						pattern="dd/MM/yyyy"
+						value="#{esameCommissioniController.dataCalendarizzazione}">
+						<p:ajax event="dateSelect"
+							listener="#{esameCommissioniController.updateRegistrazioneVotazioneHandler}" />
+					</p:calendar>
+				</p:column>
+			</p:row>     
+
+
+           <p:row rendered="#{navigationBean.isCommissioneDeliberante()}">
+				<p:column>
+					<b> <h:outputLabel for="numDcr" value="Numero DCR: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p:inputText id="numDcr" value="#{esameCommissioniController.numeroDcr}">
+						
+						
+					</p:inputText>
+				</p:column>
+				
+				
+				<p:column>
+					<b> <h:outputLabel for="dataDcr" value="Data DCR: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p:calendar size="10" locale="it" id="dataDcr"
+						pattern="dd/MM/yyyy"
+						value="#{esameCommissioniController.dataDcr}">
+						<p:ajax event="dateSelect"
+							listener="#{esameCommissioniController.updateRegistrazioneVotazioneHandler}" />
+					</p:calendar>
+				</p:column>
+				
+			</p:row>   
+
+
+           <p:row rendered="#{navigationBean.isRisEnabled()}">
+				<p:column>
+					<b> <h:outputLabel for="numRis" value="Numero RIS: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p:inputText id="numRis" value="#{esameCommissioniController.numeroRis}">
+						
+						
+					</p:inputText>
+				</p:column>
+				
+				
+				<p:column>
+					<b> <h:outputLabel for="dataRis" value="Data RIS: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p:calendar size="10" locale="it" id="dataRis"
+						pattern="dd/MM/yyyy"
+						value="#{esameCommissioniController.dataRis}">
+						<p:ajax event="dateSelect"
+							listener="#{esameCommissioniController.updateRegistrazioneVotazioneHandler}" />
+					</p:calendar>
+				</p:column>
+				
+			</p:row>      
+
+			<p:row>
+				<p:column>
+					<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}"
+						value="Registra"
+						action="#{esameCommissioniController.registraVotazione}"
+						update="votazioneMsg, :informationForm:informationBar ,:presAssForm" />
+				</p:column>
+			</p:row>
+
+
+
+		</p:panelGrid>
+	</p:fieldset>
+
+	<p:fieldset rendered="#{navigationBean.testoAttoVotatoEnabled()}"
+		legend="#{esameCommissioniController.testoParereEspressoAttoVotato()}"
+		collapsed="false" toggleable="true" toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="testoattovotatopanel">
+			<p:row>
+				<!-- <p:column>
+					<h:graphicImage alt="add" value="/resources/img/add.png" />
+				</p:column>-->
+				<p:column>
+					<p:commandButton value="Carica Testo dell'Atto"
+						oncomplete="uploadFileAttributesVotazioneDialog.show()">
+					</p:commandButton>
+
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column colspan="4">
+					<p:dataTable id="listaTestiAtto"
+						value="#{esameCommissioniController.testiAttoVotatoList}"
+						var="testoAttoVotato" styleClass="generalInfoTab grey-text"
+						editable="true">
+
+						
+							<p:ajax event="rowEdit" update="@this"
+										listener="#{esameCommissioniController.updateTestoAttoVotato}" />
+
+						<p:column sortBy="#{testoAttoVotato.nome}">
+							<f:facet name="header">Testo Dell'Atto</f:facet>
+							<h:outputText value="#{testoAttoVotato.nome}" />
+						</p:column>
+
+						<p:column
+							sortBy="#{fn:substring(testoAttoVotato.nome, fn:indexOf(testoAttoVotato.nome,'.')+1 ,fn:length(testoAttoVotato.nome) )}">
+							<f:facet name="header">Azioni</f:facet>
+							<h:outputText
+								value="#{fn:substring(testoAttoVotato.nome, fn:indexOf(testoAttoVotato.nome,'.')+1 ,fn:length(testoAttoVotato.nome) )}" />
+
+						</p:column>
+
+						<p:column sortBy="#{testoAttoVotato.pubblico}">
+							<f:facet name="header">Pubblico</f:facet>
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="si" rendered="#{testoAttoVotato.pubblico}" />
+									<h:outputText value="no"
+										rendered="#{!testoAttoVotato.pubblico}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{testoAttoVotato.pubblico}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column sortBy="#{testoAttoVotato.pubblicoOpendata}">
+							<f:facet name="header">Pubblico Opendata</f:facet>
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="si" rendered="#{testoAttoVotato.pubblicoOpendata}" />
+									<h:outputText value="no"
+										rendered="#{!testoAttoVotato.pubblicoOpendata}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:selectBooleanCheckbox value="#{testoAttoVotato.pubblicoOpendata}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+
+						<p:column>
+							<f:facet name="header">Elimina</f:facet>
+							<p:commandButton oncomplete="testoAttoDialog.show()"
+								icon="delete-icon">
+
+								<f:setPropertyActionListener value="#{testoAttoVotato.id}"
+									target="#{esameCommissioniController.testoAttoVotatoToDelete}" />
+							</p:commandButton>
+						</p:column>
+						<p:column>
+							<f:facet name="header">Scarica</f:facet>
+
+							<p:commandButton id="downloadLink" icon="detail-icon"
+								 process="@this" immediate="true"
+								onclick="PrimeFaces.monitorDownload(start, stop)">
+								<f:setPropertyActionListener value="#{testoAttoVotato.id}"
+									target="#{fileDownloadController.fileId}" />
+								<f:setPropertyActionListener value="#{testoAttoVotato.nome}"
+									target="#{fileDownloadController.fileName}" />
+								<f:setPropertyActionListener value="#{testoAttoVotato.mimetype}"
+									target="#{fileDownloadController.fileMimetype}" />
+								<p:fileDownload value="#{fileDownloadController.file}" />
+							</p:commandButton>
+
+						</p:column>
+
+						<p:column headerText="Modifica" style="width:50px">
+							<p:rowEditor />
+						</p:column>
+
+
+					</p:dataTable>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:fieldset>
+	<p:fieldset
+		rendered="#{navigationBean.isContinuazioneLavoriReferente()}"
+		legend="Continuazione dei lavori in referente" collapsed="false"
+		toggleable="true" toggleSpeed="500">
+		<p:panelGrid styleClass="infoTable" id="contlavoriinreferentepanel">
+			<p:row>
+				<p:column>
+					<b> <h:outputLabel for="dataseduta2" value="Data seduta: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p>
+						<p:calendar size="10" locale="it" id="dataseduta2"
+							pattern="dd/MM/yyyy"
+							value="#{esameCommissioniController.dataSedutaContinuazioneLavori}">
+							<p:ajax event="dateSelect"
+								listener="#{esameCommissioniController.updateContinuazioneLavoriHandler}" />
+						</p:calendar>
+					</p>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Motivazioni: " />
+				</p:column>
+				<p:column colspan="3">
+					<p:inputTextarea rows="2" cols="82"
+						value="#{esameCommissioniController.motivazioni}">
+						<p:ajax event="change"
+							listener="#{esameCommissioniController.updateContinuazioneLavoriHandler}" />
+					</p:inputTextarea>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:commandButton value="Cambia Ruolo"
+						oncomplete="confirmCambiaRuoloDialg.show()" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:fieldset>
+
+	<p:fieldset legend="Trasmissione" collapsed="false" toggleable="true"
+		toggleSpeed="500" rendered="#{navigationBean.canTransmitToAula()}">
+		<p:panelGrid styleClass="infoTable" id="trasmissionepanel">
+			<p:row>
+				<p:column
+					rendered="#{navigationBean.hasDataRichiestaIscrizioneAula()}">
+					<b> <h:outputLabel for="datarichsiscrzaula"
+							value="Data Richiesta Iscrizione Aula: " />
+					</b>
+				</p:column>
+				<p:column
+					rendered="#{navigationBean.hasDataRichiestaIscrizioneAula()}">
+					<p>
+						<p:calendar size="10" locale="it" id="datarichsiscrzaula"
+							pattern="dd/MM/yyyy"
+							value="#{esameCommissioniController.dataRichiestaIscrizione}">
+							<p:ajax event="dateSelect"
+								listener="#{esameCommissioniController.updateTrasmissioneHandler}" />
+						</p:calendar>
+					</p>
+				</p:column>
+				<p:column>
+					<b> <h:outputLabel for="datatrasmissione"
+							value="Data Trasmissione: " />
+					</b>
+				</p:column>
+				<p:column>
+					<p>
+						<p:calendar size="10" locale="it" id="datatrasmissione"
+							pattern="dd/MM/yyyy"
+							value="#{esameCommissioniController.dataTrasmissione}">
+							<p:ajax event="dateSelect"
+								listener="#{esameCommissioniController.updateTrasmissioneHandler}" />
+						</p:calendar>
+					</p>
+				</p:column>
+			</p:row>
+			<p:row
+				rendered="#{navigationBean.isSessionAttoPDL() and navigationBean.isCommissioneUpdateEnabled()}">
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+						value="Passaggio diretto in Aula: " />
+				</p:column>
+				<p:column>
+					<p:selectBooleanCheckbox
+						value="#{esameCommissioniController.passaggioDiretto}">
+						<p:ajax event="change"
+							listener="#{esameCommissioniController.updateTrasmissioneHandler}" />
+					</p:selectBooleanCheckbox>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:commandButton disabled="#{navigationBean.isSessionAttoChiuso()}"
+						value="Salva Trasmissione"
+						oncomplete="trsmissioneAttoDialog.show()" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:fieldset>
+</div>
+<script>
+	if (!("#{esameCommissioniController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {
+		$('#blockedVotazione')
+				.block(
+						{
+							message : 'Pagina bloccata!<br />Prendere in carico per sbloccare.',
+							css : {
+								width : '350px',
+								top : '10px',
+								left : '',
+								right : '10px',
+								border : 'none',
+								padding : '5px',
+								opacity : 0.6,
+								cursor : 'default',
+								color : '#fff',
+								backgroundColor : '#000',
+								'-webkit-border-radius' : '10px',
+								'-moz-border-radius' : '10px',
+								'border-radius' : '10px'
+							},
+						});
+
+	};
+	
+	if ( #{esameCommissioniController.readonly}==true || #{navigationBean.isGuest()}==true) {
+		$.blockUI.defaults.overlayCSS.opacity = 0; 
+		$('#blockedVotazione').block({ message: null } );}
+</script>
+</html>

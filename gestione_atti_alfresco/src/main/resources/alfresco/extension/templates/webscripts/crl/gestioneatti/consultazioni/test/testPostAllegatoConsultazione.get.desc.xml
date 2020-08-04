@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test upload allegato consultazione</shortname>
+  <description>Test per l'upload allegato consultazione</description>
+  <url>/crl/test/post/atto/consultazione/allegato</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

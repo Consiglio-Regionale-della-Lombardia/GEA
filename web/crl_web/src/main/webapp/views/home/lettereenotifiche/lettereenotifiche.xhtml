@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:head>
+	<style type="text/css">
+
+
+
+.ui-tree .ui-treenode {
+    background-attachment: scroll;
+    background-color: transparent;
+    background-image: none;
+    background-position: 0 0;
+    background-repeat: repeat-y;
+    list-style: none outside none;
+    margin: 5px;
+    padding: 1px 0 0;
+}
+
+
+</style>
+
+</h:head>
+	
+
+<h:form id="lettereForm">
+
+
+	<p:tabView id="tabView" dynamic="true" cache="true" effect="slide">
+
+		<p:tab id="tab1" title="Creazione lettere">
+
+
+			<p:growl id="messages" showDetail="true" />
+
+			<div id="blockedLettere">
+				<p:fieldset legend="Tipo di notifiche" toggleable="true"
+					toggleSpeed="500">
+					
+					<p:panelGrid styleClass="infoTable" id="tiponotifichepanel">
+						<p:row>
+							<p:column>
+
+								<p:tree style="width:100%"
+									value="#{lettereNotificheController.root}" var="node"
+									dynamic="true" cache="false" selectionMode="single"
+									selection="#{lettereNotificheController.selectedNode}"
+									id="tree">
+
+
+									<p:ajax event="select" update=":lettereForm:tabView:dettaglioPan,tree" 
+										listener="#{lettereNotificheController.onNodeSelect}" />
+
+									<p:treeNode expandedIcon="ui-icon-folder-open"
+										collapsedIcon="ui-icon-folder-collapsed">
+										<h:outputText value="#{node}" />
+									</p:treeNode>
+
+									<p:treeNode type="lettera" expandedIcon="ui-icon-folder-open"
+										collapsedIcon="ui-icon-folder-collapsed"
+										icon="ui-icon-document">
+										<h:outputText value="#{node.nome}" />
+									</p:treeNode>
+
+
+								</p:tree>
+
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:fieldset>
+				<p:fieldset legend="Dettagli notifica selezionata" collapsed="false"
+					toggleable="true" toggleSpeed="500">
+
+					<p:outputPanel id="dettaglioPan">
+
+						<p:panelGrid styleClass="infoTable" id="insertletterapanel">
+
+
+							<p:row
+								rendered="#{lettereNotificheController.letteraSelected.hasFirmatario}">
+
+								<p:column>
+									<h:outputLabel for="firmatario" value="Firmatario: " />
+								</p:column>
+
+								<p:column>
+									<p:inputText id="firmatario" immediate="true"
+										value="#{lettereNotificheController.firmatario}" />
+								</p:column>
+
+
+
+
+							</p:row>
+
+							<p:row
+								rendered="#{lettereNotificheController.letteraSelected.hasUfficio}">
+
+								<p:column>
+									<h:outputLabel for="ufficio" value="Ufficio: " />
+								</p:column>
+
+								<p:column>
+									<p:inputText id="ufficio" immediate="true"
+										value="#{lettereNotificheController.ufficio}" />
+								</p:column>
+
+
+							</p:row>
+
+
+							<p:row
+								rendered="#{lettereNotificheController.letteraSelected.hasNumeroTelFirmatario}">
+
+								<p:column>
+									<h:outputLabel for="numeroTelFirmatario"
+										value="Numero Telefono del Firmatario " />
+								</p:column>
+
+								<p:column>
+									<p:inputText id="numeroTelFirmatario" immediate="true"
+										value="#{lettereNotificheController.numeroTelFirmatario}" />
+								</p:column>
+
+
+							</p:row>
+
+							<p:row
+								rendered="#{lettereNotificheController.letteraSelected.hasEmailFirmatario}">
+
+								<p:column>
+									<h:outputLabel for="emailFirmatario"
+										value="Email del Firmatario: " />
+								</p:column>
+
+								<p:column>
+									<p:inputText id="emailFirmatario" immediate="true"
+										value="#{lettereNotificheController.emailFirmatario}" />
+								</p:column>
+
+							</p:row>
+							
+							
+							<p:row
+								rendered="#{lettereNotificheController.letteraSelected.hasAssessore}">
+
+								<p:column>
+									<h:outputLabel for="assessore" value="Assessore: " />
+								</p:column>
+
+								<p:column>
+									<p:inputText id="assessore" immediate="true"
+										value="#{lettereNotificheController.assessore}" />
+								</p:column>
+
+
+							</p:row>
+							
+
+							<p:row
+								rendered="#{lettereNotificheController.letteraSelected.hasDirezione}">
+
+								<p:column>
+									<h:outputLabel for="direzione" value="Direzione: " />
+								</p:column>
+
+								<p:column>
+									<p:inputText id="direzione" immediate="true"
+										value="#{lettereNotificheController.direzione}" />
+								</p:column>
+
+
+
+
+							</p:row>
+							
+							
+
+						</p:panelGrid>
+
+					</p:outputPanel>
+
+				</p:fieldset>
+
+
+				<p>
+					<p:commandButton value="Salva Modifiche" 
+						action="#{lettereNotificheController.salvaLettera}"
+						update="messages" />
+				</p>
+				<p>
+
+
+					<p:commandButton value="Vedi lettera" id="downloadLink"
+						ajax="false" onclick="PrimeFaces.monitorDownload(start, stop)">
+						<p:fileDownload value="#{lettereNotificheController.file}" />
+
+					</p:commandButton>
+
+
+				</p>
+
+
+			</div>
+			<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+			<script>
+		
+if (#{navigationBean.isGuest()}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#blockedLettere').block({ message: null } );}
+</script>
+
+		</p:tab>
+
+
+	</p:tabView>
+</h:form>
+</html>

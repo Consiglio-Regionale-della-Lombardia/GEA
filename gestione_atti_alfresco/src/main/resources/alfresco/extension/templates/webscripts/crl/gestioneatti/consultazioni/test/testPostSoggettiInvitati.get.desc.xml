@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test creazione / modifica dei soggetti invitati alle consultazioni</shortname>
+  <description>Test per la creazione e modifica dei soggetti invitati alle consultazioni associate ad un atto</description>
+  <url>/crl/test/post/atto/consultazione/soggettiinvitati</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

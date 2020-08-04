@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+
+<p:row>
+	<p:column>
+
+		
+
+
+		<!-- Confirm dialog -->
+		<p:confirmDialog id="confirmConsultazioneAttoDialog"
+			message="Sei sicuro di voler eliminare la Consultazione ?"
+			header="Cancellazione Consultazione Atto" severity="alert"
+			widgetVar="consultazioneAttoDialog">
+
+			<p:commandButton id="confirmConsultazioneAtto" value="Conferma"
+				oncomplete="consultazioneAttoDialog.hide()"
+				action="#{gestioneSeduteController.removeAttoConsultato}"
+				update="listaConsultazioniAtti" />
+			<p:commandButton id="declineConsultazioneAtto" value="Annulla"
+				onclick="consultazioneAttoDialog.hide()" type="button" />
+
+		</p:confirmDialog>
+
+		<p:confirmDialog id="confirmAudizioneDialog"
+			message="Sei sicuro di voler eliminare l'Audizione?"
+			header="Cancellazione Audizione" severity="alert"
+			widgetVar="audizioneDialog">
+
+			<p:commandButton id="confirmAudizione" value="Conferma"
+				oncomplete="audizioneDialog.hide()"
+				action="#{gestioneSeduteController.removeAudizione}"
+				actionListener="#{gestioneSeduteController.updateInserisciOdgHandler}"
+				update="listaAudizioni" />
+			<p:commandButton id="declineAudizione" value="Annulla"
+				onclick="audizioneDialog.hide()" type="button" />
+
+		</p:confirmDialog>
+
+
+
+		<p:fieldset styleClass="fieldSetTab"
+			legend="Consultazioni / Audizioni sugli atti " collapsed="false"
+			toggleable="false">
+			<p:dataTable id="listaConsultazioniAtti"
+				value="#{gestioneSeduteController.consultazioniAtti}"
+				var="consultazioneAtto" styleClass="generalInfoTab grey-text"
+				editable="true">
+
+				<p:column headerText="Tipo Atto" style="width:125px">
+							#{consultazioneAtto.tipoAtto}
+    			</p:column>
+
+				<p:column headerText="N.Atto" style="width:125px">
+					#{consultazioneAtto.numeroAtto}
+				</p:column>
+
+				<p:column headerText="Soggetto Consultato" style="width:125px">
+					#{consultazioneAtto.descrizione}					
+				</p:column>
+
+				<p:column headerText="Previsto" style="width:125px">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="si" rendered="#{consultazioneAtto.prevista}" />
+							<h:outputText value="no"
+								rendered="#{!consultazioneAtto.prevista}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectBooleanCheckbox value="#{consultazioneAtto.prevista}">
+								<p:ajax event="change" global="false"
+									listener="#{gestioneSeduteController.updateInserisciOdgHandler}" />
+							</p:selectBooleanCheckbox>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Discusso" style="width:125px">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="si" rendered="#{consultazioneAtto.discussa}" />
+							<h:outputText value="no"
+								rendered="#{!consultazioneAtto.discussa}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectBooleanCheckbox value="#{consultazioneAtto.discussa}">
+								<p:ajax event="change" global="false"
+									listener="#{gestioneSeduteController.updateInserisciOdgHandler}" />
+							</p:selectBooleanCheckbox>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+
+
+				<p:column headerText="Modifica" style="width:50px">
+				
+				<p:rowEditor rendered="#{!(gestioneSeduteController.isDisableModifiche())}"/>
+				
+				</p:column>
+
+			</p:dataTable>
+		</p:fieldset>
+
+	</p:column>
+</p:row>
+
+<p:row>
+	<p:column>
+		<p:fieldset styleClass="fieldSetTab"
+			legend="Consultazioni / Audizioni generali " collapsed="false"
+			toggleable="false">
+			<p:panelGrid id="addAudizionePanel" styleClass="tableAppend">
+
+				<f:facet name="header">
+					<p:row>
+						<p:column style="text-align:center">Soggetto Partecipante</p:column>
+						<p:column style="text-align:center">Previsto</p:column>
+						<p:column style="text-align:center">Discusso</p:column>
+						<p:column style="text-align:center"></p:column>
+					</p:row>
+				</f:facet>
+				<p:row>
+					<p:column style="text-align:center">
+						<p:inputText
+							value="#{gestioneSeduteController.soggettoPartecipante}"  size="85"/>
+					</p:column>
+
+					<p:column style="text-align:center">
+						<p:selectBooleanCheckbox
+							value="#{gestioneSeduteController.previsto}" />
+					</p:column>
+
+					<p:column style="text-align:center">
+						<p:selectBooleanCheckbox
+							value="#{gestioneSeduteController.discusso}" />
+					</p:column>
+
+					<p:column style="text-align:center">
+						<p:commandButton value="Aggiungi"
+							action="#{gestioneSeduteController.addAudizione}"
+							id="addAudizione" update="listaAudizioni , inserisciOdgMsg"
+							icon="new-icon" disabled="#{(gestioneSeduteController.disableModifiche)}"/>
+					</p:column>
+
+				</p:row>
+			</p:panelGrid>
+
+			<br />
+
+			<p:dataTable id="listaAudizioni"
+				value="#{gestioneSeduteController.audizioni}" var="audizione"
+				styleClass="generalInfoTab grey-text" editable="true">
+
+				<p:column headerText="Soggetto Partecipante">
+									
+					<p:cellEditor>
+						<f:facet name="output">
+							#{audizione.soggettoPartecipante}
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText
+							value="#{audizione.soggettoPartecipante}"  size="85"/>
+						</f:facet>
+					</p:cellEditor>
+				
+				</p:column>
+
+
+				<p:column headerText="Previsto">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="si" rendered="#{audizione.previsto}" />
+							<h:outputText value="no" rendered="#{!audizione.previsto}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectBooleanCheckbox value="#{audizione.previsto}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Discusso">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="si" rendered="#{audizione.discusso}" />
+							<h:outputText value="no" rendered="#{!audizione.discusso}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectBooleanCheckbox value="#{audizione.discusso}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Elimina">
+
+					<p:commandButton oncomplete="audizioneDialog.show()"
+						icon="delete-icon" disabled="#{(gestioneSeduteController.disableModifiche)}">
+
+						<f:setPropertyActionListener
+							value="#{audizione.soggettoPartecipante}"
+							target="#{gestioneSeduteController.audizioneToDelete}" />
+					</p:commandButton>
+				</p:column>
+
+				<p:column headerText="Modifica">
+					
+					<p:rowEditor rendered="#{!(gestioneSeduteController.isDisableModifiche())}"/>
+				
+				</p:column>
+
+			</p:dataTable>
+		</p:fieldset>
+
+	</p:column>
+</p:row>
+
+
+
+
+
+
+</html>

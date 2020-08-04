@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Upload allegato commissione atto</shortname>
+  <description>Upload allegato per una commissione di un atto specifico</description>
+  <url>/crl/atto/esamecommissioni/allegato</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

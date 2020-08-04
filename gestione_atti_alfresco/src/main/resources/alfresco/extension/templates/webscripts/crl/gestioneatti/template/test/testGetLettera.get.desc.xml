@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test generazione lettera</shortname>
+  <description>Test per la generazione di una lettera</description>
+  <url>/crl/test/post/lettera</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

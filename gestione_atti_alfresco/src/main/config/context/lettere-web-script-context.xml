@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+
+<beans>
+
+	   <bean id="attoUtil" class="com.sourcesense.crl.util.AttoUtil"> 
+			<property name="searchService">
+				<ref bean="SearchService" />
+			</property>
+	    	<property name="nodeService">
+	    		<ref bean="NodeService" />
+	    	</property>
+		</bean> 
+
+	<bean id="letteraBaseCommand" class="com.sourcesense.crl.webscript.template.LetteraBaseCommand" abstract="true"> 
+		<property name="searchService">
+			<ref bean="SearchService" />
+		</property>
+		<property name="contentService">
+	    	<ref bean="ContentService" />
+	    </property>
+	    <property name="nodeService">
+	    	<ref bean="NodeService" />
+	    </property>
+	    <property name="serviceRegistry">
+            <ref bean="ServiceRegistry"/>
+        </property>
+        <property name="attoUtil">
+			<ref bean="attoUtil" />
+		</property>
+	</bean> 
+	
+	<bean id="letteraGenericaServCommCommand" class="com.sourcesense.crl.webscript.template.LetteraGenericaServCommCommand" parent="letteraBaseCommand" />
+	<bean id="letteraGenericaCommissioniCommand" class="com.sourcesense.crl.webscript.template.LetteraGenericaCommissioniCommand" parent="letteraBaseCommand" />
+	<bean id="letteraGenericaAulaCommand" class="com.sourcesense.crl.webscript.template.LetteraGenericaAulaCommand" parent="letteraBaseCommand" />
+	
+
+	<bean id="webscript.crl.gestioneatti.template.lettera.get" class="com.sourcesense.crl.webscript.template.LetteraWebScript" parent="webscript"> 
+		<property name="searchService">
+			<ref bean="SearchService" />
+		</property>
+		<property name="contentService">
+	    	<ref bean="ContentService" />
+	    </property>
+	    <property name="nodeService">
+	    	<ref bean="NodeService" />
+	    </property>
+	    <property name="lettereCommandMap">
+            <map>
+            
+                <entry key="crltemplate:letteraTrasmissioneCommissioneReferenteServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraRettificaAssegnazioneServComm" value-ref="letteraGenericaServCommCommand"/>
+				<entry key="crltemplate:letteraIntegrazioneCPOServComm" value-ref="letteraGenericaServCommCommand"/>		
+                <entry key="crltemplate:letteraRitiroServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraAggiuntaFirmaServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraRitiroFirmaServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraAssestamentoBilancioServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraBilancioProgrammaticoServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraIniziativaPopolareServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraRendicontoGeneraleServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraLeggeFinanziariaServComm" value-ref="letteraGenericaServCommCommand"/>
+            	<entry key="crltemplate:letteraDOCAssegnazionePSRServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraDOCAssegnazioneDSAServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraAssegnazioneProgrammaLavoroCommEuropeaServComm" value-ref="letteraGenericaServCommCommand"/>
+            	<entry key="crltemplate:letteraParereCommissioneServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraIntesaCommissioneGiuntaServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraParereCommissioneConSospPausaEstivaServComm" value-ref="letteraGenericaServCommCommand"/>
+           		<entry key="crltemplate:letteraIntesaCommissioneGiuntaConSospPausaEstivaServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraParerePropostaDiRegolamentoServComm" value-ref="letteraGenericaServCommCommand"/>
+            	<entry key="crltemplate:letteraAssegnazioneInSedeDeliberantePDAServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraAssegnazioneInSedeReferentePDAServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraAssegnazionePerIstruttoriaPLPServComm" value-ref="letteraGenericaServCommCommand"/>
+           		<entry key="crltemplate:letteraRelazionePresentataDallaGiuntaServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraAssegnazionePerIstruttoriaPREServComm" value-ref="letteraGenericaServCommCommand"/>
+            	<entry key="crltemplate:letteraAssegnazionePerIstruttoriaREFServComm" value-ref="letteraGenericaServCommCommand"/>
+                <entry key="crltemplate:letteraAssegnazionePerIstruttoriaINPServComm" value-ref="letteraGenericaServCommCommand"/>
+         
+            	<entry key="crltemplate:letteraTrasmissionePDLCommissioni" value-ref="letteraGenericaCommissioniCommand"/>
+            	<entry key="crltemplate:letteraTrasmissionePDACommissioni" value-ref="letteraGenericaCommissioniCommand"/>
+            	<entry key="crltemplate:letteraTrasmissionePDAUrgenzaCommissioni" value-ref="letteraGenericaCommissioniCommand"/>
+            	<entry key="crltemplate:letteraTrasmissionePARCommissioni" value-ref="letteraGenericaCommissioniCommand"/>
+            	<entry key="crltemplate:letteraTrasmissionePLPCommissioni" value-ref="letteraGenericaCommissioniCommand"/>
+            	<entry key="crltemplate:letteraPresaAttoRELCommissioni" value-ref="letteraGenericaCommissioniCommand"/>
+            	<entry key="crltemplate:letteraIscrizioneRISCommissioni" value-ref="letteraGenericaCommissioniCommand"/>
+            	<entry key="crltemplate:letteraTrasmissioneREFCommissioni" value-ref="letteraGenericaCommissioniCommand"/>
+            	<entry key="crltemplate:letteraTrasmissioneParereDaSedeConsultivaCommissioni" value-ref="letteraGenericaCommissioniCommand"/>
+            	<entry key="crltemplate:letteraTrasmissioneAulaLeggeRiordinoCommissioni" value-ref="letteraGenericaCommissioniCommand"/>
+            	<entry key="crltemplate:letteraTrasmissioneAulaTestoUnico" value-ref="letteraGenericaCommissioniCommand"/>
+            	<entry key="crltemplate:letteraTrasmissioneDocRisDsaCommissioni" value-ref="letteraGenericaCommissioniCommand"/>
+            	<entry key="crltemplate:letteraTrasmissioneDocRisProgrammaEuropeoCommissioni" value-ref="letteraGenericaCommissioniCommand"/>
+            	<entry key="crltemplate:letteraTrasmissioneParereSuDOCCommissioni" value-ref="letteraGenericaCommissioniCommand"/>
+            	<entry key="crltemplate:letteraRichiestaParereNormaFinanziariaCommissioni" value-ref="letteraGenericaCommissioniCommand"/>
+            	<entry key="crltemplate:letteraTrasmissioneParereSuNormaFinanziariaCommissioni" value-ref="letteraGenericaCommissioniCommand"/>
+            	<entry key="crltemplate:letteraTrasmissioneRISCommissioni" value-ref="letteraGenericaCommissioniCommand"/>
+            	
+            	
+            	<entry key="crltemplate:letteraTrasmissioneLCRAula" value-ref="letteraGenericaAulaCommand"/>
+            	<entry key="crltemplate:letteraTrasmissionePDAAula" value-ref="letteraGenericaAulaCommand"/>
+            	<entry key="crltemplate:letteraTrasmissionePDABilancioAula" value-ref="letteraGenericaAulaCommand"/>
+            	<entry key="crltemplate:letteraTrasmissionePDAVariazioneBilancioAula" value-ref="letteraGenericaAulaCommand"/>
+            	<entry key="crltemplate:letteraTrasmissioneREFAula" value-ref="letteraGenericaAulaCommand"/>
+            	<entry key="crltemplate:letteraTrasmissioneORGAula" value-ref="letteraGenericaAulaCommand"/>
+            	<entry key="crltemplate:letteraConvalidaORGAula" value-ref="letteraGenericaAulaCommand"/>
+            	<entry key="crltemplate:letteraTrasmissioneBURLAula" value-ref="letteraGenericaAulaCommand"/>
+
+            </map>
+        </property>
+	    
+	    
+	    
+	    
+	</bean> 
+	
+	
+
+</beans>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<pe:tooltip value="Click per Espandere / Comprimere"
+	forSelector="legend" shared="true" targetPosition="top center"
+	position="left center" />
+
+<div id="blockedRinvioStralci">
+	<p:panelGrid styleClass="infoTable" id="rinviostralciPanel">
+		<p:row>
+			<p:column>
+				<p:growl id="rinvioStralciMsg" showDetail="true" sticky="false" />
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+
+				<p:fieldset styleClass="fieldSetTab" legend="Stralci: "
+					collapsed="false" toggleable="true" toggleSpeed="500">
+
+					<p:panelGrid styleClass="infoTable" id="stralciGrid">
+
+						<p:row>
+							<p:column>
+			Data Stralcio:
+			</p:column>
+							<p:column>
+								<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
+									value="#{esameCommissioniController.dataStralcio}">
+									<p:ajax event="dateSelect"
+										listener="#{esameCommissioniController.updateStralciHandler}" />
+								</p:calendar>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+			Data iniziativa:
+			</p:column>
+							<p:column>
+								<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
+									value="#{esameCommissioniController.dataIniziativaStralcio}">
+									<p:ajax event="dateSelect"
+										listener="#{esameCommissioniController.updateStralciHandler}" />
+								</p:calendar>
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+
+					Articoli: 
+
+						</p:column>
+							<p:column>
+								<p:inputTextarea rows="6" cols="65"
+									value="#{esameCommissioniController.articoli}">
+									<p:ajax event="change"
+										listener="#{esameCommissioniController.updateStralciHandler}" />
+								</p:inputTextarea>
+
+							</p:column>
+
+
+
+						</p:row>
+						<p:row>
+							<p:column>
+
+					Note stralcio: 
+
+						</p:column>
+							<p:column>
+								<p:inputTextarea rows="6" cols="65"
+									value="#{esameCommissioniController.noteStralcio}">
+									<p:ajax event="change"
+										listener="#{esameCommissioniController.updateStralciHandler}" />
+								</p:inputTextarea>
+
+							</p:column>
+
+
+
+						</p:row>
+						<p:row>
+							<p:column>
+					Quorum:
+					</p:column>
+							<p:column>
+								<p:selectOneMenu id="quorumStrlc"
+									value="#{esameCommissioniController.quorumStralcio}">
+									<f:selectItem itemLabel="Scegli quorum" itemValue="" />
+									<f:selectItem itemLabel="Maggioranza" itemValue="Maggioranza" />
+									<f:selectItem itemLabel="Unanimità" itemValue="Unanimità" />
+									<p:ajax event="change"
+										listener="#{esameCommissioniController.updateStralciHandler}" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<p:commandButton value="Salva" id="saveStrlc"
+									action="#{esameCommissioniController.salvaStralci}"
+									update="rinvioStralciMsg" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:fieldset>
+
+
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+</div>
+<script>
+	if (!("#{esameCommissioniController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {
+		$('#blockedRinvioStralci')
+				.block(
+						{
+							message : 'Pagina bloccata!<br />Prendere in carico per sbloccare.',
+							css : {
+								width : '350px',
+								top : '10px',
+								left : '',
+								right : '10px',
+								border : 'none',
+								padding : '5px',
+								opacity : 0.6,
+								cursor : 'default',
+								color : '#fff',
+								backgroundColor : '#000',
+								'-webkit-border-radius' : '10px',
+								'-moz-border-radius' : '10px',
+								'border-radius' : '10px'
+							},
+						});
+	};
+	
+	if ( #{esameCommissioniController.readonly}==true || #{navigationBean.isGuest()}==true) {
+		$.blockUI.defaults.overlayCSS.opacity = 0; 
+		$('#blockedRinvioStralci').block({ message: null } );}
+</script>
+
+
+</html>

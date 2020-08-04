@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Abbinamenti di un atto</shortname>
+  <description>Restituisce l'elenco degli abbinamenti di un atto</description>
+  <url>/crl/atto/abbinamenti?id={id}&amp;passaggio={passaggio}</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

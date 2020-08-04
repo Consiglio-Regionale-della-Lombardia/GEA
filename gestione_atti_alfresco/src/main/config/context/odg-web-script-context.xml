@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+
+<beans>
+
+	   <bean id="attoUtil" class="com.sourcesense.crl.util.AttoUtil"> 
+			<property name="searchService">
+				<ref bean="SearchService" />
+			</property>
+	    	<property name="nodeService">
+	    		<ref bean="NodeService" />
+	    	</property>
+		</bean> 
+
+	<bean id="odgBaseCommand" class="com.sourcesense.crl.webscript.odg.OdgBaseCommand" abstract="true"> 
+		<property name="searchService">
+			<ref bean="SearchService" />
+		</property>
+		<property name="contentService">
+	    	<ref bean="ContentService" />
+	    </property>
+	    <property name="nodeService">
+	    	<ref bean="NodeService" />
+	    </property>
+	    <property name="serviceRegistry">
+            <ref bean="ServiceRegistry"/>
+        </property>
+        <property name="attoUtil">
+			<ref bean="attoUtil" />
+		</property>
+	</bean> 
+	
+	
+	
+	<bean id="odgGenericoCommissioniCommand" class="com.sourcesense.crl.webscript.odg.OdgGenericoCommissioniCommand" parent="odgBaseCommand" />
+	<bean id="odgGenericoAulaCommand" class="com.sourcesense.crl.webscript.odg.OdgGenericoAulaCommand" parent="odgBaseCommand" />
+	
+	
+
+	<bean id="webscript.crl.gestioneatti.gestioneSedute.documentoodg.get" class="com.sourcesense.crl.webscript.odg.OdgWebScript" parent="webscript"> 
+		<property name="searchService">
+			<ref bean="SearchService" />
+		</property>
+		<property name="contentService">
+	    	<ref bean="ContentService" />
+	    </property>
+	    <property name="nodeService">
+	    	<ref bean="NodeService" />
+	    </property>
+	    <property name="odgCommandMap">
+            <map>
+            
+                <entry key="crlodg:odgGenericoCommissioniDocument" value-ref="odgGenericoCommissioniCommand"/>
+                <entry key="crlodg:odgGenericoAulaDocument" value-ref="odgGenericoAulaCommand"/>
+            
+            </map>
+        </property>
+	    
+	    
+	    
+	    
+	</bean> 
+	
+	
+
+</beans>

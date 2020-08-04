@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test aggiornamento ammissibilità atto</shortname>
+  <description>Test per l'agiornamento delle proprietà ammissibilità di atto</description>
+  <url>/crl/test/post/atto/ammissibilita</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

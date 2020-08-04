@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:panelGrid style="width:100%; text-align:right">
+	<p:row>
+		<p:column>
+			<p:commandButton onclick="showDialog()" value="Stampa" type="button"
+				icon="ui-icon-print">
+				<p:printer target="printSedutePanel">
+
+				</p:printer>
+			</p:commandButton>
+		</p:column>
+	</p:row>
+
+</p:panelGrid>
+
+<p:panelGrid styleClass="infoTable" id="sedutetab">
+	<p:row>
+		<p:column colspan="3">
+			<p:dataTable id="listaOrganiInterni"
+				value="#{attoBean.atto.seduteAtto}" var="sedutaAtto"
+				styleClass="generalInfoTab grey-text">
+
+				<p:column sortBy="#{sedutaAtto.nomeOrgano}">
+					<f:facet name="header">Organismo Interno</f:facet>
+					<h:outputText value="#{sedutaAtto.nomeOrgano}" />
+				</p:column>
+
+				<p:column sortBy="#{sedutaAtto.dataSeduta}">
+					<f:facet name="header">Data Seduta</f:facet>
+					<h:outputText value="#{sedutaAtto.dataSeduta}">
+						<f:convertDateTime locale="it" pattern="dd/MM/yyyy"></f:convertDateTime>
+					</h:outputText>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">Atto discusso</f:facet>
+					<h:outputText value="si" rendered="#{sedutaAtto.discusso}" />
+					<h:outputText value="no" rendered="#{!sedutaAtto.discusso}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">Verbale</f:facet>
+					<p:commandButton  rendered="#{not empty sedutaAtto.idVerbale}"  id="downloadLink" icon="detail-icon" ajax="false"
+						onclick="PrimeFaces.monitorDownload(start, stop)">
+						<f:setPropertyActionListener value="#{sedutaAtto.idVerbale}"
+							target="#{fileDownloadController.fileId}" />
+						<f:setPropertyActionListener value="#{sedutaAtto.nomeVerbale}"
+							target="#{fileDownloadController.fileName}" />
+						<f:setPropertyActionListener value="#{sedutaAtto.mimetypeVerbale}"
+							target="#{fileDownloadController.fileMimetype}" />
+						<p:fileDownload value="#{fileDownloadController.file}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+
+
+
+		</p:column>
+	</p:row>
+
+
+</p:panelGrid>
+
+
+
+
+
+
+<!-- LAYOUT DI STAMPA!!!!!!!!!!!!!!!! begin -->
+
+  
+<p:dialog widgetVar="printSedutePanelDialog" id="printSeduteDialog"
+	position="bottom" style="z-index:-1 !important;width:100%;height:2%">
+
+
+	<p:panel id="printSedutePanel">
+		<p:fieldset legend="Sedute" toggleable="true"
+			collapsed="false" toggleSpeed="500">
+
+			<p:panelGrid styleClass="infoTable" id="seduteprinttab">
+			<p:row>
+				<p:column colspan="3">
+					<p:dataTable id="listaOrganiInterniPrint"
+						value="#{attoBean.atto.seduteAtto}" var="sedutaAtto"
+						styleClass="generalInfoTab grey-text">
+		
+						<p:column sortBy="#{sedutaAtto.nomeOrgano}" >
+							<f:facet name="header">Organismo Interno</f:facet>
+							<h:outputText value="#{sedutaAtto.nomeOrgano}" />
+						</p:column>
+		
+						<p:column sortBy="#{sedutaAtto.dataSeduta}" style="width:100px;">
+							<f:facet name="header">Data Seduta</f:facet>
+							<h:outputText value="#{sedutaAtto.dataSeduta}">
+								<f:convertDateTime locale="it" pattern="dd/MM/yyyy"></f:convertDateTime>
+							</h:outputText>
+						</p:column>
+		
+						<p:column>
+							<f:facet name="header">Atto discusso</f:facet>
+							<h:outputText value="si" rendered="#{sedutaAtto.discusso}" />
+							<h:outputText value="no" rendered="#{!sedutaAtto.discusso}" />
+						</p:column>
+						
+					</p:dataTable>
+					<h:outputText value="Nessuna seduta"
+							rendered="#{empty attoBean.atto.seduteAtto}">
+					</h:outputText>
+				</p:column>
+				</p:row>
+			</p:panelGrid>
+		</p:fieldset>
+	</p:panel>
+
+</p:dialog>
+
+
+<!-- LAYOUT DI STAMPA!!!!!!!!!!!!!!!! end --> 
+
+</html>

@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test aggiornamento note e links atto commissione</shortname>
+  <description>Test per l'agiornamento delle proprietà note e links di un atto in una commissione</description>
+  <url>/crl/test/post/atto/esamecommissioni/noteallegati</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

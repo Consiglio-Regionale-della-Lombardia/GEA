@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Organismi statutari</shortname>
+  <description>Restituisce l'elenco di tutti gli organismi statutari</description>
+  <url>/crl/anagrafica/atto/organismistatutari</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

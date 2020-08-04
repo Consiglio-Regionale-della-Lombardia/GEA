@@ -1,0 +1,7 @@
+<webscript>
+  <shortname>Restore Firmatari</shortname>
+  <description>Restore Firmatari</description>
+  <url>/crl/extra/restoreFirmatari</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+</webscript>

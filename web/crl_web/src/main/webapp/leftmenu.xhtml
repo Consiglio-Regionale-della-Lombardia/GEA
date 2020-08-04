@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form id="leftmenu">
+		<p:menu >
+			<p:submenu label="Menu">
+				<p:menuitem value="Home" url="/home" />
+				<p:menuitem value="Inserisci atto" url="/inserisciatto" rendered="#{ navigationBean.isInsertEnabled()}"/>
+				<p:menuitem value="Inserisci atto EAC" url="/inserisciattoEAC" rendered="#{ navigationBean.isServizioCommissioni() }"/>
+				<p:menuitem value="Inserisci atto MIS" url="/inserisciattoMIS" rendered="#{navigationBean.isCPCVUser()}"/>
+				<p:menuitem value="Gestione sedute" url="/gestionesedute" rendered="#{navigationBean.isGestioneSeduteEnabled() }" />
+				<p:menuitem value="Reportistica" url="/reportistica" rendered="#{ !navigationBean.isGuest() }"/>
+				<p:menuitem value="Disconnetti" action="#{loginController.logout}" />
+			</p:submenu>
+		</p:menu>
+</h:form>
+</html>

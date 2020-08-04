@@ -1,0 +1,1241 @@
+<alfresco-config>
+
+	
+
+    <config evaluator="string-compare" condition="Server">
+        <server>
+            <!--
+                Enable and adjust the following settings to allow for external
+                access URLs to the WebScript Framework - to return an externally
+                accessable address for absolute url generation.
+            -->
+            <scheme>${share.server.scheme}</scheme>
+            <hostname>${share.server.name}</hostname>
+            <port>${share.server.port}</port>
+        </server>
+    </config>
+
+   <!-- Global config section -->
+   <config replace="true">
+      <flags>
+         <!--
+            Developer debugging setting to turn on DEBUG mode for client scripts in the browser
+         -->
+         <client-debug>false</client-debug>
+
+         <!--
+            LOGGING can always be toggled at runtime when in DEBUG mode (Ctrl, Ctrl, Shift, Shift).
+            This flag automatically activates logging on page load.
+         -->
+         <client-debug-autologging>false</client-debug-autologging>
+      </flags>
+   </config>
+   
+   <config evaluator="string-compare" condition="WebFramework">
+      <web-framework>
+         <!-- SpringSurf Autowire Runtime Settings -->
+         <!-- 
+              Developers can set mode to 'development' to disable; SpringSurf caches,
+              FreeMarker template caching and Rhino JavaScript compilation.
+         -->
+         <autowire>
+            <!-- Pick the mode: "production" or "development" -->
+            <mode>${surf.development.mode}</mode>
+         </autowire>
+      </web-framework>
+   </config>
+
+   <config evaluator="string-compare" condition="Replication">
+      <share-urls>
+         <!--
+            To discover a Repository Id, browse to the remote server's CMIS landing page at:
+              http://{server}:{port}/alfresco/service/cmis/index.html
+            The Repository Id field is found under the "CMIS Repository Information" expandable panel.
+
+            Example config entry:
+              <share-url repositoryId="622f9533-2a1e-48fe-af4e-ee9e41667ea4">http://new-york-office:8080/share/</share-url>
+         -->
+         <share-url repositoryId="c15b1b46-6d5a-46d0-b0e4-40090feec886">http://localhost:9080/share/</share-url>
+      </share-urls>
+   </config>
+
+   <!-- Document Library config section -->
+   <config evaluator="string-compare" condition="DocumentLibrary" replace="true">
+
+      <tree>
+         <!--
+            Whether the folder Tree component should enumerate child folders or not.
+            This is a relatively expensive operation, so should be set to "false" for Repositories with broad folder structures.
+         -->
+         <evaluate-child-folders>false</evaluate-child-folders>
+         
+         <!--
+            Optionally limit the number of folders shown in treeview throughout Share.
+         -->
+         <maximum-folder-count>-1</maximum-folder-count>
+      </tree>
+
+      <!--
+         Used by the "Manage Aspects" action
+
+         For custom aspects, remember to also add the relevant i18n string(s)
+            cm_myaspect=My Aspect
+      -->
+      <aspects>
+         <!-- Aspects that a user can see -->
+         <visible>
+            <aspect name="cm:generalclassifiable" />
+            <aspect name="cm:complianceable" />
+            <aspect name="cm:dublincore" />
+            <aspect name="cm:effectivity" />
+            <aspect name="cm:summarizable" />
+            <aspect name="cm:versionable" />
+            <aspect name="cm:templatable" />
+            <aspect name="cm:emailed" />
+            <aspect name="emailserver:aliasable" />
+            <aspect name="cm:taggable" />
+            <aspect name="app:inlineeditable" />
+            <aspect name="gd:googleEditable" />
+            <aspect name="cm:geographic" />
+            <aspect name="exif:exif" />
+            <aspect name="crlatti:protocollato" />
+           	<aspect name="crlatti:importatoDaProtocollo"/>
+         </visible>
+
+         <!-- Aspects that a user can add. Same as "visible" if left empty -->
+         <addable>
+         </addable>
+
+         <!-- Aspects that a user can remove. Same as "visible" if left empty -->
+         <removeable>
+         </removeable>
+      </aspects>
+
+      <!--
+         Used by the "Change Type" action
+
+         Define valid subtypes using the following example:
+            <type name="cm:content">
+               <subtype name="cm:mysubtype" />
+            </type>
+
+         Remember to also add the relevant i18n string(s):
+            cm_mysubtype=My SubType
+      -->
+      <types>
+         <type name="cm:content">
+         	<subtype name="crlatti:firmatario"/>
+         	<subtype name="crlatti:firmatarioAnagrafica"/>
+         	<subtype name="crlatti:firmatarioAttoIndirizzo"/>
+         	<subtype name="crlatti:consigliereAnagrafica"/>
+         	<subtype name="crlatti:legislaturaAnagrafica"/>
+         	<subtype name="crlatti:abbinamento"/>
+         	<subtype name="crlatti:allegato"/>
+         	<subtype name="crlatti:testo"/>
+         	<subtype name="crlatti:link"/>
+			<subtype name="crlatti:relatore"/>
+			<subtype name="crlatti:membroComitatoRistretto" />
+			<subtype name="crlatti:testoComitatoRistretto"/>
+			<subtype name="crlatti:collegamento" />
+			<subtype name="crlatti:collegamentoAttoIndirizzo" />
+			<subtype name="crlatti:audizione" />
+			
+			<subtype name="crltemplate:lettera"/>
+			<subtype name="crltemplate:letteraServComm"/>
+			<subtype name="crltemplate:letteraTrasmissioneCommissioneReferenteServComm"/>
+			<subtype name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm"/>
+			<subtype name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm"/>
+			<subtype name="crltemplate:letteraRettificaAssegnazioneServComm"/>
+			<subtype name="crltemplate:letteraIntegrazioneCPOServComm"/>
+			<subtype name="crltemplate:letteraRitiroServComm"/>
+			<subtype name="crltemplate:letteraAggiuntaFirmaServComm"/>		
+			<subtype name="crltemplate:letteraRitiroFirmaServComm"/>
+			<subtype name="crltemplate:letteraAssestamentoBilancioServComm"/>
+			<subtype name="crltemplate:letteraBilancioProgrammaticoServComm"/>
+			<subtype name="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm"/>
+			<subtype name="crltemplate:letteraIniziativaPopolareServComm"/>
+			<subtype name="crltemplate:letteraRendicontoGeneraleServComm"/>
+			<subtype name="crltemplate:letteraLeggeFinanziariaServComm"/>
+			<subtype name="crltemplate:letteraDOCAssegnazionePSRServComm"/>
+			<subtype name="crltemplate:letteraDOCAssegnazioneDSAServComm"/>
+			<subtype name="crltemplate:letteraAssegnazioneProgrammaLavoroCommEuropeaServComm"/>
+			<subtype name="crltemplate:letteraParereCommissioneServComm"/>
+			<subtype name="crltemplate:letteraIntesaCommissioneGiuntaServComm"/>
+			<subtype name="crltemplate:letteraParereCommissioneConSospPausaEstivaServComm"/>
+			<subtype name="crltemplate:letteraIntesaCommissioneGiuntaConSospPausaEstivaServComm"/>
+			<subtype name="crltemplate:letteraParerePropostaDiRegolamentoServComm"/>
+			<subtype name="crltemplate:letteraAssegnazioneInSedeDeliberantePDAServComm"/>
+			<subtype name="crltemplate:letteraAssegnazioneInSedeReferentePDAServComm"/>
+			<subtype name="crltemplate:letteraAssegnazionePerIstruttoriaPLPServComm"/>
+			<subtype name="crltemplate:letteraRelazionePresentataDallaGiuntaServComm"/>
+			<subtype name="crltemplate:letteraAssegnazionePerIstruttoriaPREServComm"/>	
+			<subtype name="crltemplate:letteraAssegnazionePerIstruttoriaREFServComm"/>
+			<subtype name="crltemplate:letteraAssegnazionePerIstruttoriaINPServComm"/>
+			<subtype name="crltemplate:letteraCommissioni"/>	
+			<subtype name="crltemplate:letteraTrasmissionePDLCommissioni"/>		
+			<subtype name="crltemplate:letteraTrasmissionePDACommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissionePDAUrgenzaCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissionePARCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissionePLPCommissioni"/>
+			<subtype name="crltemplate:letteraPresaAttoRELCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissioneREFCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissioneParereDaSedeConsultivaCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissioneAulaLeggeRiordinoCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissioneAulaTestoUnico"/>
+			<subtype name="crltemplate:letteraTrasmissioneDocRisDsaCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissioneDocRisProgrammaEuropeoCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissioneParereSuDOCCommissioni"/>
+			<subtype name="crltemplate:letteraRichiestaParereNormaFinanziariaCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissioneParereSuNormaFinanziariaCommissioni"/>
+			<subtype name="crltemplate:letteraTrasmissioneRISCommissioni"/>
+			<subtype name="crltemplate:letteraAula"/>
+			<subtype name="crltemplate:letteraTrasmissioneLCRAula"/>
+			<subtype name="crltemplate:letteraTrasmissionePDAAula"/>
+			<subtype name="crltemplate:letteraTrasmissionePDABilancioAula"/>
+			<subtype name="crltemplate:letteraTrasmissionePDAVariazioneBilancioAula"/>
+			<subtype name="crltemplate:letteraTrasmissioneREFAula"/>
+			<subtype name="crltemplate:letteraTrasmissioneORGAula"/>
+			<subtype name="crltemplate:letteraConvalidaORGAula"/>
+			<subtype name="crltemplate:letteraTrasmissioneBURLAula"/>
+			
+			<!-- Reports -->
+			<subtype name="crlreport:reportAttiAssCommissioniServComm" />
+			<subtype name="crlreport:reportAttiIniziativaConsPerConsServComm" />
+			<subtype name="crlreport:reportAttiInviatiOrganiEsterniServComm" />
+			<subtype name="crlreport:reportAttiLicenziatiServComm" />
+			<subtype name="crlreport:reportAttiRelatoreServComm" />
+			<subtype name="crlreport:reportAttiRitiratiRevocatiServComm" />
+			<subtype name="crlreport:reportComposizioneCommissioniServComm" />
+			<subtype name="crlreport:reportConferenzeServComm" />
+			<subtype name="crlreport:reportAttiAssCommissioniComm" />
+			<subtype name="crlreport:reportAttiIstruttoriaCommissioniComm" />
+			<subtype name="crlreport:reportAttiLicenziatiComm" />
+			<subtype name="crlreport:reportRelatoriDataNominaComm" />
+			<subtype name="crlreport:reportAttiIstruttoriaAula" />
+			<subtype name="crlreport:reportAttiRinviatiAula" />
+			<subtype name="crlreport:reportDCRAula" />
+			<subtype name="crlreport:reportLCRAula" />
+			<!-- Odg -->
+			<subtype name="crlodg:odgGenericoCommissioniDocument" />
+			<subtype name="crlodg:odgGenericoAulaDocument" />
+   			
+         </type>
+
+         <type name="cm:folder">
+         	<subtype name="crlatti:atto" />
+         	<subtype name="crlatti:attoDoc" />
+			<subtype name="crlatti:attoPdl" />
+			<subtype name="crlatti:attoInp" />
+			<subtype name="crlatti:attoPar" />
+			<subtype name="crlatti:attoPda" />
+			<subtype name="crlatti:attoPlp" />
+			<subtype name="crlatti:attoPre" />
+			<subtype name="crlatti:attoRef" />
+			<subtype name="crlatti:attoRel" />
+			<subtype name="crlatti:attoEac" />
+			<subtype name="crlatti:attoIndirizzo"/>
+			<subtype name="crlatti:commissione"/>
+			<subtype name="crlatti:comitatoRistretto"/>
+			<subtype name="crlatti:aula"/>
+			<subtype name="crlatti:parere"/>
+			<subtype name="crlatti:consultazione"/>
+			<subtype name="crlatti:sedutaODG"/>
+         </type>
+      </types>
+
+      <!--
+         If set, will present a WebDAV link for the current item on the Document and Folder details pages.
+         Also used to generate the "View in Alfresco Explorer" action for folders.
+      -->
+      <repository-url>${alfresco.server.scheme}://${alfresco.server.name}:${alfresco.server.port}/alfresco</repository-url>
+
+      <!--
+         Google Docs™ integration
+      -->
+      <google-docs>
+         <!--
+            Enable/disable the Google Docs UI integration (Extra types on Create Content menu, Google Docs actions).
+         -->
+         <enabled>false</enabled>
+
+         <!--
+            The mimetypes of documents Google Docs allows you to create via the Share interface.
+            The I18N label is created from the "type" attribute, e.g. google-docs.doc=Google Docs&trade; Document
+         -->
+         <creatable-types>
+            <creatable type="doc">application/msword</creatable>
+            <creatable type="xls">application/vnd.ms-excel</creatable>
+            <creatable type="ppt">application/vnd.ms-powerpoint</creatable>
+         </creatable-types>
+      </google-docs>
+
+      <!--
+         File upload configuration
+      -->
+      <file-upload>
+         <!--
+            Adobe Flash™
+            In certain environments, an HTTP request originating from Flash cannot be authenticated using an existing session.
+            See: http://bugs.adobe.com/jira/browse/FP-4830
+            For these cases, it is useful to disable the Flash-based uploader for Share Document Libraries.
+         -->
+         <adobe-flash-enabled>true</adobe-flash-enabled>
+      </file-upload>
+   </config>
+
+
+   <!-- Custom DocLibActions config section -->
+   <config evaluator="string-compare" condition="DocLibActions">
+      <actionGroups>
+         <actionGroup id="document-browse">
+
+            <!-- Simple Repo Actions -->
+            <!--
+            <action index="340" id="document-extract-metadata" />
+            <action index="350" id="document-increment-counter" />
+            -->
+
+            <!-- Dialog Repo Actions -->
+            <!--
+            <action index="360" id="document-transform" />
+            <action index="370" id="document-transform-image" />
+            <action index="380" id="document-execute-script" />
+            -->
+
+         </actionGroup>
+      </actionGroups>
+   </config>
+
+   <!-- Global folder picker config section -->
+   <config evaluator="string-compare" condition="GlobalFolder">
+      <siteTree>
+         <container type="cm:folder">
+            <!-- Use a specific label for this container type in the tree -->
+            <rootLabel>location.path.documents</rootLabel>
+            <!-- Use a specific uri to retreive the child nodes for this container type in the tree -->
+            <uri>slingshot/doclib/treenode/site/{site}/{container}{path}?children={evaluateChildFoldersSite}&amp;max={maximumFolderCountSite}</uri>
+         </container>
+      </siteTree>
+   </config>
+
+   <!-- Repository Library config section -->
+   <config evaluator="string-compare" condition="RepositoryLibrary" replace="true">
+      <!--
+         Root nodeRef or xpath expression for top-level folder.
+         e.g. alfresco://user/home, /app:company_home/st:sites/cm:site1
+         If using an xpath expression, ensure it is properly ISO9075 encoded here.
+      -->
+      <root-node>alfresco://company/home</root-node>
+
+      <tree>
+         <!--
+            Whether the folder Tree component should enumerate child folders or not.
+            This is a relatively expensive operation, so should be set to "false" for Repositories with broad folder structures.
+         -->
+         <evaluate-child-folders>false</evaluate-child-folders>
+         
+         <!--
+            Optionally limit the number of folders shown in treeview throughout Share.
+         -->
+         <maximum-folder-count>500</maximum-folder-count>
+      </tree>
+   </config>
+   
+   <!-- Kerberos settings -->
+   <!-- To enable kerberos rename this condition to "Kerberos" -->
+   <config evaluator="string-compare" condition="KerberosDisabled" replace="true">
+      <kerberos>
+         <!--
+            Password for HTTP service account.
+            The account name *must* be built from the HTTP server name, in the format :
+               HTTP/<server_name>[at]<realm>
+            (NB this is because the web browser requests an ST for the
+            HTTP/<server_name> principal in the current realm, so if we're to decode
+            that ST, it has to match.)
+         -->
+         <password>secret</password>
+         <!--
+            Kerberos realm and KDC address.
+         -->
+         <realm>ALFRESCO.ORG</realm>
+         <!--
+            Service Principal Name to use on the repository tier.
+            This must be like: HTTP/host.name@REALM
+         -->
+         <endpoint-spn>HTTP/repository.server.com@ALFRESCO.ORG</endpoint-spn>
+         <!--
+            JAAS login configuration entry name.
+         -->
+         <config-entry>ShareHTTP</config-entry>
+      </kerberos>
+   </config>
+
+    <!-- example port config used to access remote Alfresco server (default is 8080) -->
+   
+   <config evaluator="string-compare" condition="Remote">
+      <remote>
+         <endpoint>
+            <id>alfresco-noauth</id>
+            <name>Alfresco - unauthenticated access</name>
+            <description>Access to Alfresco Repository WebScripts that do not require authentication</description>
+            <connector-id>alfresco</connector-id>
+            <endpoint-url>${alfresco.server.scheme}://${alfresco.server.name}:${alfresco.server.port}/alfresco/s</endpoint-url>
+            <identity>none</identity>
+         </endpoint>
+
+         <endpoint>
+            <id>alfresco</id>
+            <name>Alfresco - user access</name>
+            <description>Access to Alfresco Repository WebScripts that require user authentication</description>
+            <connector-id>alfresco</connector-id>
+            <endpoint-url>${alfresco.server.scheme}://${alfresco.server.name}:${alfresco.server.port}/alfresco/s</endpoint-url>
+            <identity>user</identity>
+         </endpoint>
+
+         <endpoint>
+            <id>alfresco-feed</id>
+            <name>Alfresco Feed</name>
+            <description>Alfresco Feed - supports basic HTTP authentication via the EndPointProxyServlet</description>
+            <connector-id>http</connector-id>
+            <endpoint-url>${alfresco.server.scheme}://${alfresco.server.name}:${alfresco.server.port}/alfresco/s</endpoint-url>
+            <basic-auth>true</basic-auth>
+            <identity>user</identity>
+         </endpoint>
+      </remote>
+   </config>
+    
+
+   <!-- 
+        Overriding endpoints to reference an Alfresco server with external SSO enabled
+        NOTE: If utilising a load balancer between web-tier and repository cluster, the "sticky
+              sessions" feature of your load balancer must be used.
+        NOTE: If alfresco server location is not localhost:8080 then also combine changes from the
+              "example port config" section below.
+        *Optional* keystore contains SSL client certificate + trusted CAs.
+        Used to authenticate share to an external SSO system such as CAS
+        Remove the keystore section if not required i.e. for NTLM.
+        
+        NOTE: For Kerberos SSO rename the "KerberosDisabled" condition above to "Kerberos"
+   
+   
+   <config evaluator="string-compare" condition="Remote">
+      <remote>
+         <keystore>
+             <path>alfresco/web-extension/alfresco-system.p12</path>
+             <type>pkcs12</type>
+             <password>alfresco-system</password>
+         </keystore>
+         
+         <connector>
+            <id>alfrescoCookie</id>
+            <name>Alfresco Connector</name>
+            <description>Connects to an Alfresco instance using cookie-based authentication</description>
+            <class>org.springframework.extensions.webscripts.connector.AlfrescoConnector</class>
+         </connector>
+         
+         <endpoint>
+            <id>alfresco</id>
+            <name>Alfresco - user access</name>
+            <description>Access to Alfresco Repository WebScripts that require user authentication</description>
+            <connector-id>alfrescoCookie</connector-id>
+            <endpoint-url>${alfresco.server.scheme}://${alfresco.server.name}:${alfresco.server.port}/alfresco/wcs</endpoint-url>
+            <identity>user</identity>
+            <external-auth>true</external-auth>
+         </endpoint>
+      </remote>
+   </config>
+   -->
+   
+   <config evaluator="model-type" condition="crlatti:atto">
+   <forms>
+      <form id="search">
+           <field-visibility>
+            <hide id="cm:contains" />
+            <show id="cm:name" />
+            <show id="cm:title" force="true" />
+            <show id="cm:description" force="true" />
+            <show id="mimetype" />
+            <show id="cm:created"/>
+            <show id="crlatti:assegnazione"/>
+            <show id="crlatti:descrizioneIniziativa"/>
+            <show id="crlatti:numeroRepertorio"/>
+            <show id="crlatti:dataRepertorio"/>
+            <show id="crlatti:tipologia"/>
+            <show id="crlatti:legislatura"/>
+            <show id="crlatti:statoAtto"/>
+            <show id="crlatti:dataPresaInCarico"/>
+            <show id="crlatti:numeroAtto"/>
+            <show id="crlatti:estensioneAtto"/>
+            <show id="crlatti:dataIniziativa"/>
+            <show id="crlatti:numeroProtocollo"/>
+            <show id="crlatti:tipoIniziativa"/>
+            <show id="crlatti:numeroDcr"/>
+            <show id="crlatti:oggetto"/>
+            <show id="crlatti:dataPubblicazione"/>
+            <show id="crlatti:esitoVotoComRef"/>
+            <show id="crlatti:dataSedutaSc"/>
+            <show id="crlatti:esitoVotoAula"/>
+            <show id="crlatti:dataSedutaComm"/>
+            <show id="crlatti:commReferente"/>
+            <show id="crlatti:dataAssegnazioneCommissioneReferente" />
+            <show id="crlatti:dataSedutaAula"/>
+            <show id="crlatti:commConsultiva"/>
+            <show id="crlatti:relatori"/>
+            <show id="crlatti:redigente"/>
+            <show id="crlatti:coreferente"/>
+            <show id="crlatti:deliberante"/>
+            <show id="crlatti:organismiStatutari"/>
+            <show id="crlatti:numeroLcr"/>
+            <show id="crlatti:soggettoConsultato"/>
+            <show id="crlatti:anno"/>
+            <show id="crlatti:emendato"/>
+            <show id="crlatti:emendatoAulaAtto"/>
+            <show id="crlatti:rinviato"/>
+            <show id="crlatti:sospeso"/>
+            <show id="crlatti:abbinamento"/>
+            <show id="crlatti:stralcio"/>
+            <show id="crlatti:primoFirmatario" />
+            <show id="crlatti:firmatari"/>
+            <show id="crlatti:firmatariOriginari" />
+            <show id="crlatti:dataChiusura" />
+			<show id="crlatti:tipoChiusura" />
+			<show id="crlatti:noteChiusura" />
+			<show id="crlatti:numeroLr" />
+			<show id="crlatti:dataLr" />
+			<show id="crlatti:numeroPubblicazioneBURL" />
+			<show id="crlatti:dataPubblicazioneBURL" />
+			<show id="crlatti:pubblico" />
+			<show id="crlatti:numeroDgrSeguito" />
+			<show id="crlatti:dataDgrSeguito" />
+          </field-visibility>
+      </form>
+   </forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:atto">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   			<hide id="cm:contains" />
+   		    <show id="cm:name" />
+            <show id="cm:title" force="true" />
+            <show id="cm:description" force="true" />
+            <show id="mimetype" />
+            <show id="cm:created"/>
+            <show id="crlatti:assegnazione"/>
+            <show id="crlatti:descrizioneIniziativa"/>
+            <show id="crlatti:numeroRepertorio"/>
+            <show id="crlatti:dataRepertorio"/>
+            <show id="crlatti:classificazione"/>
+            <show id="crlatti:tipologia"/>
+            <show id="crlatti:legislatura"/>
+            <show id="crlatti:statoAtto"/>
+            <show id="crlatti:numeroAtto"/>
+    		<show id="crlatti:estensioneAtto"/>
+            <show id="crlatti:dataIniziativa"/>
+            <show id="crlatti:numeroProtocollo"/>
+            <show id="crlatti:tipoIniziativa"/>
+            <show id="crlatti:numeroDcr"/>
+            <show id="crlatti:primoFirmatario"/>
+            <show id="crlatti:oggetto"/>
+            <show id="crlatti:firmatari"/>
+            <show id="crlatti:dataPubblicazione"/>
+            <show id="crlatti:esitoVotoComRef"/>
+            <show id="crlatti:dataSedutaSc"/>
+            <show id="crlatti:esitoVotoAula"/>
+            <show id="crlatti:dataSedutaComm"/>
+            <show id="crlatti:commReferente"/>
+            <show id="crlatti:dataAssegnazioneCommissioneReferente" />
+            <show id="crlatti:dataSedutaAula"/>
+            <show id="crlatti:commConsultiva"/>
+            <show id="crlatti:relatori"/>
+            <show id="crlatti:redigente"/>
+            <show id="crlatti:coreferente"/>
+            <show id="crlatti:deliberante"/>
+            <show id="crlatti:organismiStatutari"/>
+            <show id="crlatti:numeroLcr"/>
+            <show id="crlatti:soggettoConsultato"/>
+            <show id="crlatti:anno"/>
+            <show id="crlatti:emendato"/>
+            <show id="crlatti:emendatoAulaAtto"/>
+            <show id="crlatti:rinviato"/>
+            <show id="crlatti:sospeso"/>
+            <show id="crlatti:abbinamento"/>
+            <show id="crlatti:stralcio"/>
+            <show id="crlatti:primoFirmatario" />
+            <show id="crlatti:firmatari"/>
+            <show id="crlatti:firmatariOriginari" />
+            <show id="crlatti:dataChiusura" />
+			<show id="crlatti:tipoChiusura" />
+			<show id="crlatti:noteChiusura" />
+			<show id="crlatti:numeroLr" />
+			<show id="crlatti:dataLr" />
+			<show id="crlatti:numeroPubblicazioneBURL" />
+			<show id="crlatti:dataPubblicazioneBURL" />
+			<show id="crlatti:pubblico" />
+			<show id="crlatti:numeroDgrSeguito" />
+			<show id="crlatti:dataDgrSeguito" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="model-type" condition="crlatti:attoPdl">
+   <forms>
+      <form id="search">
+           <field-visibility>
+            <hide id="cm:contains" />
+            <show id="cm:name" />
+            <show id="cm:title" force="true" />
+            <show id="cm:description" force="true" />
+            <show id="mimetype" />
+            <show id="cm:created"/>
+            <show id="crlatti:dataPresaInCarico" />
+            <show id="crlatti:assegnazione"/>
+            <show id="crlatti:descrizioneIniziativa"/>
+            <show id="crlatti:numeroRepertorio"/>
+            <show id="crlatti:dataRepertorio"/>
+            <show id="crlatti:classificazione"/>
+            <show id="crlatti:pubblico"/>
+            <show id="crlatti:legislatura"/>
+            <show id="crlatti:statoAtto"/>
+            <show id="crlatti:numeroAtto"/>
+            <show id="crlatti:dataIniziativa"/>
+            <show id="crlatti:numeroProtocollo"/>
+            <show id="crlatti:tipoIniziativa"/>
+            <show id="crlatti:numeroDcr"/>
+            <show id="crlatti:oggetto"/>
+            <show id="crlatti:dataPubblicazione"/>
+            <show id="crlatti:esitoVotoComRef"/>
+            <show id="crlatti:dataSedutaSc"/>
+            <show id="crlatti:esitoVotoAula"/>
+            <show id="crlatti:dataSedutaComm"/>
+            <show id="crlatti:commReferente"/>
+            <show id="crlatti:dataAssegnazioneCommissioneReferente" />
+            <show id="crlatti:dataSedutaAula"/>
+            <show id="crlatti:commConsultiva"/>
+            <show id="crlatti:relatori"/>
+            <show id="crlatti:redigente"/>
+            <show id="crlatti:coreferente"/>
+            <show id="crlatti:deliberante"/>
+            <show id="crlatti:organismiStatutari"/>
+            <show id="crlatti:numeroLcr"/>
+            <show id="crlatti:soggettoConsultato"/>
+            <show id="crlatti:anno"/>
+            <show id="crlatti:emendato"/>
+            <show id="crlatti:emendatoAulaAtto"/>
+            <show id="crlatti:rinviato"/>
+            <show id="crlatti:sospeso"/>
+            <show id="crlatti:abbinamento"/>
+            <show id="crlatti:stralcio"/>
+            <show id="crlatti:primoFirmatario" /> 
+            <show id="crlatti:firmatari"/>
+            <show id="crlatti:firmatariOriginari" />
+            <show id="crlatti:dataChiusura" />
+			<show id="crlatti:tipoChiusura" />
+			<show id="crlatti:noteChiusura" />
+			<show id="crlatti:numeroLr" />
+			<show id="crlatti:dataLr" />
+			<show id="crlatti:numeroPubblicazioneBURL" />
+			<show id="crlatti:dataPubblicazioneBURL" />
+			<show id="crlatti:pubblico" />
+			<show id="crlatti:statoExportAttiIndirizzo" />
+          </field-visibility>
+      </form>
+   </forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:attoPdl">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   			<hide id="cm:contains" />
+   		    <show id="cm:name" />
+            <show id="cm:title" force="true" />
+            <show id="cm:description" force="true" />
+            <show id="mimetype" />
+            <show id="cm:created"/>
+            <show id="crlatti:assegnazione"/>
+            <show id="crlatti:dataPresaInCarico" />
+            <show id="crlatti:descrizioneIniziativa"/>
+            <show id="crlatti:numeroRepertorio"/>
+            <show id="crlatti:dataRepertorio"/>
+            <show id="crlatti:classificazione"/>
+            <show id="crlatti:pubblico"/>
+            <show id="crlatti:legislatura"/>
+            <show id="crlatti:statoAtto"/>
+            <show id="crlatti:numeroAtto"/>
+            <show id="crlatti:dataIniziativa"/>
+            <show id="crlatti:numeroProtocollo"/>
+            <show id="crlatti:tipoIniziativa"/>
+            <show id="crlatti:numeroDcr"/>
+            <show id="crlatti:oggetto"/>
+            <show id="crlatti:dataPubblicazione"/>
+            <show id="crlatti:esitoVotoComRef"/>
+            <show id="crlatti:dataSedutaSc"/>
+            <show id="crlatti:esitoVotoAula"/>
+            <show id="crlatti:dataSedutaComm"/>
+            <show id="crlatti:commReferente"/>
+            <show id="crlatti:dataAssegnazioneCommissioneReferente" />
+            <show id="crlatti:dataSedutaAula"/>
+            <show id="crlatti:commConsultiva"/>
+            <show id="crlatti:relatori"/>
+            <show id="crlatti:redigente"/>
+            <show id="crlatti:coreferente"/>
+            <show id="crlatti:deliberante"/>
+            <show id="crlatti:organismiStatutari"/>
+            <show id="crlatti:numeroLcr"/>
+            <show id="crlatti:soggettoConsultato"/>
+            <show id="crlatti:anno"/>
+            <show id="crlatti:emendato"/>
+            <show id="crlatti:emendatoAulaAtto"/>
+            <show id="crlatti:rinviato"/>
+            <show id="crlatti:sospeso"/>
+            <show id="crlatti:abbinamento"/>
+            <show id="crlatti:stralcio"/>
+            <show id="crlatti:primoFirmatario" />
+            <show id="crlatti:firmatari"/>
+            <show id="crlatti:firmatariOriginari" />
+            <show id="crlatti:dataChiusura" />
+			<show id="crlatti:tipoChiusura" />
+			<show id="crlatti:noteChiusura" />
+			<show id="crlatti:numeroLr" />
+			<show id="crlatti:dataLr" />
+			<show id="crlatti:numeroPubblicazioneBURL" />
+			<show id="crlatti:dataPubblicazioneBURL" />
+			<show id="crlatti:pubblico" />
+			<show id="crlatti:statoExportAttiIndirizzo" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="model-type" condition="crlatti:attoEac">
+   	<forms>
+   		<form id="search">
+   			<field-visibility>
+   				<show id="crlatti:dataAtto"/>
+   				<show id="crlatti:noteEac"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:attoEac">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:dataAtto"/>
+   				<show id="crlatti:noteEac"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:collegamento">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:note" />
+				<show id="crlatti:attoAssociatoCollegamento" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:abbinamento">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:dataAbbinamento" />
+				<show id="crlatti:dataDisabbinamento" />
+				<show id="crlatti:attoAssociatoAbbinamento" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:allegato">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:tipologia" />
+   				<show id="crlatti:pubblico" />
+   				<show id="crlatti:provenienza"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+    <config evaluator="node-type" condition="crlatti:testoComitatoRistretto">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:tipologia" />
+   				<show id="crlatti:pubblico" />
+   				<show id="crlatti:provenienza"/>
+   				<show id="crlatti:dataSedutaTestoCR" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+    
+    <config evaluator="node-type" condition="crlatti:membroComitatoRistretto">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:dataNominaMCR" />
+   				<show id="crlatti:dataUscitaMCR" />
+   				<show id="crlatti:coordinatoreMCR"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:testo">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:tipologia" />
+   				<show id="crlatti:pubblico" />
+   				<show id="crlatti:provenienza"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   
+   <config evaluator="node-type" condition="crlatti:legislaturaAnagrafica">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:dataInizioLegislatura" />
+				<show id="crlatti:dataFineLegislatura" />
+				<show id="crlatti:correnteLegislatura" />
+				<show id="crlatti:chiusuraLegislatura" />
+				<show id="crlatti:idAnagrafica" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+    <config evaluator="node-type" condition="crlatti:firmatarioAnagrafica">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:gruppoConsiliare" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+ 
+   <config evaluator="node-type" condition="crlatti:commissioneAnagrafica">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:numeroOrdinamentoCommissioneAnagrafica" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+    	   
+	   
+   <config evaluator="node-type" condition="crlatti:commissione">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				 <show id="crlatti:materiaCommissione"/>
+   				 <show id="crlatti:relatoriCommissione" />
+		         <show id="crlatti:dataAssegnazioneCommissione" />
+		         <show id="crlatti:dataPresaInCaricoCommissione" />
+		         <show id="crlatti:dataScadenzaCommissione" />
+		         <show id="crlatti:dataNominaCommissione" />
+		         <show id="crlatti:membriComitatoRistrettoCommissione" />
+		         <show id="crlatti:tipoVotazioneCommissione" />
+		         <show id="crlatti:esitoVotazioneCommissione" />
+		         <show id="crlatti:dataVotazioneCommissione" />
+		         <show id="crlatti:dataTrasmissioneCommissione" />
+		         <show id="crlatti:dataRichiestaIscrizioneAulaCommissione" />
+				 <show id="crlatti:passaggioDirettoInAulaCommissione" />
+				 <show id="crlatti:motivazioniContinuazioneInReferente" />
+				 <show id="crlatti:dataSedutaContinuazioneInReferente" />
+		         <show id="crlatti:dataAnnulloCommissione" />
+		         <show id="crlatti:ruoloCommissione" />
+		         <show id="crlatti:statoCommissione" />
+		         <show id="crlatti:dataSedutaStralcioCommissione" />
+				 <show id="crlatti:dataStralcioCommissione" />
+				 <show id="crlatti:dataIniziativaStralcioCommissione" />
+				 <show id="crlatti:articoliCommissione" />
+				 <show id="crlatti:noteStralcioCommissione" />
+				 <show id="crlatti:dataStralcioCommissione" />
+				 <show id="crlatti:quorumEsameCommissione" />
+				 
+				 <show id="crlatti:dataScadenzaCommissione" />
+				 <show id="crlatti:sospensioneFerialeCommissione" />
+				 <show id="crlatti:dataInterruzioneCommissione" />
+				 <show id="crlatti:dataRicezioneIntegrazioniCommissione" />
+				 
+		        <show id="crlatti:numEmendPresentatiMaggiorEsame" />
+				<show id="crlatti:numEmendPresentatiMinorEsame" />
+				<show id="crlatti:numEmendPresentatiGiuntaEsame" />
+				<show id="crlatti:numEmendPresentatiMistoEsame" />
+				<show id="crlatti:numEmendApprovatiMaggiorEsame" />
+				<show id="crlatti:numEmendApprovatiMinorEsame" />
+				<show id="crlatti:numEmendApprovatiGiuntaEsame" />
+				<show id="crlatti:numEmendApprovatiMistoEsame" />
+				<show id="crlatti:numEmendNonAmmissibiliEsame" />
+				<show id="crlatti:numEmendDecadutiEsame" />
+				<show id="crlatti:numEmendRitiratiEsame" />
+				<show id="crlatti:numEmendRespintiEsame" />
+				<show id="crlatti:noteEmendamentiEsame" />
+				
+				<show id="crlatti:dataPresaInCaricoPropClausolaValutEsame" />
+				<show id="crlatti:dataIntesaClausolaValutEsame" />
+				<show id="crlatti:esitoVotazioneIntesaClausolaValutEsame" />
+				<show id="crlatti:noteClausolaValutativaEsame" />
+				
+				<show id="crlatti:nomeAttoCommissione" />
+				<show id="crlatti:numeroAttoCommissione" />
+				<show id="crlatti:tipoAttoCommissione" />
+	 
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:aula">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:dataPresaInCaricoEsameAula" />
+				<show id="crlatti:relazioneScrittaAula" />
+				<show id="crlatti:tipologiaVotazioneAula" />
+				
+				<show id="crlatti:esitoVotoPassaggioAula" />
+				<show id="crlatti:dataSedutaPassaggioAula" />
+				<show id="crlatti:numeroDcrPassaggioAula" />
+				<show id="crlatti:numeroLcrPassaggioAula" />
+				<show id="crlatti:emendatoAula" />
+				<show id="crlatti:noteVotazioneAula" />
+				<show id="crlatti:dataSedutaRinvioAula" />
+				<show id="crlatti:dataTermineMassimoAula" />
+				<show id="crlatti:motivazioneRinvioAula" />
+				<show id="crlatti:dataSedutaStralcioAula" />
+				<show id="crlatti:dataStralcioAula" />
+				<show id="crlatti:dataIniziativaStralcioAula" />
+				<show id="crlatti:articoliAula" />
+				<show id="crlatti:noteStralcioAula" />
+				<show id="crlatti:dataStralcioAula" />
+				<show id="crlatti:quorumEsameAula" />
+				
+				<show id="crlatti:numEmendPresentatiMaggiorEsame" />
+				<show id="crlatti:numEmendPresentatiMinorEsame" />
+				<show id="crlatti:numEmendPresentatiGiuntaEsame" />
+				<show id="crlatti:numEmendPresentatiMistoEsame" />
+				<show id="crlatti:numEmendApprovatiMaggiorEsame" />
+				<show id="crlatti:numEmendApprovatiMinorEsame" />
+				<show id="crlatti:numEmendApprovatiGiuntaEsame" />
+				<show id="crlatti:numEmendApprovatiMistoEsame" />
+				<show id="crlatti:numEmendNonAmmissibiliEsame" />
+				<show id="crlatti:numEmendDecadutiEsame" />
+				<show id="crlatti:numEmendRitiratiEsame" />
+				<show id="crlatti:numEmendRespintiEsame" />
+				<show id="crlatti:noteEmendamentiEsame" />
+				
+				
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+    
+    <config evaluator="node-type" condition="crlatti:link">
+    	<forms>
+    		<form>
+    			<field-visibility>
+    				<show id="crlatti:indirizzoCollegamento"/>
+    				<show id="crlatti:pubblico"/>
+    			</field-visibility>
+    		</form>
+    	</forms>
+    </config>
+   
+   <config evaluator="node-type" condition="crlatti:comitatoRistretto">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:presenzaCR"/>
+   				<show id="crlatti:dataIstituzioneCR" />
+   				<show id="crlatti:dataFineLavoriCR" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:firmatario">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:nomeFirmatario"/>
+   				<show id="crlatti:gruppoConsiliare" />
+   				<show id="crlatti:dataFirma" />
+         		<show id="crlatti:dataRitiro" />
+         		<show id="crlatti:isPrimoFirmatario" />
+         		<show id="crlatti:numeroOrdinamento" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+    
+    <config evaluator="node-type" condition="crlatti:relatore">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:dataNominaRelatore"/>
+   				<show id="crlatti:dataUscitaRelatore" />
+   				<show id="crlatti:tipoAttoRelatore" />
+				<show id="crlatti:numeroAttoRelatore" />
+				<show id="crlatti:commissioneRelatore" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   
+   <config evaluator="node-type" condition="crlatti:parere">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:organismoStatutarioParere"/>
+   				<show id="crlatti:dataAnnulloParere" />
+   				<show id="crlatti:dataAssegnazioneParere" />
+   				<show id="crlatti:dataRicezioneParere"/>
+   				<show id="crlatti:dataRicezioneOrganoParere" />
+   				<show id="crlatti:noteParere" />
+   				<show id="crlatti:esitoParere" />
+   				<show id="crlatti:commissioneDestinatariaParere" />
+   				<show id="crlatti:tipoAttoParere" />
+				<show id="crlatti:numeroAttoParere" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:consultazione">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:descrizioneConsultazione"/>
+   				<show id="crlatti:dataConsultazione" />
+   				<show id="crlatti:previstaConsultazione" />
+   				<show id="crlatti:discussaConsultazione"/>
+   				<show id="crlatti:dataSedutaConsultazione" />
+   				<show id="crlatti:noteConsultazione" />
+   				<show id="crlatti:commissioneConsultazione" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   
+   <config evaluator="node-type" condition="crlatti:consigliereAnagrafica">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:nomeConsigliereAnagrafica"/>
+   				<show id="crlatti:cognomeConsigliereAnagrafica" />
+   				<show id="crlatti:legislaturaConsigliereAnagrafica" />
+   				<show id="crlatti:gruppoConsigliereAnagrafica"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:attoTrattatoODG">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:previstoAttoTrattatoODG"/>
+   				<show id="crlatti:discussoAttoTrattatoODG" />
+   				<show id="crlatti:attoTrattatoSedutaODG" />
+   				<show id="crlatti:numeroOrdinamento" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+    <config evaluator="node-type" condition="crlatti:sedutaODG">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:dataSedutaSedutaODG"/>
+   				<show id="crlatti:numVerbaleSedutaODG" />
+   				<show id="crlatti:noteSedutaODG" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+    <config evaluator="node-type" condition="crlatti:audizione">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:previstoAudizione"/>
+   				<show id="crlatti:discussoAudizione" />
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+	
+   
+   <config evaluator="node-type" condition="crltemplate:lettera">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:firmatario"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   
+   <config evaluator="node-type" condition="crltemplate:letteraServComm">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:firmatario"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   
+   <config evaluator="node-type" condition="crltemplate:letteraCommissioni">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:firmatario"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   
+   <config evaluator="node-type" condition="crltemplate:letteraAula">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:firmatario"/>
+   				<show id="crltemplate:ufficio"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crltemplate:letteraTrasmissionePDAVariazioneBilancioAula">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:firmatario"/>
+   				<show id="crltemplate:ufficio"/>
+   				<show id="crltemplate:direzione"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crltemplate:letteraTrasmissioneBURLAula">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crltemplate:firmatario"/>
+   				<show id="crltemplate:ufficio"/>
+   				<show id="crltemplate:numeroTelFirmatario"/>
+   				<show id="crltemplate:emailFirmatario"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:attoIndirizzo">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:IdAttoIndirizzo"/>
+   				<show id="crlatti:IdLegislaturaAttoIndirizzo"/>
+   				<show id="crlatti:tipoAttoIndirizzo"/>
+   				<show id="crlatti:numeroAttoIndirizzo"/>
+   				<show id="crlatti:oggettoAttoIndirizzo"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:firmatarioAttoIndirizzo">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:IdFirmatarioAttoIndirizzo"/>
+   				<show id="crlatti:idGruppoFirmatarioAttoIndirizzo"/>
+   				<show id="crlatti:nomeFirmatarioAttoIndirizzo"/>
+   				<show id="crlatti:cognomeFirmatarioAttoIndirizzo"/>
+   				<show id="crlatti:gruppoFirmatarioAttoIndirizzo"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   <config evaluator="node-type" condition="crlatti:collegamentoAttoIndirizzo">
+   	<forms>
+   		<form>
+   			<field-visibility>
+   				<show id="crlatti:descrizioneCollegamentoAttiIndirizzo"/>
+   				<show id="crlatti:attoAssociatoCollegamentoAttiIndirizzo"/>
+   			</field-visibility>
+   		</form>
+   	</forms>
+   </config>
+   
+   
+   
+   
+   <config evaluator="string-compare" condition="AdvancedSearch" replace="true">
+      <advanced-search>
+         <!-- Forms for the advanced search type list -->
+         <forms>
+            <!--
+               The 'form' config element contains the name of the model type
+               of the form to display.
+               
+               The element supports the following optional attributes:
+                  id = form id, the id of "search" will be assumed if not set
+                  label = label text to display - defaults to model type if not set
+                  labelId = I18N message id of label text to display
+                  description = description text to display
+                  descriptionId = I18N message id of description text to display
+            -->
+            <form labelId="search.form.label.cm_content" descriptionId="search.form.desc.cm_content">cm:content</form>
+            <form labelId="search.form.label.cm_folder" descriptionId="search.form.desc.cm_folder">cm:folder</form>
+            <form label="Abbinamento" description="Cerca tra tutti gli abbinamenti">crlatti:abbinamento</form>
+            <form label="Commissione" description="Cerca tra tutte le commissioni">crlatti:commissione</form>
+            <form label="Aula" description="Cerca tra tutte le aula">crlatti:aula</form>
+            <form label="Firmatario" description="Cerca tra tutti i firmatari">crlatti:firmatario</form>
+            <form label="Allegato" description="Cerca tra tutti gli allegati">crlatti:allegato</form>
+            <form label="Testo" description="Cerca tra tutti i testi degli atti">crlatti:testo</form>
+            <form label="DOC" description="Cerca tra tutti gli atti">crlatti:attoDoc</form>
+            <form label="PDL" description="Cerca tra tutti i progetti di legge">crlatti:attoPdl</form>
+            <form label="INP" description="Cerca tra tutte le petizioni popolari">crlatti:attoInp</form>
+            <form label="PAR" description="Cerca tra tutti i pareri">crlatti:attoPar</form>
+            <form label="PDA" description="Cerca tra tutte le proposte di atti amministrativi">crlatti:attoPda</form>
+            <form label="PLP" description="Cerca tra tutte le proposte di legge parlamentari">crlatti:attoPlp</form>
+            <form label="PRE" description="Cerca tra tutte le proposte di regolamento">crlatti:attoPre</form>
+            <form label="REF" description="Cerca tra tutte le proposte di referendum">crlatti:attoRef</form>
+            <form label="REL" description="Cerca tra tutte le relazioni">crlatti:attoRel</form>
+            <form label="EAC" description="Cerca tra tutti gli elenchi di atti comunitari">crlatti:attoEac</form>
+            <form label="Seduta" description="Cerca tra tutte le sedute">crlatti:sedutaODG</form>
+            
+         </forms>
+      </advanced-search>
+   </config>
+   
+</alfresco-config>

@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Elenco dei tipi atto indirizzo</shortname>
+  <description>Restituisce l'elenco dei tipi atto indirizzo</description>
+  <url>/crl/atto/tipiattoindirizzo</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

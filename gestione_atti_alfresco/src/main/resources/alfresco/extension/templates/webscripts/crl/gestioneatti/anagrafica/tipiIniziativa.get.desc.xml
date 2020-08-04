@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Tipi iniziative</shortname>
+  <description>Restituisce l'elenco di tutti i tipi iniziative associabili ad un atto</description>
+  <url>/crl/anagrafica/atto/tipiiniziative</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

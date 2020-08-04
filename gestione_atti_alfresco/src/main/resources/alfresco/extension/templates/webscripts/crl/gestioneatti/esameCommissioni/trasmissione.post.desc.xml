@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Trasmissione atto in aula</shortname>
+  <description>Trasmissione atto in aula da parte della commissione</description>
+  <url>/crl/atto/esamecommissioni/trasmissione</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

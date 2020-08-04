@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:form id="insertForm">
+
+	<!-- <p:ajaxStatus onstart="statusDialog.show();"
+		onsuccess="statusDialog.hide();" />
+	<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
+		draggable="false" closable="false">
+		<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
+	</p:dialog> -->
+
+
+	<p:panelGrid
+		style="align:center;width:70%;margin-bottom:7px;border:1px solid #4F4F4F;"
+		id="insertattopanel">
+
+		<f:facet name="header">
+			<p:row>
+				<p:column style="text-align:left" colspan="4">
+				
+						Inserisci Atto:
+			    
+			    </p:column>
+			</p:row>
+		</f:facet>
+
+
+		<p:growl id="inserimentoMsg" showDetail="true" sticky="false" />
+
+		<p:row>
+			<p:column colspan="3">
+				<p:messages id="msgs" />
+
+			</p:column>
+		</p:row>
+
+		<p:row >
+			<p:column style="text-align:left;">
+				<h:outputLabel for="numeroatto" value="Numero Atto: *" />
+			</p:column>
+			<p:column style="text-align:left;">
+				<p:inputText id="numeroatto"
+					value="#{inserisciAttoController.numeroAtto}" required="true"
+					requiredMessage="Numero Atto obbligatorio" />
+			</p:column>
+			<p:column >
+				<p:message for="numeroatto" display="icon" />
+			</p:column>
+
+		</p:row>
+
+        <p:row>
+			<p:column style="text-align:left;">
+				<h:outputLabel for="numeroatto" value="Estensione Atto: " />
+			</p:column>
+			<p:column style="text-align:left;">
+				<p:inputText id="estensioneatto"
+					value="#{inserisciAttoController.estensioneAtto}" />
+			</p:column>
+			<p:column>
+			
+			</p:column>
+
+		</p:row>
+
+		<p:row>
+			<p:column style="text-align:left;">
+				<h:outputLabel for="tipoatto" value="Tipo atto: *" />
+			</p:column>
+
+			<p:column style="text-align:left;">
+				<p:selectOneMenu id="tipoatto"
+					value="#{inserisciAttoController.tipoAtto}" required="true"
+					requiredMessage="Tipo Atto obbligatorio">
+					<f:selectItem itemLabel="Scegli Tipo" itemValue="" />
+					<f:selectItems value="#{inserisciAttoController.tipiAtto}" var="tipoAtto"
+					itemLabel="#{tipoAtto.descrizione}" itemValue="#{tipoAtto.codice}" />
+					
+				</p:selectOneMenu>
+			</p:column>
+
+			
+		</p:row>
+
+
+		<p:row>
+			<p:column style="text-align:left;">
+				<h:outputLabel for="legislatura" value="Legislatura: *" />
+			</p:column>
+
+			<p:column style="text-align:left;">
+				<p:selectOneMenu id="legislatura"
+					value="#{inserisciAttoController.legislatura}" required="true"
+					requiredMessage="Legislatura obbligatoria">
+					<!-- <f:selectItem itemLabel="Scegli Legislatura" itemValue="" /> -->
+					<f:selectItems value="#{inserisciAttoController.legislature}" />
+				</p:selectOneMenu>
+			</p:column>
+
+			<p:column>
+				<p:message for="legislatura" display="icon" />
+			</p:column>
+		</p:row>
+
+
+		<p:row>
+
+			<p:column colspan="2" style="text-align:left;">
+				<p:commandButton ajax="false" update="insertattopanel"
+					id="insertattobtn" value="Salva"
+					action="#{inserisciAttoController.inserisciAtto}" />
+			</p:column>
+		</p:row>
+
+
+	</p:panelGrid>
+
+
+
+</h:form>
+
+</html>

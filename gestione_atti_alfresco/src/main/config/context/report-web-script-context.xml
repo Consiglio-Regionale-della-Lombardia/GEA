@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+
+<beans>
+
+	<bean id="reportBaseCommand" class="com.sourcesense.crl.webscript.report.ReportBaseCommand"
+		abstract="true">
+		<property name="searchService">
+			<ref bean="SearchService" />
+		</property>
+		<property name="contentService">
+			<ref bean="ContentService" />
+		</property>
+		<property name="nodeService">
+			<ref bean="NodeService" />		
+		</property>
+		<property name="dictionaryService">
+			<ref bean="DictionaryService" />
+		</property>
+	</bean>
+
+	<!-- Servizio Commissioni -->
+
+	<bean id="reportAttiAssCommissioniServComm"
+		class="com.sourcesense.crl.webscript.report.servizio_commissioni.ReportAttiAssCommissioniCommand"
+		parent="reportBaseCommand" />
+
+	<bean id="reportAttiIniziativaConsPerConsServComm"
+		class="com.sourcesense.crl.webscript.report.servizio_commissioni.ReportAttiIniziativaConsPerConsCommand"
+		parent="reportBaseCommand" />
+
+	<bean id="reportAttiInviatiOrganiEsterniServComm"
+		class="com.sourcesense.crl.webscript.report.servizio_commissioni.ReportAttiInviatiOrganiEsterniCommand"
+		parent="reportBaseCommand" />
+
+	<bean id="reportAttiLicenziatiServComm"
+		class="com.sourcesense.crl.webscript.report.servizio_commissioni.ReportAttiLicenziatiCommand"
+		parent="reportBaseCommand" />
+
+	<bean id="reportAttiRelatoreServComm"
+		class="com.sourcesense.crl.webscript.report.servizio_commissioni.ReportAttiRelatoreCommand"
+		parent="reportBaseCommand" />
+
+	<bean id="reportAttiRitiratiRevocatiServComm"
+		class="com.sourcesense.crl.webscript.report.servizio_commissioni.ReportAttiRitiratiRevocatiCommand"
+		parent="reportBaseCommand" />
+
+	<bean id="reportComposizioneCommissioniServComm"
+		class="com.sourcesense.crl.webscript.report.servizio_commissioni.ReportComposizioneCommissioniCommand"
+		parent="reportBaseCommand" />
+
+	<bean id="reportConferenzeServComm"
+		class="com.sourcesense.crl.webscript.report.servizio_commissioni.ReportConferenzeCommand"
+		parent="reportBaseCommand" />
+
+	<!-- Commissioni -->
+
+	<bean id="reportAttiAssCommissioniComm"
+		class="com.sourcesense.crl.webscript.report.commissioni.ReportAttiAssCommissioniCommand"
+		parent="reportBaseCommand" />
+
+	<bean id="reportAttiIstruttoriaCommissioniComm"
+		class="com.sourcesense.crl.webscript.report.commissioni.ReportAttiIstruttoriaCommissioniCommand"
+		parent="reportBaseCommand" />
+
+	<bean id="reportRelatoriDataNominaComm"
+		class="com.sourcesense.crl.webscript.report.commissioni.ReportRelatoriDataNominaCommand"
+		parent="reportBaseCommand" />
+
+	<bean id="reportAttiLicenziatiComm"
+		class="com.sourcesense.crl.webscript.report.commissioni.ReportAttiLicenziatiCommand"
+		parent="reportBaseCommand" />
+        
+        <bean id="reportAudizioniCommissioniComm"
+		class="com.sourcesense.crl.webscript.report.commissioni.ReportAudizioniCommissioniCommand"
+		parent="reportBaseCommand" />
+
+	<!-- Aula -->
+	<bean id="reportAttiIstruttoriaAula"
+		class="com.sourcesense.crl.webscript.report.aula.ReportAttiIstruttoriaCommand"
+		parent="reportBaseCommand" />
+
+	<bean id="reportAttiRinviatiAula"
+		class="com.sourcesense.crl.webscript.report.aula.ReportAttiRinviatiCommand"
+		parent="reportBaseCommand" />
+
+	<bean id="reportDCRAula"
+		class="com.sourcesense.crl.webscript.report.aula.ReportDCRCommand"
+		parent="reportBaseCommand" />
+
+	<bean id="reportLCRAula"
+		class="com.sourcesense.crl.webscript.report.aula.ReportLCRCommand"
+		parent="reportBaseCommand" />
+
+
+	<bean id="webscript.crl.gestioneatti.report.report.post" class="com.sourcesense.crl.webscript.report.ReportWebScript"
+		parent="webscript">
+		<property name="searchService">
+			<ref bean="SearchService" />
+		</property>
+		<property name="contentService">
+			<ref bean="ContentService" />
+		</property>
+		<property name="nodeService">
+			<ref bean="NodeService" />
+		</property>
+		<property name="dictionaryService">
+			<ref bean="DictionaryService" />
+		</property>
+
+		<property name="reportCommandMap">
+			<map>
+				<!-- Servizio Commissioni -->
+				<entry key="crlreport:reportAttiAssCommissioniServComm"
+					value-ref="reportAttiAssCommissioniServComm" />
+				<entry key="crlreport:reportAttiIniziativaConsPerConsServComm"
+					value-ref="reportAttiIniziativaConsPerConsServComm" />
+				<entry key="crlreport:reportAttiInviatiOrganiEsterniServComm"
+					value-ref="reportAttiInviatiOrganiEsterniServComm" />
+				<entry key="crlreport:reportAttiLicenziatiServComm" value-ref="reportAttiLicenziatiServComm" />
+				<entry key="crlreport:reportAttiRelatoreServComm" value-ref="reportAttiRelatoreServComm" />
+				<entry key="crlreport:reportAttiRitiratiRevocatiServComm"
+					value-ref="reportAttiRitiratiRevocatiServComm" />
+				<entry key="crlreport:reportComposizioneCommissioniServComm"
+					value-ref="reportComposizioneCommissioniServComm" />
+				<entry key="crlreport:reportConferenzeServComm" value-ref="reportConferenzeServComm" />
+				<!-- Commissioni -->
+				<entry key="crlreport:reportAttiAssCommissioniComm" value-ref="reportAttiAssCommissioniComm" />
+				<entry key="crlreport:reportAttiLicenziatiComm" value-ref="reportAttiLicenziatiComm" />
+				<entry key="crlreport:reportAttiIstruttoriaCommissioniComm"
+					value-ref="reportAttiIstruttoriaCommissioniComm" />
+				<entry key="crlreport:reportRelatoriDataNominaComm" value-ref="reportRelatoriDataNominaComm" />
+                                
+                                <entry key="crlreport:reportAudizioniCommissioniComm" value-ref="reportAudizioniCommissioniComm" />
+                                
+				<!-- Aula -->
+				<entry key="crlreport:reportAttiIstruttoriaAula" value-ref="reportAttiIstruttoriaAula" />
+				<entry key="crlreport:reportAttiRinviatiAula" value-ref="reportAttiRinviatiAula" />
+				<entry key="crlreport:reportDCRAula" value-ref="reportDCRAula" />
+				<entry key="crlreport:reportLCRAula" value-ref="reportLCRAula" />
+
+
+			</map>
+		</property>
+
+
+
+
+	</bean>
+
+
+
+</beans>

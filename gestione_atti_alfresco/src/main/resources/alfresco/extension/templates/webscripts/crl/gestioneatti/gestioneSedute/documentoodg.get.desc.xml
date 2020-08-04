@@ -1,0 +1,8 @@
+<webscript>
+  <shortname>Creazione documento odg</shortname>
+  <description>creazione documento odg</description>
+  <url>/crl/sedute/odg/creadocumentoodg</url>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

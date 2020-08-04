@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+<p:panelGrid styleClass="infoTable" id="amministrazionetab">
+    <p:row>
+        <p:column colspan="3">
+
+        </p:column>
+    </p:row>
+
+
+</p:panelGrid>
+
+
+
+<p:fieldset rendered="#{true}"
+            legend="Funzionalità avanzate" toggleable="true" collapsed="false"
+            toggleSpeed="500">
+    <p:growl id="amministrazioneMsg" showDetail="true" sticky="false" />
+    <p:row>
+        <p:column>
+            <b> <h:outputText style="font-weight: bold;"
+                              value="Stato atto: " />
+            </b>
+        </p:column>
+
+        <p:column>
+            <p:selectOneMenu id="stato" style="width:250px"
+                             value="#{attoBean.stato}">
+                <f:selectItem itemLabel="Scegli Stato" itemValue="" />
+                <f:selectItems value="#{searchAttoController.stati}" />
+            </p:selectOneMenu>
+        </p:column>
+
+
+    </p:row>
+
+
+</p:fieldset>
+
+
+
+
+
+<p>
+
+    <p:commandButton value="Elimina atto" update="amministrazioneMsg"
+                     action="#{amministrazioneAttoController.deleteAtto}"  />
+
+</p>
+
+<p>
+
+<p:commandButton value="Salva"
+                 update="amministrazioneMsg"
+                 actionListener="#{amministrazioneAttoController.updateAtto}"  />
+
+</p>
+ <div>       </div>
+</html>

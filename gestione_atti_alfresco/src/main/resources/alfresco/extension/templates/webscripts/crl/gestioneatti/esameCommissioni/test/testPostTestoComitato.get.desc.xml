@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test upload testo comitato ristretto</shortname>
+  <description>Test per l'upload di un testo comitato ristretto</description>
+  <url>/crl/test/post/atto/esamecommissioni/testocomitato</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

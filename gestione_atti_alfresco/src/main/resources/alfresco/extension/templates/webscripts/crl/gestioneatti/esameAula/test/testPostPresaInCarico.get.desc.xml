@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test presa in carico atto aula</shortname>
+  <description>Test per la presa in carico da parte dell'aula</description>
+  <url>/crl/test/post/atto/esameaula/presaincarico</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

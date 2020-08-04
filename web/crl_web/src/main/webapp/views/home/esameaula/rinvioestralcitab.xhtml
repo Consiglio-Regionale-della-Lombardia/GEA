@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<pe:tooltip value="Click per Espandere / Comprimere"
+	forSelector="legend" shared="true" targetPosition="top center"
+	position="left center" />
+<p:ajaxStatus onstart="statusDialog.show();"
+	onsuccess="statusDialog.hide();" />
+<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
+	draggable="false" closable="false">
+	<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
+</p:dialog>
+<div id="blockedRinvioStralci">
+
+	<p:panelGrid styleClass="infoTable" id="rinviostralciPanel">
+		<p:row
+			rendered="#{!navigationBean.sessionAttoPDA_UDP and !navigationBean.isSessionAttoORG()}">
+			<p:column>
+				<p:fieldset styleClass="fieldSetTab" legend="Rinvio esame: "
+					collapsed="false" toggleable="true" toggleSpeed="500">
+
+					<p:panelGrid styleClass="infoTable" id="rinvioGrid">
+						<p:row>
+							<p:column>
+								<p:growl id="rinvioStralciMsg" showDetail="true" sticky="false" />
+
+								<p:confirmDialog id="confirmRinvioDialog"
+									message="Conferma rinvio?" header="Rinvio a Commissioni "
+									severity="alert" widgetVar="confirmRinvioCommDialog">
+
+									<p:commandButton id="confirmTrasmDialog" value="Conferma"
+										oncomplete="confirmRinvioCommDialog.hide()"
+										action="#{esameAulaController.salvaRinvioEsame}"
+										update="rinvioStralciMsg, :informationForm:informationBar" />
+
+									<p:commandButton id="declineTrasmAtto" value="Annulla"
+										onclick="confirmRinvioCommDialog.hide()" type="button" />
+
+								</p:confirmDialog>
+
+							</p:column>
+						</p:row>
+
+
+						<p:row>
+							<p:column>
+			Data seduta:
+			
+			</p:column>
+							<p:column>
+								<p:calendar size="10" locale="it" id="dataSeduta"
+									pattern="dd/MM/yyyy"
+									value="#{esameAulaController.dataSedutaRinvio}">
+									<p:ajax event="dateSelect" global="false"
+										listener="#{esameAulaController.updateRinvioEsameHandler}" />
+								</p:calendar>
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+			Termine massimo:
+			
+			</p:column>
+							<p:column>
+								<p:calendar size="10" locale="it" id="termineMassimo"
+									pattern="dd/MM/yyyy"
+									value="#{esameAulaController.dataTermineMassimo}">
+									<p:ajax event="dateSelect" global="false"
+										listener="#{esameAulaController.updateRinvioEsameHandler}" />
+								</p:calendar>
+							</p:column>
+						</p:row>
+						
+						<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
+							<p:column>
+							
+							
+							Rinvio a comm. bilancio:
+			
+			</p:column>
+							<p:column>
+								<p:selectBooleanCheckbox value="#{esameAulaController.rinvioCommBilancio}">
+								
+								</p:selectBooleanCheckbox>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+
+					Motivazione: 
+
+						</p:column>
+							<p:column>
+								<p:inputTextarea rows="6" cols="65"
+									value="#{esameAulaController.motivazioneRinvio}">
+									<p:ajax event="change" global="false"
+										listener="#{esameAulaController.updateRinvioEsameHandler}" />
+								</p:inputTextarea>
+
+							</p:column>
+
+
+							<p:column>
+
+								<p:commandButton value="Salva" global="false"
+									oncomplete="confirmRinvioCommDialog.show()"
+									disabled="#{navigationBean.isSessionAttoChiuso()}" />
+
+							</p:column>
+						</p:row>
+
+					</p:panelGrid>
+
+				</p:fieldset>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+
+				<p:fieldset styleClass="fieldSetTab" legend="Stralci: "
+					collapsed="false" toggleable="true" toggleSpeed="500"
+					rendered="#{navigationBean.stralciAulaEnabled()}">
+
+					<p:panelGrid styleClass="infoTable" id="stralciGrid">
+
+						<p:row>
+							<p:column>
+			Data Stralcio:
+			</p:column>
+							<p:column>
+								<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
+									value="#{esameAulaController.dataStralcio}">
+									<p:ajax event="dateSelect" global="false"
+										listener="#{esameAulaController.updateStralciHandler}" />
+								</p:calendar>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+			Data iniziativa:
+			</p:column>
+							<p:column>
+								<p:calendar size="10" locale="it" pattern="dd/MM/yyyy"
+									value="#{esameAulaController.dataIniziativaStralcio}">
+									<p:ajax event="dateSelect" global="false"
+										listener="#{esameAulaController.updateStralciHandler}" />
+								</p:calendar>
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+
+					Articoli: 
+
+						</p:column>
+							<p:column>
+								<p:inputTextarea rows="6" cols="65"
+									value="#{esameAulaController.articoli}">
+									<p:ajax event="change" global="false"
+										listener="#{esameAulaController.updateStralciHandler}" />
+								</p:inputTextarea>
+
+							</p:column>
+
+
+
+						</p:row>
+						<p:row>
+							<p:column>
+
+					Note stralcio: 
+
+						</p:column>
+							<p:column>
+								<p:inputTextarea rows="6" cols="65"
+									value="#{esameAulaController.noteStralcio}">
+									<p:ajax event="change" global="false"
+										listener="#{esameAulaController.updateStralciHandler}" />
+								</p:inputTextarea>
+
+							</p:column>
+
+
+
+						</p:row>
+						<p:row>
+							<p:column>
+					Quorum:
+					</p:column>
+							<p:column>
+								<p:selectOneMenu id="quorum"
+									value="#{esameAulaController.quorum}">
+									<f:selectItem itemLabel="Scegli quorum" itemValue="" />
+									<f:selectItem itemLabel="Maggioranza" itemValue="Maggioranza" />
+									<f:selectItem itemLabel="Unanimità" itemValue="Unanimità" />
+									<p:ajax event="change" global="false"
+										listener="#{esameAulaController.updateStralciHandler}" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:commandButton value="Salva" global="false"
+									action="#{esameAulaController.salvaStralci}"
+									update="rinvioStralciMsg" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:fieldset>
+
+
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+</div>
+<script>
+
+
+if (! ("#{esameAulaController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {
+	$('#blockedRinvioStralci').block({ message: 'Pagina bloccata!<br />Prendere in carico per sbloccare.', css: {
+		width:		'350px',
+		top:		'10px',
+		left:		'',
+		right:		'10px',
+		border:		'none',
+		padding:	'5px',
+		opacity:	0.6,
+		cursor:		'default',
+		color:		'#fff',
+		backgroundColor: '#000',
+		'-webkit-border-radius':'10px',
+		'-moz-border-radius':	'10px',
+		'border-radius':		'10px'
+	}, });
+	};
+
+	if ( #{esameAulaController.readonly}==true || #{navigationBean.isGuest()}==true) {
+		   $.blockUI.defaults.overlayCSS.opacity = 0; 
+		   $('#blockedRinvioStralci').block({ message: null } );}
+
+</script>
+
+
+</html>

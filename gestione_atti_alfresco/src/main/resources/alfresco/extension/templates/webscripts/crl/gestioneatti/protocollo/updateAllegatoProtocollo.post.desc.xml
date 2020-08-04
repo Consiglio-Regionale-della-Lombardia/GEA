@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Protocollo - aggiornamento allegato atto</shortname>
+  <description>Protocollo - esegue l'upload di una nuova versione di un allegato</description>
+  <url>/crl/protocollo/synch/atto/allegato/update</url>
+  <format default="json"/>
+  <authentication>admin</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti - Protocollo - Synch</family>
+</webscript>

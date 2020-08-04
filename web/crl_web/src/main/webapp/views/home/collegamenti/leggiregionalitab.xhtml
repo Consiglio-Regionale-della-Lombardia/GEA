@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<pe:tooltip value="Click per Espandere / Comprimere"
+	forSelector="legend" shared="true" targetPosition="top center"
+	position="left center" />
+
+<div id="blockedLeggiRegionali">
+<p:panelGrid styleClass="infoTable" id="LRIndirizzoPanel">
+	<p:row>
+		<p:column>
+			<p:fieldset styleClass="fieldSetTab"
+				legend="Leggi Regionali"
+				collapsed="false" toggleable="true" toggleSpeed="500">
+
+				<p:row>
+					<p:column colspan="4">
+
+						<!-- Messaggio azioni -->
+						<p:growl id="leggiRegionaliMsg" showDetail="true" sticky="false" />
+
+						<!-- Confirm dialog -->
+						<p:confirmDialog id="confirmCollegamentoAttoRegionaleDialog"
+							message="Sei sicuro di voler eliminare il Collegamento ?"
+							header="Cancellazione Collegamento" severity="alert"
+							widgetVar="collegamentoAttoRegionaleDialog">
+
+							<p:commandButton id="confirmAttoRegionaleCollegamento"
+								value="Conferma"
+								oncomplete="collegamentoAttoRegionaleDialog.hide()"
+								action="#{collegamentiController.removeCollegamentoAttoRegionale}"
+								update="listaCollegamentiAttiRegionali" />
+							<p:commandButton id="declineCollegamentoAttoRegionale"
+								value="Annulla" onclick="collegamentoAttoRegionaleDialog.hide()"
+								type="button" />
+						</p:confirmDialog>
+
+
+
+						<p:panelGrid id="addAttoRegionalePanel" styleClass="tableAppend">
+							<f:facet name="header">
+								<p:row>
+									<p:column>Tipo</p:column>
+									<p:column>N. Atto</p:column>
+									<p:column>Descrizione</p:column>
+									<p:column></p:column>
+								</p:row>
+							</f:facet>
+							<p:row>
+								<p:column>
+									<p:selectOneMenu id="numAttoRegionale"
+										value="#{collegamentiController.numeroAttoRegionale}">
+										<f:selectItem itemLabel="Scegli numero Atto" itemValue="" />
+										<f:selectItem itemLabel="1234" itemValue="1234" />
+										<f:selectItem itemLabel="5678" itemValue="5678" />
+										<f:selectItems
+											value="#{collegamentiController.numeriAttoRegionale}" />
+									</p:selectOneMenu>
+								</p:column>
+
+								<p:column>
+									<p:selectOneMenu id="tipoAttoRegionale"
+										value="#{collegamentiController.tipoAttoRegionale}">
+										<f:selectItem itemLabel="Scegli tipo Atto" itemValue="" />
+										<f:selectItem itemLabel="ITR" itemValue="ITR" />
+										<f:selectItem itemLabel="ITL" itemValue="ITL" />
+										<f:selectItems
+											value="#{collegamentiController.tipiAttoRegionale}" />
+									</p:selectOneMenu>
+								</p:column>
+
+								<p:column>
+									<p:inputText id="descrizionAttoRegionale"
+										value="#{collegamentiController.descrizioneAttoRegionale}" />
+								</p:column>
+
+								<p:column>
+									<p:commandButton value="Aggiungi"
+										action="#{collegamentiController.addCollegamentoAttoRegionale}"
+										id="addCollegamentoAttoRegionale"
+										update="listaCollegamentiAttiRegionali, leggiRegionaliMsg"
+										icon="new-icon" />
+								</p:column>
+
+							</p:row>
+
+						</p:panelGrid>
+
+					</p:column>
+				</p:row>
+
+				<br />
+
+				<p:row>
+					<p:column colspan="4">
+
+
+						<p:dataTable id="listaCollegamentiAttiRegionali"
+							value="#{collegamentiController.collegamentiLeggiRegionali}"
+							var="collegamento" styleClass="generalInfoTab" editable="true">
+
+							<p:column headerText="Tipo Atto" style="width:125px" sortBy="#{collegamento.tipoAtto}">
+							<h:outputText value="#{collegamento.tipoAtto}" />
+    			</p:column>
+
+							<p:column headerText="N.Atto" style="width:125px" sortBy="#{collegamento.numeroAtto}" >
+					<h:outputText value="#{collegamento.numeroAtto}" />
+				</p:column>
+
+							<p:column headerText="Descrizione" style="width:125px" sortBy="#{collegamento.descrizione}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{collegamento.descrizione}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{collegamento.descrizione}"
+											style="width:100%">
+											<p:ajax event="change"
+												listener="#{collegamentiController.updateLeggiRegionaliHandler}" />
+										</p:inputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Azioni" style="width:125px">
+
+								<p:commandButton
+									oncomplete="collegamentoAttoRegionaleDialog.show()"
+									icon="delete-icon">
+									<f:setPropertyActionListener value="#{collegamento.numeroAtto}"
+										target="#{collegamentiController.attoRegionaleToDelete}" />
+								</p:commandButton>
+							</p:column>
+
+							<p:column headerText="Modifica" style="width:50px">
+								<p:rowEditor />
+							</p:column>
+
+						</p:dataTable>
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<br />
+						<p:commandButton value="Salva"
+							action="#{collegamentiController.salvaLeggiRegionali}"
+							update="leggiRegionaliMsg" />
+					</p:column>
+				</p:row>
+
+			</p:fieldset>
+		</p:column>
+	</p:row>
+</p:panelGrid>
+</div>
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+<script>
+		
+if (#{navigationBean.isGuest()}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#blockedLeggiRegionali').block({ message: null } );}
+</script>
+</html>

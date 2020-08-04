@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Ricerca semplice atti</shortname>
+  <description>Ricerca semplice per gli atti</description>
+  <url>/crl/atto/ricerca/semplice</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

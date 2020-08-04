@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<pe:tooltip value="Click per Espandere / Comprimere"
+	forSelector="legend" shared="true" targetPosition="top center"
+	position="left center" />
+
+
+
+<div id="blockedIter">
+
+	<h:inputHidden id="urlHidden"
+		value="#{chiusuraIterController.urlLeggiRegionali}"></h:inputHidden>
+
+
+	<p:fieldset legend="Chiudi fascicolo" toggleable="true"
+		toggleSpeed="500">
+		<p:row>
+			<p:column>
+				<p:growl id="chiusuraIterMsg" showDetail="true" sticky="false" />
+			</p:column>
+		</p:row>
+
+		<p:panelGrid styleClass="infoTable" id="chiudifascicolopanel">
+			<p:row>
+				<p:column>
+					<b> <h:outputLabel for="datachiusura" value="Data chiusura: " />
+					</b>
+				</p:column>
+
+				<p:column>
+					<p:calendar size="10" locale="it" id="datachiusura"
+						pattern="dd/MM/yyyy"
+						value="#{chiusuraIterController.dataChiusura}">
+
+
+					</p:calendar>
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Tipo chiusura: " />
+				</p:column>
+				<p:column>
+					<p:selectOneMenu id="tipoSelect"
+						value="#{chiusuraIterController.tipoChiusura}">
+
+						<p:ajax process="@this chiudifascicolopanel" event="change"
+							update="chiudifascicolopanel"
+							listener="#{chiusuraIterController.changeDgr}" />
+
+						<f:selectItem itemLabel="Scegli tipo chiusura" itemValue="" />
+						<f:selectItem itemLabel="Pubblicato" itemValue="Pubblicato" />
+
+						<f:selectItem itemLabel="Parere trasmesso alla Giunta"
+							itemValue="Parere trasmesso alla Giunta" />
+
+						<f:selectItem itemLabel="Respinto dall'Aula"
+							itemValue="Respinto dall'Aula" />
+						<f:selectItem itemLabel="Inammissibile" itemValue="Inammissibile" />
+						<f:selectItem itemLabel="Ritirato dai promotori"
+							itemValue="Ritirato dai promotori" />
+						<f:selectItem itemLabel="Abbinato ad altro atto"
+							itemValue="Abbinato ad altro atto" />
+						<f:selectItem itemLabel="Per decadenza (fine legislatura)"
+							itemValue="Per decadenza (fine legislatura)" />
+						<f:selectItem itemLabel="Per motivi diversi"
+							itemValue="Per motivi diversi" />
+
+						<f:selectItem itemLabel="Istruttoria conclusa"
+							itemValue="Istruttoria conclusa" />
+						<f:selectItem itemLabel="Irricevibile" itemValue="Irricevibile" />
+						<f:selectItem itemLabel="Improcedibile" itemValue="Improcedibile" />
+					</p:selectOneMenu>
+				</p:column>
+			</p:row>
+
+
+			<p:row id="dgrRow" rendered="#{chiusuraIterController.isDgr()}">
+
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+						value="Numero DGR a seguito di parere: " />
+				</p:column>
+
+				<p:column>
+
+					<p:inputText value="#{chiusuraIterController.numeroDgrSeguito}" />
+
+				</p:column>
+
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Data DGR: " />
+				</p:column>
+
+				<p:column>
+					<p:calendar pattern="dd/MM/yyyy" locale="it"
+						value="#{chiusuraIterController.dataDgrSeguito}" />
+				</p:column>
+			</p:row>
+
+
+			<p:row>
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Note: " />
+				</p:column>
+				<p:column colspan="3">
+					<p:inputTextarea rows="2" cols="82"
+						value="#{chiusuraIterController.note}" />
+				</p:column>
+			</p:row>
+
+
+		</p:panelGrid>
+
+	</p:fieldset>
+	<p:fieldset legend="Pubblicazione su BURL" collapsed="false"
+		toggleable="true" toggleSpeed="500"
+		rendered="#{navigationBean.isBURLEnabled()}">
+		<p:panelGrid styleClass="infoTable" id="registrazioneburlpanel">
+
+			<p:row rendered="#{navigationBean.isBURLEnabled()}">
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+						value="Numero e serie BURL: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="inputnumerorifburl"
+						value="#{chiusuraIterController.numRiferimentoBurl}" />
+				</p:column>
+				<p:column>
+					<b> <h:outputLabel for="databurl" value="Data BURL: " />
+					</b>
+				</p:column>
+
+				<p:column>
+					<p:calendar size="10" locale="it" id="databurl"
+						pattern="dd/MM/yyyy" value="#{chiusuraIterController.dataBurl}" />
+				</p:column>
+
+			</p:row>
+			<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
+				<p:column>
+					<h:outputText style="font-weight: bold;" value="Numero LR: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="inputnumerolr"
+						value="#{chiusuraIterController.numeroLr}" />
+				</p:column>
+				<p:column>
+					<b> <h:outputLabel for="datalr" value="Data LR: " />
+					</b>
+				</p:column>
+
+				<p:column>
+					<p:calendar size="10" locale="it" id="datalr" pattern="dd/MM/yyyy"
+						value="#{chiusuraIterController.dataLr}" />
+				</p:column>
+			</p:row>
+
+			<p:row
+				rendered="#{navigationBean.isCommissioneDeliberante() and navigationBean.isSessionAttoPDA()}">
+				<p:column>
+					<b><h:outputLabel for="numeroDcr" value="Numero DCR: " /></b>
+				</p:column>
+				<p:column>
+					<p:inputMask id="numeroDcr"
+						value="#{chiusuraIterController.numeroDcr}"
+						mask="#{chiusuraIterController.atto.legislatura}/999/9999">
+					</p:inputMask>
+				</p:column>
+			</p:row>
+
+
+
+			<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
+				<p:column colspan="2">
+
+					<p:commandLink target="_blank" value="Link Leggi Regionali"
+						action="#{chiusuraIterController.createLeggeRegionaleLink}"
+						oncomplete="leggiRegionali()" update="urlHidden,chiusuraIterMsg" />
+
+
+
+
+				</p:column>
+				<!-- action="#{chiusuraIterController.createLeggeRegionaleLink}" -->
+			</p:row>
+
+           <p:row rendered="#{navigationBean.isSessionAttoPRE()}">
+				<p:column>
+					<h:outputText style="font-weight: bold;"
+						value="Numero Regolamento: " />
+				</p:column>
+				<p:column>
+					<p:inputText id="inputnumeroreg"
+						value="#{chiusuraIterController.numRegolamento}" />
+				</p:column>
+				<p:column>
+					<b> <h:outputLabel for="datareg" value="Data Regolamento: " />
+					</b>
+				</p:column>
+
+				<p:column>
+					<p:calendar size="10" locale="it" id="datareg"
+						pattern="dd/MM/yyyy" value="#{chiusuraIterController.dataRegolamento}" />
+				</p:column>
+
+			</p:row>     
+
+
+
+			<div id=""></div>
+
+
+
+		</p:panelGrid>
+	</p:fieldset>
+	<p>
+		<p:commandButton disabled="#{navigationBean.isSessionAttoPARChiuso()}"
+			value="Chiusura atto" action="#{chiusuraIterController.chiusuraAtto}"
+			update="chiusuraIterMsg , :informationForm:informationBar" />
+	</p>
+
+</div>
+
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+<script type="text/javascript">
+
+
+
+
+
+	
+if ( #{navigationBean.isGuest()}==true || #{navigationBean.isCommissioneConsultiva()}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#blockedIter').block({ message: null } );}
+</script>
+</html>

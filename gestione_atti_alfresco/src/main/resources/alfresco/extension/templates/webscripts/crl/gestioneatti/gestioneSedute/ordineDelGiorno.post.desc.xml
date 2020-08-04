@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Aggiunta e modifica dell'ordine del giorno in una seduta</shortname>
+  <description>Aggiunta e modifica dell'ordine del giorno in una seduta</description>
+  <url>/crl/sedute/odg</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test creazione di un atto EAC</shortname>
+  <description>Test per la creazione del nodo per un nuovo atto EAC</description>
+  <url>/crl/test/atto/eac</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test POST dati lettera</shortname>
+  <description>Test POST dati lettera</description>
+  <url>/crl/test/post/lettera/dati</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

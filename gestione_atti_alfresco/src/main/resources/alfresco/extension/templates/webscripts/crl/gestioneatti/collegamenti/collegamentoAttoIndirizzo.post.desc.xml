@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Creazione o modifica dei collegamenti di un atto di indirizzo</shortname>
+  <description>Aggiunge o modifica i collegamenti di un determinato atto di indirizzo</description>
+  <url>/crl/atto/collegamentoattoindirizzo</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

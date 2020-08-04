@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test lettura tipologie di un tipo di atto</shortname>
+  <description>Permette di testare la funzionalità di reperimento delle tipologie di uno specifico tipo di atto</description>
+  <url>/crl/test/anagrafica/atto/tipologie</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

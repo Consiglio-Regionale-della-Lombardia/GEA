@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>stralcio commissione</shortname>
+  <description>stralcio commissione</description>
+  <url>/crl/atto/esamecommissionimigrazione/stralcio</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

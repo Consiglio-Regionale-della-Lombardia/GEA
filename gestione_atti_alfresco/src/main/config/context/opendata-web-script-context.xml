@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+
+
+<beans>
+	<bean id="openDataCommand" class="com.sourcesense.crl.util.OpenDataCommand" depends-on="attoUtil">
+		<property name="nodeService" ref="NodeService" />
+		<property name="searchService" ref="SearchService" />
+		<property name="listSeparator">
+			<value>${nga:opendata.separator.list}</value>
+		</property>
+		<property name="linkAtto">
+			<value>${nga:opendata.bancadati.link.atto}</value>
+		</property>
+		<property name="linkVotoFinale">
+			<value>${nga:opendata.bancadati.link.votofinale}</value>
+		</property>
+		<property name="namespaceService" ref="namespaceService" />
+		<property name="attoUtil" ref="attoUtil" />
+	</bean>
+
+	<bean id="webscript.crl.gestioneatti.exportExcel.list.get"
+		class="com.sourcesense.crl.webscript.opendata.NodeListDownloadWebScript"
+		parent="webscript">
+		<property name="nodeService" ref="NodeService" />
+		<property name="contentService" ref="ContentService" />
+		<property name="personService" ref="PersonService" />
+		<property name="namespaceService" ref="namespaceService" />
+		<property name="dictionaryService" ref="dictionaryService" />
+		<property name="searchService" ref="searchService" />
+		<property name="openDataCommand" ref="openDataCommand" />
+		<property name="overHeadings">
+			<value>id_atto,legislatura,tipo_atto,n_atto,oggetto,data_presentazione,stato,primo_firmatario,firmatari,primo_promotore,promotori,tipo_iniziativa,tipo_chiusura,abbinamenti,com_referente_co-referente_redigente_deliberante,data_assegnazione_referente,relatore_referente,data_nomina_relatore_referente,esito_votazione_com_referente_o_redigente_o_deliberante,data_votazione_com_referente_o_redigente_o_deliberante,commissioni_consultive,esito_votazione_aula,data_votazione_aula,n_dcr,burl,data_burl,n_lr,data_lr,ids_lr,link_testo_atto_com_referente,link_voto_finale_aula,link_atto_bancadati</value>
+		</property>
+		<property name="overDescriptions">
+			<!-- <value>id_atto,tipo_atto,n_atto,oggetto,data_presentazione,stato,id_primo_firmatario,primo_firmatario,id_tutti_firmatari,tutti_firmatari,tipo_iniziativa,tipo_chiusura,com_referente_co-referente_redigente_deliberante,data_assegnazione,commissioni_consultive,id_relatore,relatore,data_nomina_relatore,abbinamenti,esito_votazione_commissione_referente_redigente_deliberante,data_votazione_commissione,esito_votazione_aula,data_votazione_aula,N 
+				DCR,BURL,Data BURL,n_lr,data_lr,ids_lr,link_testo_presentato,link_atto_bancadati 
+				</value> -->
+			<value>ID ATTO</value>
+		</property>
+		<property name="modelProperties">
+			<!-- <value>crlatti:numeroAtto</value> -->
+			<!-- <value>cm:name,</value> -->
+			<value>openDataCommand:getIdAtto,crlatti:legislatura,openDataCommand:getTipoAtto,openDataCommand:getNumeroAtto,crlatti:oggetto,crlatti:dataIniziativa,crlatti:statoAtto,openDataCommand:getPrimoFirmatario,openDataCommand:getTuttiFirmatari,openDataCommand:getPrimoPromotore,openDataCommand:getTuttiPromotori,crlatti:tipoIniziativa,crlatti:tipoChiusura,openDataCommand:getAbbinamenti,crlatti:commReferente,crlatti:dataAssegnazioneCommissioneReferente,openDataCommand:getRelatore,openDataCommand:getDataNominaRelatore,openDataCommand:getEsitoVotazioneCommissioneReferente,openDataCommand:getDataVotazioneCommissioneReferente,crlatti:commConsultiva,openDataCommand:getEsitoVotazioneAula,openDataCommand:getDataVotazioneAula,openDataCommand:getNumeroDcrPassaggioAula,crlatti:numeroPubblicazioneBURL,crlatti:dataPubblicazioneBURL,crlatti:numeroLr,crlatti:dataLr,openDataCommand:getIdsLr,openDataCommand:linkTestoAttoComReferente,openDataCommand:getLinkVotoFinaleAula,openDataCommand:linkAtto</value>
+		</property>
+		<property name="openDataDateFormat">
+			<value>${nga:opendata.excel.date.format}</value>
+		</property>
+		<property name="listSeparator">
+			<value>${nga:opendata.separator.list}</value>
+		</property>
+
+	</bean>
+</beans>

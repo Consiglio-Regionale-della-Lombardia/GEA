@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form>
+	<p:panelGrid
+		style="align:center;width:70%;margin-bottom:7px;border:1px solid #4F4F4F;"
+		id="loginpanel">
+
+
+
+		<f:facet name="header">
+			<p:row>
+				<p:column style="text-align:left" colspan="4">
+						Errore di Sistema :  
+			    </p:column>
+			</p:row>
+		</f:facet>
+
+		<p:row>
+			<p:column colspan="3">
+				<h:outputText value="#{param.error}" />
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column colspan="3">
+				<h:outputText value="Tentare un nuovo Login e Contattare l'Amministratore di Sistema" />
+			</p:column>
+		</p:row>
+
+
+		<p:row>
+
+			<p:column colspan="3" style="align:center">
+
+				<p:button  value="Login"  href="/">
+					
+				</p:button>
+			</p:column>
+		</p:row>
+
+
+	</p:panelGrid>
+
+
+
+</h:form>
+</html>

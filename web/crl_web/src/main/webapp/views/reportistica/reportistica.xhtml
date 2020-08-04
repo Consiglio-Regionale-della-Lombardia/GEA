@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<style type="text/css">
+.ui-fieldset-legend {
+	width: 200px;
+}
+
+
+.ui-tree .ui-treenode {
+    background-attachment: scroll;
+    background-color: transparent;
+    background-image: none;
+    background-position: 0 0;
+    background-repeat: repeat-y;
+    list-style: none outside none;
+    margin: 5px;
+    padding: 1px 0 0;
+}
+
+
+</style>
+
+</h:head>
+
+
+<h:form id="reportForm">
+
+
+	<p:growl id="messages" showDetail="true" />
+
+	<p:fieldset style="text-align: left;" legend="Tipo di reports"
+		toggleable="true" toggleSpeed="500">
+
+		<p:panelGrid
+			style="text-align:left;width:100%;margin-bottom:7px;border:1px solid #4F4F4F;"
+			id="reportisticapanel">
+
+			<f:facet name="header">
+				<p:row>
+					<p:column style="text-align:left" colspan="4">
+						Reportistica:
+			    </p:column>
+				</p:row>
+			</f:facet>
+
+			<p:row>
+				<p:column>
+
+					<p:tree style="width:90%;border:none" id="docTree"
+						value="#{reportisticaController.root}" var="node" dynamic="false"
+						cache="false" selectionMode="single" 
+						selection="#{reportisticaController.selectedNode}">
+
+						<p:ajax event="select" update=":reportForm:dettaglioPan,docTree"
+							
+							listener="#{reportisticaController.onNodeSelect}" />
+
+						<p:treeNode  expandedIcon="ui-icon-folder-open"
+							collapsedIcon="ui-icon-folder-collapsed" >
+							<h:outputText value="#{node}" />
+						</p:treeNode>
+
+						<p:treeNode type="lettera" expandedIcon="ui-icon-folder-open"
+							collapsedIcon="ui-icon-folder-collapsed" icon="ui-icon-document">
+							<h:outputText value="#{node.nome}" />
+						</p:treeNode>
+
+
+					</p:tree>
+
+
+
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:fieldset>
+
+
+	<p:fieldset style="text-align: left;"
+		legend="Dettagli Report selezionato" collapsed="false"
+		toggleable="true" toggleSpeed="500">
+
+		<p:outputPanel id="dettaglioPan">
+
+			<p:panelGrid styleClass="infoTable" id="insertletterapanel">
+
+
+
+				<p:row
+					rendered="#{not empty reportisticaController.selectedReport.nome and reportisticaController.isLegislaturaVisible()}">
+
+					<p:column>
+						<h:outputLabel for="legislature" value="Legislatura: " />
+					</p:column>
+
+					<p:column colspan="3">
+						<p:selectOneMenu id="legislatura"
+							value="#{reportisticaController.legislatura}" required="true"
+							requiredMessage="Legislatura obbligatoria">
+							<f:selectItems value="#{reportisticaController.legislature}" />
+						</p:selectOneMenu>
+					</p:column>
+
+
+				</p:row>
+
+				<p:row rendered="#{reportisticaController.isTipiAttoVisible()}">
+
+					<p:column>
+						<h:outputLabel for="tipiAtto" value="Tipi di Atto: " />
+					</p:column>
+
+					<p:column>
+						<h:selectManyCheckbox id="tipiAtto"
+							value="#{reportisticaController.tipiAtto}" layout="pageDirection">
+							<f:selectItems value="#{reportisticaController.tipiAttoSel}" />
+						</h:selectManyCheckbox>
+					</p:column>
+					<p:column>
+						<p:commandButton value="Seleziona tutti"
+							onclick="selectAllChecks('reportForm:tipiAtto:')"></p:commandButton>
+					</p:column>
+					<p:column>
+						<p:commandButton value="Deseleziona tutti"
+							onclick="deselectAllChecks('reportForm:tipiAtto:')"></p:commandButton>
+					</p:column>
+
+				</p:row>
+
+
+
+
+				<p:row rendered="#{reportisticaController.isCommissioniVisible()}">
+
+					<p:column>
+						<h:outputLabel for="commissioni" value="Commissioni: " />
+					</p:column>
+
+					<p:column>
+						<h:selectManyCheckbox id="commissioni"
+							value="#{reportisticaController.commissioni}"
+							layout="pageDirection">
+							<f:selectItems id="commissioni_chk"
+								value="#{reportisticaController.commissioniSel}" />
+						</h:selectManyCheckbox>
+					</p:column>
+					<p:column>
+						<p:commandButton value="Seleziona tutti"
+							onclick="selectAllChecks('reportForm:commissioni:')"></p:commandButton>
+					</p:column>
+					<p:column>
+						<p:commandButton value="Deseleziona tutti"
+							onclick="deselectAllChecks('reportForm:commissioni:')"></p:commandButton>
+					</p:column>
+
+				</p:row>
+
+
+				<p:row
+					rendered="#{reportisticaController.isRuoloCommissioneVisible()}">
+
+					<p:column>
+						<h:outputLabel for="ruoloComm" value="Competenza: " />
+					</p:column>
+
+					<p:column>
+						<p:selectOneMenu id="ruoloComm"
+							value="#{reportisticaController.ruoloCommissione}"
+							layout="pageDirection">
+							<f:selectItem itemLabel="Scegli Ruolo" itemValue="" />
+							<f:selectItem itemLabel="Referente" itemValue="Referente" />
+							<f:selectItem itemLabel="Co-Referente" itemValue="Co-Referente" />
+							<f:selectItem itemLabel="Consultiva" itemValue="Consultiva" />
+							<f:selectItem itemLabel="Redigente" itemValue="Redigente" />
+							<f:selectItem itemLabel="Deliberante" itemValue="Deliberante" />
+						</p:selectOneMenu>
+					</p:column>
+
+				</p:row>
+
+
+				<p:row
+					rendered="#{reportisticaController.isDataAssegnazioneVisible()}">
+
+					<p:column>
+						Data Assegnazione  
+					</p:column>
+
+					<p:column>
+						da : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataAssegnazioneDa}"></p:calendar>
+						a : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataAssegnazioneA}"></p:calendar>
+					</p:column>
+
+				</p:row>
+
+				<p:row
+					rendered="#{reportisticaController.isDataVotazioneCommReferenteVisible()}">
+
+					<p:column>
+						Data Votazione Commissione Referente   
+					</p:column>
+
+					<p:column>
+						da : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataVotazioneCommReferenteDa}"></p:calendar>
+						a : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataVotazioneCommReferenteA}"></p:calendar>
+					</p:column>
+
+				</p:row>
+
+				<p:row rendered="#{reportisticaController.isDataRitiroVisible()}">
+
+					<p:column>
+						Data Ritiro   
+					</p:column>
+
+					<p:column>
+						da : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataRitiroDa}"></p:calendar>
+						a : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataRitiroA}"></p:calendar>
+					</p:column>
+
+
+				</p:row>
+
+				<p:row
+					rendered="#{reportisticaController.isDataNominaRelatoreVisible()}">
+
+					<p:column>
+						Data Nomina Relatore    
+					</p:column>
+
+					<p:column>
+						da : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataNominaRelatoreDa}"></p:calendar>
+						a : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataNominaRelatoreA}"></p:calendar>
+					</p:column>
+
+
+				</p:row>
+
+				<p:row rendered="#{reportisticaController.isRelatoriVisible()}">
+
+					<p:column>
+						<h:outputLabel for="relatori" value="Relatori: " />
+					</p:column>
+
+					<p:column>
+						<p:selectManyMenu id="relatori" style="width:200px;height:200px;overflow:scroll"
+							value="#{reportisticaController.relatoriSelected}">
+							<f:selectItems value="#{reportisticaController.relatori}" />
+						</p:selectManyMenu>
+					</p:column>
+
+				</p:row>
+
+				<p:row rendered="#{reportisticaController.isOrganismoVisible()}">
+
+					<p:column>
+						<h:outputLabel for="organismo" value="Organismo: " />
+					</p:column>
+
+					<p:column>
+						<p:selectOneMenu id="organismo"
+							value="#{reportisticaController.organismo}">
+							<f:selectItems value="#{reportisticaController.organismi}" />
+						</p:selectOneMenu>
+					</p:column>
+
+
+				</p:row>
+
+				<p:row
+					rendered="#{reportisticaController.isDataAssegnazioneParereDaVisible()}">
+
+					<p:column>
+						Data Assegnazione Parere    
+					</p:column>
+
+					<p:column>
+						da : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataAssegnazioneParereDa}"></p:calendar>
+						a : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataAssegnazioneParereA}"></p:calendar>
+					</p:column>
+
+
+				</p:row>
+
+				<p:row rendered="#{reportisticaController.isFirmatarioVisible()}">
+
+					<p:column>
+						<h:outputLabel for="firmatario" value="Firmatario: " />
+					</p:column>
+
+					<p:column>
+						<p:selectOneMenu id="firmatario"
+							value="#{reportisticaController.firmatario}">
+							<f:selectItem itemValue="" itemLabel="Scegli Firmatario" />
+							<f:selectItems value="#{reportisticaController.firmatari}" />
+						</p:selectOneMenu>
+					</p:column>
+				</p:row>
+
+				<p:row
+					rendered="#{reportisticaController.isTipologiaFirmaVisible()}">
+
+					<p:column>
+						<h:outputLabel for="tipologiaFirma" value="Tipologia firma: " />
+					</p:column>
+
+					<p:column>
+						<p:selectOneMenu id="tipologiaFirma"
+							value="#{reportisticaController.tipologiaFirma}" required="true" 
+											requiredMessage="Tipologia firma obbligatoria">
+							<f:selectItem itemValue="" itemLabel="Scegli Tipologia Firma" />
+                            <f:selectItem itemValue="primo" itemLabel="Primo" />
+                            <f:selectItem itemValue="originari" itemLabel="Originari" />
+                            <!-- <f:selectItem itemValue="aggiunti" itemLabel="Aggiunti" />   -->
+						</p:selectOneMenu>
+					</p:column>
+
+				</p:row>
+
+				<p:row
+					rendered="#{reportisticaController.isDataPresentazioneVisible()}">
+
+					<p:column>
+						Data Presentazione   
+					</p:column>
+
+					<p:column>
+						da : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataPresentazioneDa}"></p:calendar>
+						a : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataPresentazioneA}"></p:calendar>
+					</p:column>
+				</p:row>
+
+				<p:row
+					rendered="#{reportisticaController.isDataAssegnazioneCommReferenteVisible()}">
+
+					<p:column>
+						Data Assegnazione Commissione Referente   
+					</p:column>
+
+					<p:column>
+						da : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataAssegnazioneCommReferenteDa}"></p:calendar>
+						a : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataAssegnazioneCommReferenteA}"></p:calendar>
+					</p:column>
+
+				</p:row>
+
+				<p:row rendered="#{reportisticaController.isDataSedutaVisible()}">
+
+					<p:column>
+						Data Seduta   
+					</p:column>
+
+					<p:column>
+						da : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataSedutaDa}"></p:calendar>
+						a : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataSedutaA}"></p:calendar>
+					</p:column>
+
+				</p:row>
+
+
+
+                <p:row
+					rendered="#{reportisticaController.isDataConsultazioneVisible()}">
+
+					<p:column>
+						Data Consultazione  
+					</p:column>
+
+					<p:column>
+						da : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataConsultazioneDa}"></p:calendar>
+						a : <p:calendar locale="it" pattern="dd/MM/yyyy"
+							value="#{reportisticaController.dataConsultazioneA}"></p:calendar>
+					</p:column>
+
+				</p:row>
+                  
+
+
+
+			</p:panelGrid>
+
+		</p:outputPanel>
+
+	</p:fieldset>
+
+
+
+	<p>
+
+
+		<p:commandButton value="Genera Report" id="downloadLink" ajax="false"
+			onclick="PrimeFaces.monitorDownload(start, stop)">
+			<p:fileDownload value="#{reportisticaController.file}" />
+
+		</p:commandButton>
+
+
+	</p>
+
+
+
+
+</h:form>
+</html>

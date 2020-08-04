@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Upload verbale seduta</shortname>
+  <description>Upload di un verbale per una seduta specifica</description>
+  <url>/crl/seduta/allegato/verbale</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

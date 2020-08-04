@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test creazione / modifica di un relatore</shortname>
+  <description>Test per la creazione e modifica del nodo di un relatore associato ad una commissione di un atto</description>
+  <url>/crl/test/post/atto/esamecommissioni/membricomitato</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test stralcio commissione</shortname>
+  <description>Test stralcio commissione</description>
+  <url>/crl/test/post/atto/esamecommissioni/stralcio</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

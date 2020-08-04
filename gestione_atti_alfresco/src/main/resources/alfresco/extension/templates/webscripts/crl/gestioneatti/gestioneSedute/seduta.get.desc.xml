@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Dettaglio seduta</shortname>
+  <description>Restituisce il dettaglio della seduta</description>
+  <url>/crl/seduta?provenienza={provenienza}&amp;dataSeduta={dataSeduta}&amp;legislatura={legislatura}</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

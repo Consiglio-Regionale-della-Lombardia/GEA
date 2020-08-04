@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:form id="navForm" >
+<p:breadCrumb style="width: 99%">
+	<p:menuitem value="Home" url="/home" />
+	
+	
+	<p:menuitem value=" #{fn: replace (prettyContext.getCurrentInstance().currentMapping.id  ,'_', ' '   )  }"
+		url="#{prettyContext.getCurrentInstance().currentMapping.pattern}" />
+    
+</p:breadCrumb>
+
+</h:form>
+
+</html>

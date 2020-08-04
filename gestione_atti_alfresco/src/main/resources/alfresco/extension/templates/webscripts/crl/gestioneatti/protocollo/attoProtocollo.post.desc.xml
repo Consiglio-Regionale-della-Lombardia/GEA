@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Protocollo - creazione o aggiornamento atto</shortname>
+  <description>Protocollo - crea o aggiorna i metadati di un nodo atto</description>
+  <url>/crl/protocollo/atto</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti - Protocollo - Synch</family>
+</webscript>

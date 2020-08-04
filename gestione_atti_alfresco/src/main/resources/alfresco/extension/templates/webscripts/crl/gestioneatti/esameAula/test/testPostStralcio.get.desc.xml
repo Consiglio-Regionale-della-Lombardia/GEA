@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test Stralcio aula</shortname>
+  <description>Test Stralcio aula</description>
+  <url>/crl/test/post/atto/esameaula/stralcio</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

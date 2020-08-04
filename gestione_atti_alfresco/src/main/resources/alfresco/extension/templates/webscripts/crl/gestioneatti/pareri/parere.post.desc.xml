@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Parere organismo statutario</shortname>
+  <description>Memorizza un parere dell'atto espresso da un organismo statutario</description>
+  <url>/crl/atto/parere</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

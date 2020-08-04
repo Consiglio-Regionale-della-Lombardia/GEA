@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Modifica dati lettera</shortname>
+  <description>Modifica dati associati ai template delle lettere</description>
+  <url>/crl/template/lettere/updatelettera</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

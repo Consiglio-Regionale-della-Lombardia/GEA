@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Creazione di un atto</shortname>
+  <description>Crea il nodo per un nuovo atto</description>
+  <url>/crl/atto</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

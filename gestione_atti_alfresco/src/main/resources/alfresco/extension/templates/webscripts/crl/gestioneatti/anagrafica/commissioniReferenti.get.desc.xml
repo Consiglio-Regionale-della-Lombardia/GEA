@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Commissioni referenti</shortname>
+  <description>Restituisce l'elenco di tutte le commissioni referenti</description>
+  <url>/crl/anagrafica/atto/commissioni/referenti</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

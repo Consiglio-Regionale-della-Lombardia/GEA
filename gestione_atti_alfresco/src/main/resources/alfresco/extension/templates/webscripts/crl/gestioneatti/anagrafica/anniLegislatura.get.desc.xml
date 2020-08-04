@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Legislatura</shortname>
+  <description>Restituisce l'elenco degli anni relativi ad una legislatura</description>
+  <url>/crl/anagrafica/legislatura?nomeLegislatura={nomeLegislatura}</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

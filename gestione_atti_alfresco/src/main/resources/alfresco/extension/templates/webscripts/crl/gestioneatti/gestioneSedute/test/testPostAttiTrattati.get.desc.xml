@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test aggiunta atti trattati in una seduta</shortname>
+  <description>Test aggiunta atti trattati in una seduta</description>
+  <url>/crl/test/sedute/attotrattati</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

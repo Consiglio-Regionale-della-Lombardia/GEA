@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<pe:tooltip value="Click per Espandere / Comprimere"
+	forSelector="legend" shared="true" targetPosition="top center"
+	position="left center" />
+
+<div id="blockedNote">
+
+	<p:panelGrid styleClass="infoTable" id="notePanel">
+		<p:row>
+			<p:column>
+				<p>
+					<!-- Messaggio azioni -->
+					<p:growl id="noteAllegatiMsg" showDetail="true" sticky="false" />
+
+
+
+					<!-- Confirm dialog -->
+					<p:confirmDialog id="confirmAllegatoDialog"
+						message="Sei sicuro di voler eliminare l'Allegato ?"
+						header="Cancellazione Allegato" severity="alert"
+						widgetVar="allegatoDialog">
+
+						<p:commandButton id="confirmAllegato" value="Conferma"
+							oncomplete="allegatoDialog.hide()"
+							action="#{presentazioneAssegnazioneAttoController.removeAllegato}"
+							actionListener="#{presentazioneAssegnazioneAttoController.updateNoteHandler}"
+							update="listaAllegati" />
+						<p:commandButton id="declineAllegato" value="Annulla"
+							onclick="allegatoDialog.hide()" type="button" />
+
+					</p:confirmDialog>
+
+					<p:confirmDialog id="confirmLinkDialog"
+						message="Sei sicuro di voler eliminare il Link?"
+						header="Cancellazione Link" severity="alert"
+						widgetVar="linkDialog">
+
+						<p:commandButton id="confirmLink" value="Conferma"
+							oncomplete="linkDialog.hide()"
+							action="#{presentazioneAssegnazioneAttoController.removeLink}"
+							actionListener="#{presentazioneAssegnazioneAttoController.updateNoteHandler}"
+							update="listaLinks" />
+						<p:commandButton id="declineLink" value="Annulla"
+							onclick="linkDialog.hide()" type="button" />
+
+					</p:confirmDialog>
+
+
+					<p:confirmDialog id="uploadAllegatoAttributes" header="Caricamento"
+						widgetVar="uploadAllegatoAttributesDialog" style="width:450px"
+						message="Allega file">
+						<p:panelGrid id="uploadpanelalleg">
+							<p:row>
+								<p:column>
+									<h:outputLabel for="isPubblico" value="Pubblica su Internet: " />
+									<p:selectBooleanCheckbox id="isPubblicoAllegato"
+										value="#{presentazioneAssegnazioneAttoController.currentFilePubblico}">
+										<p:ajax event="change" immediate="true"></p:ajax>
+									</p:selectBooleanCheckbox>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:fileUpload label="Sfoglia"  uploadLabel="Carica" cancelLabel="Cancella"
+										oncomplete="uploadAllegatoAttributesDialog.hide()"
+										auto="false" update="listaAllegati ,noteAllegatiMsg"
+										fileUploadListener="#{presentazioneAssegnazioneAttoController.uploadAllegato}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:commandButton id="declineUploadAllegato" value="Annulla"
+										onclick="uploadAllegatoAttributesDialog.hide()" type="button" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:confirmDialog>
+
+				</p>
+			</p:column>
+		</p:row>
+
+
+
+		<p:row>
+			<p:column>
+				<p:fieldset styleClass="fieldSetTab" legend="Note:"
+					collapsed="false" toggleable="true" toggleSpeed="500">
+
+					<b>Note generali: </b>
+					<br />
+					<br />
+					<p:inputTextarea rows="5" cols="101"
+						value="#{presentazioneAssegnazioneAttoController.noteNoteAllegati}">
+						<p:ajax event="change"
+							listener="#{presentazioneAssegnazioneAttoController.updateNoteHandler}" />
+					</p:inputTextarea>
+
+					<h:outputText id="counter" />
+
+
+				</p:fieldset>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<p:fieldset styleClass="fieldSetTab" legend="Allegati:"
+					collapsed="false" toggleable="true" toggleSpeed="500">
+
+					<p:panelGrid styleClass="infoTable" id="allegatopanel">
+						<p:row>
+
+							<p:column>
+
+
+								<p:commandButton value="Carica Allegato"
+									oncomplete="uploadAllegatoAttributesDialog.show()">
+								</p:commandButton>
+
+							</p:column>
+							<p:column colspan="2">
+								<p:commandButton value="Sposta Testi Atto"
+									action="#{presentazioneAssegnazioneAttoController.spostaAllegati}"
+									update="listaAllegati,noteAllegatiMsg,:presAssForm:tabView:listaTestiAtto">
+								</p:commandButton>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="4">
+
+								<p:dataTable id="listaAllegati"
+									value="#{presentazioneAssegnazioneAttoController.allegatiList}"
+									var="allegato" styleClass="generalInfoTab grey-text" editable="true">
+															
+									<p:ajax event="rowEdit" update="@this"
+									listener="#{presentazioneAssegnazioneAttoController.updateAllegato}" />
+
+									<p:column sortBy="#{allegato.nome}">
+										<f:facet name="header">Descrizione Allegato</f:facet>
+										<h:outputText value="#{allegato.nome}" />
+									</p:column>
+
+									<p:column sortBy="#{allegato.mimetype}">
+
+										<f:facet name="header">Formato</f:facet>
+										<h:outputText value="#{allegato.mimetype}" />
+
+
+									</p:column>
+
+									<p:column sortBy="#{allegato.pubblico}">
+										<f:facet name="header">Pubblico</f:facet>
+
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="si"  rendered="#{allegato.pubblico}" />
+												<h:outputText value="no" rendered="#{!allegato.pubblico}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:selectBooleanCheckbox   value="#{allegato.pubblico}"  />
+											</f:facet>
+										</p:cellEditor>
+
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Elimina</f:facet>
+										<p:commandButton oncomplete="allegatoDialog.show()"
+											icon="delete-icon">
+
+											<f:setPropertyActionListener value="#{allegato.id}"
+													target="#{presentazioneAssegnazioneAttoController.allegatoToDelete}" />
+										</p:commandButton>
+									</p:column>
+									<p:column>
+										<f:facet name="header">Scarica</f:facet>
+
+										<p:commandButton id="downloadLinkemendamento"
+											icon="detail-icon" ajax="false"
+											onclick="PrimeFaces.monitorDownload(start, stop)">
+											<f:setPropertyActionListener value="#{allegato.id}"
+												target="#{fileDownloadController.fileId}" />
+											<f:setPropertyActionListener value="#{allegato.nome}"
+												target="#{fileDownloadController.fileName}" />
+											<f:setPropertyActionListener value="#{allegato.mimetype}"
+												target="#{fileDownloadController.fileMimetype}" />
+											<p:fileDownload value="#{fileDownloadController.file}" />
+										</p:commandButton>
+
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Testo Atto</f:facet>
+
+										<p:selectBooleanCheckbox id="checkTesto"
+											value="#{allegato.testo}">
+
+										</p:selectBooleanCheckbox>
+
+									</p:column>
+									
+									<p:column headerText="Modifica" style="width:50px">
+							<p:rowEditor   />
+						</p:column>
+
+
+								</p:dataTable>
+							</p:column>
+						</p:row>
+
+					</p:panelGrid>
+
+					<!-- TODO : upload file al click sul pulsante-->
+
+				</p:fieldset>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<p:fieldset styleClass="fieldSetTab" legend="Link:"
+					collapsed="false" toggleable="true" toggleSpeed="500">
+
+					<p:panelGrid styleClass="infoTable" id="linkspanel">
+
+
+						<p:row>
+							<p:column colspan="4">
+								<p:panelGrid id="addLinkPanel" styleClass="tableAppend">
+
+									<f:facet name="header">
+										<p:row>
+											<p:column>Descrizione collegamento</p:column>
+											<p:column>Indirizzo collegamento</p:column>
+											<p:column>Pubblico</p:column>
+											<p:column></p:column>
+										</p:row>
+									</f:facet>
+									<p:row>
+										<p:column style="text-align:center">
+											<p:inputText id="link" size="55"
+												value="#{presentazioneAssegnazioneAttoController.nomeLink}" />
+
+										</p:column>
+
+										<p:column style="text-align:center">
+											
+											<p:inputText id="urllink" size="55"
+												value="#{presentazioneAssegnazioneAttoController.urlLink}" />
+										
+										</p:column>
+
+										<p:column style="text-align:center">
+											<p:selectBooleanCheckbox id="pubblico"
+												value="#{presentazioneAssegnazioneAttoController.pubblico}" />
+										</p:column>
+
+										<p:column style="text-align:center">
+											<p:commandButton value="Aggiungi"
+												action="#{presentazioneAssegnazioneAttoController.addLink}"
+												id="addLink" update="listaLinks , noteAllegatiMsg"
+												icon="new-icon" />
+										</p:column>
+
+									</p:row>
+								</p:panelGrid>
+
+
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column colspan="4">
+
+								<p:dataTable id="listaLinks"
+									value="#{presentazioneAssegnazioneAttoController.linksList}"
+									var="link" styleClass="generalInfoTab grey-text"
+									editable="true">
+
+									<p:column headerText="Descrizione collegamento"
+										sortBy="#{link.descrizione}">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{link.descrizione}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{link.descrizione}" style="width:100%">
+
+												</p:inputText>
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+									<p:column headerText="Indirizzo collegamento"
+										sortBy="#{link.indirizzo}">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputLink  value="http://#{link.indirizzo}"  target="_blank">
+													<h:outputText value="#{link.indirizzo}" />
+												</h:outputLink>
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{link.indirizzo}" style="width:100%">
+
+												</p:inputText>
+											</f:facet>
+										</p:cellEditor>
+
+
+									</p:column>
+
+									<p:column headerText="Pubblico" sortBy="#{link.pubblico}">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="si" rendered="#{link.pubblico}" />
+												<h:outputText value="no" rendered="#{!link.pubblico}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:selectBooleanCheckbox value="#{link.pubblico}" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+									<p:column headerText="Elimina">
+
+
+										<p:commandButton oncomplete="linkDialog.show()"
+											icon="delete-icon">
+
+											<f:setPropertyActionListener value="#{link.descrizione}"
+												target="#{presentazioneAssegnazioneAttoController.linkToDelete}" />
+										</p:commandButton>
+									</p:column>
+
+									<p:column headerText="Modifica" style="width:50px">
+										<p:rowEditor />
+									</p:column>
+
+								</p:dataTable>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:fieldset>
+			</p:column>
+		</p:row>
+
+
+
+		<p:row>
+			<p:column>
+
+				<p>
+					<p:commandButton value="Salva" id="salvanoteeallegati"
+						action="#{presentazioneAssegnazioneAttoController.salvaNoteEAllegati}"
+						update="noteAllegatiMsg" />
+				</p>
+			</p:column>
+		</p:row>
+
+	</p:panelGrid>
+</div>
+<script>
+
+
+if (! ("#{presentazioneAssegnazioneAttoController.dataPresaInCarico}").length &amp;&amp; #{navigationBean.isGuest()}==false) {
+$('#blockedNote').block({ message: 'Pagina bloccata!<br />Prendere in carico per sbloccare.', css: {
+	width:		'350px',
+	top:		'10px',
+	left:		'',
+	right:		'10px',
+	border:		'none',
+	padding:	'5px',
+	opacity:	0.6,
+	cursor:		'default',
+	color:		'#fff',
+	backgroundColor: '#000',
+	'-webkit-border-radius':'10px',
+	'-moz-border-radius':	'10px',
+	'border-radius':		'10px'
+}, });
+
+
+
+};
+
+if ( #{navigationBean.presentazioneAssegnazioneDisabled()}==true) {  
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+   $('#blockedNote').block({ message: null } );
+}
+
+if (#{navigationBean.isGuest()}==true){
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	   $('#blockedNote').block({ message: null } );
+	
+}
+
+</script>
+</html>

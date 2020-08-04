@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test aggiunta e modifica odg iin una seduta</shortname>
+  <description>Test aggiunta e modifica odg iin una seduta</description>
+  <url>/crl/test/sedute/odg</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

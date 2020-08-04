@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test allegato to record</shortname>
+  <description>Test per il tagging di un allegato come testo</description>
+  <url>/crl/test/post/allegato/to/record</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

@@ -1,0 +1,844 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+<p:panelGrid style="width:100%; text-align:right">
+	<p:row>
+		<p:column>
+			<p:commandButton onclick="showDialog()" value="Stampa" type="button"
+				icon="ui-icon-print">
+				<p:printer target="printDocumentiPanel">
+
+				</p:printer>
+			</p:commandButton>
+		</p:column>
+	</p:row>
+
+</p:panelGrid>
+
+
+<p:fieldset legend="Testi Ufficiali :" toggleable="true"
+	collapsed="false" toggleSpeed="500">
+
+	<c:set var="colAttoComm" value="Atto votato in Commissione" />
+	<c:set var="colAttoServComm" value="Atto presentato" />
+
+	<c:if test="#{navigationBean.isSessionAttoPAR()}">
+
+		<c:set var="colAttoComm" value="Parere votato in Commissioni" />
+		<c:set var="colAttoServComm" value="DGR con richiesta Parere/Intesa" />
+	</c:if>
+
+	<p:panelGrid style="width:100%">
+		<p:row>
+			<p:column colspan="3">
+
+
+				<p:dataTable id="listaTestiUfficiali"
+					value="#{attoBean.atto.testiAtto}" var="testoAtto"
+					styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{testoAtto.nome}">
+						<f:facet name="header">#{colAttoServComm}</f:facet>
+						<h:outputText value="#{testoAtto.nome}" />
+					</p:column>
+
+
+
+					<p:column sortBy="#{testoAtto.pubblico}">
+						<f:facet name="header">Pubblico</f:facet>
+						<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
+						<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Scarica</f:facet>
+
+						<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+							onclick="PrimeFaces.monitorDownload(start, stop)">
+							<f:setPropertyActionListener value="#{testoAtto.id}"
+								target="#{fileDownloadController.fileId}" />
+							<f:setPropertyActionListener value="#{testoAtto.nome}"
+								target="#{fileDownloadController.fileName}" />
+							<f:setPropertyActionListener value="#{testoAtto.mimetype}"
+								target="#{fileDownloadController.fileMimetype}" />
+							<p:fileDownload value="#{fileDownloadController.file}" />
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column colspan="3">
+
+
+
+
+				<p:dataTable id="listaTestiUfficialiCommissione"
+					value="#{attoBean.getTestiAttoCommissione()}" var="testoAtto"
+					styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{testoAtto.nome}">
+						<f:facet name="header">#{colAttoComm}</f:facet>
+						<h:outputText value="#{testoAtto.nome}" />
+					</p:column>
+
+					<p:column sortBy="#{testoAtto.commissione}">
+						<f:facet name="header">Commissione</f:facet>
+						<h:outputText value="#{testoAtto.commissione}" />
+					</p:column>
+
+
+
+
+					<p:column sortBy="#{testoAtto.pubblico}">
+						<f:facet name="header">Pubblico</f:facet>
+						<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
+						<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Scarica</f:facet>
+
+						<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+							onclick="PrimeFaces.monitorDownload(start, stop)">
+							<f:setPropertyActionListener value="#{testoAtto.id}"
+								target="#{fileDownloadController.fileId}" />
+							<f:setPropertyActionListener value="#{testoAtto.nome}"
+								target="#{fileDownloadController.fileName}" />
+							<f:setPropertyActionListener value="#{testoAtto.mimetype}"
+								target="#{fileDownloadController.fileMimetype}" />
+							<p:fileDownload value="#{fileDownloadController.file}" />
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+
+			</p:column>
+		</p:row>
+
+
+
+
+		<p:row rendered="#{not navigationBean.isSessionAttoPAR()}">
+			<p:column colspan="3">
+
+
+				<p:dataTable id="listaTestiUfficialiAula"
+					value="#{attoBean.getTestiAttoAula()}" var="testoAtto"
+					styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{testoAtto.nome}">
+						<f:facet name="header">Atto votato in Aula</f:facet>
+						<h:outputText value="#{testoAtto.nome}" />
+					</p:column>
+
+
+
+					<p:column sortBy="#{testoAtto.pubblico}">
+						<f:facet name="header">Pubblico</f:facet>
+						<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
+						<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Scarica</f:facet>
+
+						<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+							onclick="PrimeFaces.monitorDownload(start, stop)">
+							<f:setPropertyActionListener value="#{testoAtto.id}"
+								target="#{fileDownloadController.fileId}" />
+							<f:setPropertyActionListener value="#{testoAtto.nome}"
+								target="#{fileDownloadController.fileName}" />
+							<f:setPropertyActionListener value="#{testoAtto.mimetype}"
+								target="#{fileDownloadController.fileMimetype}" />
+							<p:fileDownload value="#{fileDownloadController.file}" />
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+
+</p:fieldset>
+
+<p:fieldset legend="Pareri delle Commissioni consultive: "
+	toggleable="true" collapsed="false"
+	rendered="#{not navigationBean.isSessionAttoPAR()}" toggleSpeed="500">
+	<p:panelGrid style="width:100%">
+		<p:row >
+			<p:column colspan="3">
+
+				<p:dataTable 
+					value="#{attoBean.getTestiAttoCommissioneConsultive()}"
+					var="testoAtto" styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{testoAtto.nome}">
+						<f:facet name="header">Parere trasmesso</f:facet>
+						<h:outputText value="#{testoAtto.nome}" />
+					</p:column>
+
+					<p:column sortBy="#{testoAtto.commissione}">
+						<f:facet name="header">Commissione</f:facet>
+						<h:outputText value="#{testoAtto.commissione}" />
+					</p:column>
+
+
+
+
+					<p:column sortBy="#{testoAtto.pubblico}">
+						<f:facet name="header">Pubblico</f:facet>
+						<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
+						<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Scarica</f:facet>
+
+						<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+							onclick="PrimeFaces.monitorDownload(start, stop)">
+							<f:setPropertyActionListener value="#{testoAtto.id}"
+								target="#{fileDownloadController.fileId}" />
+							<f:setPropertyActionListener value="#{testoAtto.nome}"
+								target="#{fileDownloadController.fileName}" />
+							<f:setPropertyActionListener value="#{testoAtto.mimetype}"
+								target="#{fileDownloadController.fileMimetype}" />
+							<p:fileDownload value="#{fileDownloadController.file}" />
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+
+</p:fieldset>
+
+<br />
+<br />
+
+<p:fieldset legend="Emendamenti: " toggleable="true" collapsed="false"
+	rendered="#{navigationBean.testoAttoVotatoEnabled()}" toggleSpeed="500">
+	<p:panelGrid style="width:100%">
+		<p:row>
+			<p:column colspan="3">
+				<p:dataTable id="listaEmendamentiCommissioni"
+					value="#{attoBean.getEmendamentiCommissioni()}" var="allegato"
+					styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{allegato.nome}">
+						<f:facet name="header">Emendamenti presentati in Commissione</f:facet>
+						<h:outputText value="#{allegato.nome}" />
+					</p:column>
+
+					<p:column sortBy="#{allegato.commissione}">
+						<f:facet name="header">Commissione</f:facet>
+						<h:outputText value="#{allegato.commissione}" />
+					</p:column>
+
+
+
+
+					<p:column>
+						<f:facet name="header">Scarica</f:facet>
+
+						<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+							onclick="PrimeFaces.monitorDownload(start, stop)">
+							<f:setPropertyActionListener value="#{allegato.id}"
+								target="#{fileDownloadController.fileId}" />
+							<f:setPropertyActionListener value="#{allegato.nome}"
+								target="#{fileDownloadController.fileName}" />
+							<f:setPropertyActionListener value="#{allegato.mimetype}"
+								target="#{fileDownloadController.fileMimetype}" />
+							<p:fileDownload value="#{fileDownloadController.file}" />
+						</p:commandButton>
+
+					</p:column>
+
+
+				</p:dataTable>
+
+
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column colspan="3">
+				<p:dataTable id="listaEmendamentiAula"
+					value="#{attoBean.getEmendamentiAula()}" var="allegato"
+					styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{allegato.nome}">
+						<f:facet name="header">Emendamenti presentati in Aula</f:facet>
+						<h:outputText value="#{allegato.nome}" />
+					</p:column>
+
+
+					<p:column>
+						<f:facet name="header">Scarica</f:facet>
+
+						<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+							onclick="PrimeFaces.monitorDownload(start, stop)">
+							<f:setPropertyActionListener value="#{allegato.id}"
+								target="#{fileDownloadController.fileId}" />
+							<f:setPropertyActionListener value="#{allegato.nome}"
+								target="#{fileDownloadController.fileName}" />
+							<f:setPropertyActionListener value="#{allegato.mimetype}"
+								target="#{fileDownloadController.fileMimetype}" />
+							<p:fileDownload value="#{fileDownloadController.file}" />
+						</p:commandButton>
+
+					</p:column>
+
+
+				</p:dataTable>
+
+
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+</p:fieldset>
+
+
+<br />
+
+<p:fieldset legend="Audizioni/Consultazioni: " toggleable="true"
+	collapsed="false" toggleSpeed="500">
+	<p:panelGrid style="width:100%">
+		<p:row>
+			<p:column colspan="3">
+				<p:dataTable id="listaAltriAllegatiConsultazioni"
+					value="#{attoBean.getAllegatiConsultazioni()}" var="allegato"
+					styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{allegato.nome}">
+						<f:facet name="header">Allegati</f:facet>
+						<h:outputText value="#{allegato.nome}" />
+					</p:column>
+
+
+
+					<p:column>
+						<f:facet name="header">Scarica</f:facet>
+
+						<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+							onclick="PrimeFaces.monitorDownload(start, stop)">
+							<f:setPropertyActionListener value="#{allegato.id}"
+								target="#{fileDownloadController.fileId}" />
+							<f:setPropertyActionListener value="#{allegato.nome}"
+								target="#{fileDownloadController.fileName}" />
+							<f:setPropertyActionListener value="#{allegato.mimetype}"
+								target="#{fileDownloadController.fileMimetype}" />
+							<p:fileDownload value="#{fileDownloadController.file}" />
+						</p:commandButton>
+
+					</p:column>
+
+
+				</p:dataTable>
+
+
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+</p:fieldset>
+
+<br />
+
+<p:fieldset legend="Pareri degli Organismi statutari: "
+	toggleable="true" collapsed="false" toggleSpeed="500">
+
+	<p:panelGrid style="width:100%">
+		<p:row>
+			<p:column colspan="3">
+				<p:dataTable id="listaAltriAllegatiPareri"
+					value="#{attoBean.getAllegatiPareri()}" var="allegato"
+					styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{allegato.nome}">
+						<f:facet name="header">Organismo</f:facet>
+						<h:outputText value="#{allegato.nome}" />
+					</p:column>
+
+
+
+					<p:column>
+						<f:facet name="header">Scarica</f:facet>
+
+						<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+							onclick="PrimeFaces.monitorDownload(start, stop)">
+							<f:setPropertyActionListener value="#{allegato.id}"
+								target="#{fileDownloadController.fileId}" />
+							<f:setPropertyActionListener value="#{allegato.nome}"
+								target="#{fileDownloadController.fileName}" />
+							<f:setPropertyActionListener value="#{allegato.mimetype}"
+								target="#{fileDownloadController.fileMimetype}" />
+							<p:fileDownload value="#{fileDownloadController.file}" />
+						</p:commandButton>
+
+					</p:column>
+
+
+				</p:dataTable>
+
+
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+</p:fieldset>
+
+<br />
+<p:fieldset legend="Allegati : " toggleable="true" collapsed="false"
+	toggleSpeed="500">
+
+	<p:panelGrid style="width:100%">
+
+
+		<p:row>
+			<p:column colspan="3">
+				<p:dataTable id="listaAltriAllegatiComm"
+					value="#{attoBean.getAllegatiCommissioni()}" var="allegato"
+					styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{allegato.nome}">
+						<f:facet name="header">Allegati Commissioni</f:facet>
+						<h:outputText value="#{allegato.nome}" />
+					</p:column>
+
+
+					<p:column sortBy="#{allegato.commissione}">
+						<f:facet name="header">Commissione</f:facet>
+						<h:outputText value="#{allegato.commissione}" />
+					</p:column>
+
+
+
+					<p:column>
+						<f:facet name="header">Scarica</f:facet>
+
+						<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+							onclick="PrimeFaces.monitorDownload(start, stop)">
+							<f:setPropertyActionListener value="#{allegato.id}"
+								target="#{fileDownloadController.fileId}" />
+							<f:setPropertyActionListener value="#{allegato.nome}"
+								target="#{fileDownloadController.fileName}" />
+							<f:setPropertyActionListener value="#{allegato.mimetype}"
+								target="#{fileDownloadController.fileMimetype}" />
+							<p:fileDownload value="#{fileDownloadController.file}" />
+						</p:commandButton>
+
+					</p:column>
+
+
+				</p:dataTable>
+
+
+			</p:column>
+		</p:row>
+
+
+		<p:row>
+			<p:column colspan="3">
+				<p:dataTable id="listaAltriAllegatiAula"
+					value="#{attoBean.getAllegatiAula()}" var="allegato"
+					styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{allegato.nome}">
+						<f:facet name="header">Allegati Aula</f:facet>
+						<h:outputText value="#{allegato.nome}" />
+					</p:column>
+
+
+
+					<p:column>
+						<f:facet name="header">Scarica</f:facet>
+
+						<p:commandButton id="downloadLink" icon="detail-icon" ajax="false"
+							onclick="PrimeFaces.monitorDownload(start, stop)">
+							<f:setPropertyActionListener value="#{allegato.id}"
+								target="#{fileDownloadController.fileId}" />
+							<f:setPropertyActionListener value="#{allegato.nome}"
+								target="#{fileDownloadController.fileName}" />
+							<f:setPropertyActionListener value="#{allegato.mimetype}"
+								target="#{fileDownloadController.fileMimetype}" />
+							<p:fileDownload value="#{fileDownloadController.file}" />
+						</p:commandButton>
+
+					</p:column>
+
+
+				</p:dataTable>
+
+
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+	
+</p:fieldset>
+	
+<!-- LAYOUT DI STAMPA!!!!!!!!!!!!!!!! begin -->
+
+  
+<p:dialog widgetVar="printDocumentiPanelDialog" id="printDocumentiDialog"
+	position="bottom" style="z-index:-1 !important;width:100%;height:2%">
+
+	<p:panel id="printDocumentiPanel">
+	<p:fieldset legend="Testi Ufficiali :" toggleable="true"
+	collapsed="false" toggleSpeed="500">
+
+	<c:set var="colAttoComm" value="Atto votato in Commissione" />
+	<c:set var="colAttoServComm" value="Atto presentato" />
+
+	<c:if test="#{navigationBean.isSessionAttoPAR()}">
+
+		<c:set var="colAttoComm" value="Parere votato in Commissioni" />
+		<c:set var="colAttoServComm" value="DGR con richiesta Parere/Intesa" />
+	</c:if>
+
+	<p:panelGrid style="width:100%">
+		<p:row>
+			<p:column colspan="3">
+
+
+				<p:dataTable id="listaTestiUfficialiDocumenti"
+					value="#{attoBean.atto.testiAtto}" var="testoAtto"
+					styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{testoAtto.nome}">
+						<f:facet name="header">#{colAttoServComm}</f:facet>
+						<h:outputText value="#{testoAtto.nome}" />
+					</p:column>
+
+
+
+					<p:column sortBy="#{testoAtto.pubblico}">
+						<f:facet name="header">Pubblico</f:facet>
+						<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
+						<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
+					</p:column>
+
+					
+				</p:dataTable>
+				<h:outputText value="Nessun atto presentato"
+						rendered="#{empty attoBean.atto.testiAtto}">
+				</h:outputText>
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column colspan="3">
+
+
+
+
+				<p:dataTable id="listaTestiUfficialiCommissioneDocumenti"
+					value="#{attoBean.getTestiAttoCommissione()}" var="testoAtto"
+					styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{testoAtto.nome}" style="width:200px;">
+						<f:facet name="header">#{colAttoComm}</f:facet>
+						<h:outputText value="#{testoAtto.nome}" />
+					</p:column>
+
+					<p:column sortBy="#{testoAtto.commissione}" style="width:200px;">
+						<f:facet name="header">Commissione</f:facet>
+						<h:outputText value="#{testoAtto.commissione}" />
+					</p:column>
+
+
+
+
+					<p:column sortBy="#{testoAtto.pubblico}" style="width:120px;">
+						<f:facet name="header">Pubblico</f:facet>
+						<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
+						<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
+					</p:column>
+						
+				</p:dataTable>
+				<h:outputText value="Nessun atto votato in commissione"
+						rendered="#{empty attoBean.getTestiAttoCommissione()}">
+				</h:outputText>	
+			</p:column>
+		</p:row>
+
+
+
+
+		<p:row rendered="#{not navigationBean.isSessionAttoPAR()}">
+			<p:column colspan="3">
+
+
+				<p:dataTable id="listaTestiUfficialiAulaDocumenti"
+					value="#{attoBean.getTestiAttoAula()}" var="testoAtto"
+					styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{testoAtto.nome}">
+						<f:facet name="header">Atto votato in Aula</f:facet>
+						<h:outputText value="#{testoAtto.nome}" />
+					</p:column>
+
+
+
+					<p:column sortBy="#{testoAtto.pubblico}">
+						<f:facet name="header">Pubblico</f:facet>
+						<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
+						<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
+					</p:column>
+
+
+				</p:dataTable>
+				<h:outputText value="Nessun atto votato in aula"
+						rendered="#{empty attoBean.getTestiAttoAula()}">
+				</h:outputText>	
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+
+</p:fieldset>
+
+<p:fieldset legend="Pareri delle Commissioni consultive: "
+	toggleable="true" collapsed="false"
+	rendered="#{not navigationBean.isSessionAttoPAR()}" toggleSpeed="500">
+	<p:panelGrid style="width:100%">
+		<p:row >
+			<p:column colspan="3">
+
+				<p:dataTable 
+					value="#{attoBean.getTestiAttoCommissioneConsultive()}"
+					var="testoAtto" styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{testoAtto.nome}">
+						<f:facet name="header">Parere trasmesso</f:facet>
+						<h:outputText value="#{testoAtto.nome}" />
+					</p:column>
+
+					<p:column sortBy="#{testoAtto.commissione}">
+						<f:facet name="header">Commissione</f:facet>
+						<h:outputText value="#{testoAtto.commissione}" />
+					</p:column>
+
+
+
+
+					<p:column sortBy="#{testoAtto.pubblico}">
+						<f:facet name="header">Pubblico</f:facet>
+						<h:outputText value="si" rendered="#{testoAtto.pubblico}" />
+						<h:outputText value="no" rendered="#{!testoAtto.pubblico}" />
+					</p:column>
+
+				</p:dataTable>
+				<h:outputText value="Nessun parere trasmesso"
+						rendered="#{empty attoBean.getTestiAttoCommissioneConsultive()}">
+				</h:outputText>	
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+
+</p:fieldset>
+
+<br />
+<br />
+
+<p:fieldset legend="Emendamenti: " toggleable="true" collapsed="false"
+	rendered="#{navigationBean.testoAttoVotatoEnabled()}" toggleSpeed="500">
+	<p:panelGrid style="width:100%">
+		<p:row>
+			<p:column colspan="3">
+				<p:dataTable id="listaEmendamentiCommissioniDocumenti"
+					value="#{attoBean.getEmendamentiCommissioni()}" var="allegato"
+					styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{allegato.nome}" style="width:300px;">
+						<f:facet name="header">Emendamenti presentati in Commissione</f:facet>
+						<h:outputText value="#{allegato.nome}" />
+					</p:column>
+
+					<p:column sortBy="#{allegato.commissione}">
+						<f:facet name="header">Commissione</f:facet>
+						<h:outputText value="#{allegato.commissione}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<h:outputText value="Nessun emendamento presentato in commissione"
+						rendered="#{empty attoBean.getEmendamentiCommissioni()}">
+				</h:outputText>	
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column colspan="3">
+				<p:dataTable id="listaEmendamentiAulaDocumenti"
+					value="#{attoBean.getEmendamentiAula()}" var="allegato"
+					styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{allegato.nome}">
+						<f:facet name="header">Emendamenti presentati in Aula</f:facet>
+						<h:outputText value="#{allegato.nome}" />
+					</p:column>
+
+				</p:dataTable>
+				<h:outputText value="Nessun emendamento presentato in aula"
+						rendered="#{empty attoBean.getEmendamentiAula()}">
+				</h:outputText>	
+
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+</p:fieldset>
+
+
+<br />
+
+<p:fieldset legend="Audizioni/Consultazioni: " toggleable="true"
+	collapsed="false" toggleSpeed="500">
+	<p:panelGrid style="width:100%">
+		<p:row>
+			<p:column colspan="3">
+				<p:dataTable id="listaAltriAllegatiConsultazioniDocumenti"
+					value="#{attoBean.getAllegatiConsultazioni()}" var="allegato"
+					styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{allegato.nome}">
+						<f:facet name="header">Allegati</f:facet>
+						<h:outputText value="#{allegato.nome}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<h:outputText value="Nessun allegato"
+						rendered="#{empty attoBean.getAllegatiConsultazioni()}">
+				</h:outputText>	
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+</p:fieldset>
+
+<br />
+
+<p:fieldset legend="Pareri degli Organismi statutari: "
+	toggleable="true" collapsed="false" toggleSpeed="500">
+
+	<p:panelGrid style="width:100%">
+		<p:row>
+			<p:column colspan="3">
+				<p:dataTable id="listaAltriAllegatiPareriDocumenti"
+					value="#{attoBean.getAllegatiPareri()}" var="allegato"
+					styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{allegato.nome}">
+						<f:facet name="header">Organismo</f:facet>
+						<h:outputText value="#{allegato.nome}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<h:outputText value="Nessun organismo"
+						rendered="#{empty attoBean.getAllegatiPareri()}">
+				</h:outputText>	
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+</p:fieldset>
+
+<br />
+<p:fieldset legend="Allegati : " toggleable="true" collapsed="false"
+	toggleSpeed="500">
+
+	<p:panelGrid style="width:100%">
+
+
+		<p:row>
+			<p:column colspan="3">
+				<p:dataTable id="listaAltriAllegatiCommDocumenti"
+					value="#{attoBean.getAllegatiCommissioni()}" var="allegato"
+					styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{allegato.nome}">
+						<f:facet name="header">Allegati Commissioni</f:facet>
+						<h:outputText value="#{allegato.nome}" />
+					</p:column>
+
+
+					<p:column sortBy="#{allegato.commissione}">
+						<f:facet name="header">Commissione</f:facet>
+						<h:outputText value="#{allegato.commissione}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<h:outputText value="Nessun allegato"
+						rendered="#{empty attoBean.getAllegatiCommissioni()}">
+				</h:outputText>	
+			</p:column>
+		</p:row>
+
+
+		<p:row>
+			<p:column colspan="3">
+				<p:dataTable id="listaAltriAllegatiAulaDocumenti"
+					value="#{attoBean.getAllegatiAula()}" var="allegato"
+					styleClass="generalInfoTab grey-text">
+
+
+					<p:column sortBy="#{allegato.nome}">
+						<f:facet name="header">Allegati Aula</f:facet>
+						<h:outputText value="#{allegato.nome}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<h:outputText value="Nessun allegato"
+						rendered="#{empty attoBean.getAllegatiAula()}">
+				</h:outputText>	
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+</p:fieldset>
+</p:panel>
+</p:dialog>
+
+
+<!-- LAYOUT DI STAMPA!!!!!!!!!!!!!!!! end -->
+
+
+
+</html>

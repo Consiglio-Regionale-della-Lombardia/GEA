@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Registrazione Votazione</shortname>
+  <description>Registrazione votazione atto da parte della commissione</description>
+  <url>/crl/atto/esamecommissionimigrazione/registravotazione</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

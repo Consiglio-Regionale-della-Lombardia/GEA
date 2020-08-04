@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<pe:tooltip value="Click per Espandere / Comprimere"
+	forSelector="legend" shared="true" targetPosition="top center"
+	position="left center" />
+
+
+<h:form id="presAssForm" enctype="multipart/form-data">
+
+<!--     <p:ajaxStatus onstart="statusDialog.show();"
+		onsuccess="statusDialog.hide();" />
+	<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
+		draggable="false" closable="false">
+		<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
+	</p:dialog>   -->
+
+
+	<p:growl id="tabPresAssMsg" showDetail="true" sticky="false" />
+
+	<p:tabView onTabChange="" id="tabView" dynamic="true" cache="true"
+		effect="slide">
+
+
+
+		<p:ajax event="tabChange"
+			listener="#{presentazioneAssegnazioneAttoController.changeTabHandler}"
+			update=":presAssForm:tabPresAssMsg" />
+
+
+		<p:tab id="tba1" title="Informazioni Generali">
+
+
+			<ui:include src="./informazionigeneralitab.xhtml" />
+
+
+		</p:tab>
+
+		<p:tab id="tab2" title="Ammissibilità">
+
+			<ui:include src="./ammissibilitatab.xhtml" />
+		</p:tab>
+
+		<p:tab id="tab3" title="Assegnazione">
+
+			<ui:include src="./assegnazionetab.xhtml" />
+
+		</p:tab>
+
+		<p:tab id="tba4" title="Note e Allegati">
+
+
+			<ui:include src="./noteallegatitab.xhtml" />
+
+
+		</p:tab>
+	</p:tabView>
+</h:form>
+</html>

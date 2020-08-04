@@ -1,0 +1,278 @@
+#top {
+    position: relative;
+    background-color: #036fab;
+    color: white;
+    padding: 5px;
+    margin: 0px 0px 10px 0px;
+    w
+}
+
+#bottom {
+    position: relative;
+    background-color: #c2dfef;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+    clear:both;	
+    text-align:center;
+}
+
+#footer_logo{float:left;margin-left:10px; margin-top: auto; margin-bottom: auto}
+
+#footer_menu{text-align:right;vertical-align: middle; font-size:12px; padding-right: 20px}
+#footer_menu ul li{display:inline}
+#footer_menu li a,footer_menu li a:visited,footer_menu li a:hover,footer_menu li a:active{text-decoration:none;}
+
+
+.attiSindacatoSelect, .ui-selectonemenu-panel {
+    width: 450px;
+}
+
+
+ #left {
+    float: left;
+    /*background-color: #ece3a5; */
+    padding: 5px;
+    width: 150px;
+    margin-bottom: 10px;
+    
+} 
+
+#left2 {
+    float: left;
+    padding: 5px;
+    width: 150px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    min-height: 100%;
+    font-size: 12px !important;
+} 
+
+#right {
+    float: right;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+}
+
+.center_content {
+    position: relative;
+    background-color: #dddddd;
+    padding: 5px;
+}
+
+.right_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin: 0px 0px 0px 170px;
+}
+
+.right_content_2menu {
+    background-color: #dddddd;
+    padding: 5px;
+    margin: 0px 0px 0px 340px;
+}
+
+#top a:link, #top a:visited {
+  color: white;
+  font-weight : bold;
+  text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+  color: black;
+  font-weight : bold;
+  text-decoration : underline;
+}
+
+/* Rounded DIVS */
+#top, #right, #left, #left2, #content, #bottom {
+    -moz-border-radius: 4px; /* Firefox */
+    -webkit-border-radius: 4px; /* Safari, Chrome */
+    -khtml-border-radius: 4px; /* KHTML */
+    border-radius: 4px; /* Opera 10.50 beta and other CSS3 compatible browsers */
+    /* for IEs */
+    behavior: url(/crl/resources/css/PIE.htc); /* teaching IE to understand border-radius */
+}
+
+#content{
+	
+	  background-color: white;
+}
+
+
+.ui-growl{
+	
+	margin-left: 640px !important;
+	margin-right: 580px !important;
+	margin-top: 13% !important;
+}
+
+
+.ui-panelgrid tr, .ui-panelgrid td {
+border:0 !important;
+
+}
+
+.ui-datepicker {
+	
+	z-index: 1200 !important;
+}
+
+.ui-fieldset, .ui-fieldset  {
+    background: none repeat scroll 0 0 transparent !important;
+    border: 1 none;
+    cursor: pointer;
+}
+
+.ui-fieldset-legend {
+	background: none repeat scroll 0 0 transparent !important;
+    border: 0 none !important;
+    cursor: pointer;
+	
+}
+
+.infoTable {
+width:100%;
+padding: 8px 19px 4px 10px ;	
+	
+}
+
+
+.infoTableSearch {
+width:100%;
+padding: 0 ;	
+	
+}
+
+.infoBar {
+	
+	border-radius: 4px 4px 4px 4px;
+    color: white;
+    height: 30px;
+    width: 100%;
+}
+
+.infoBar td,tr {
+	
+	background-color: #045491 ;
+    color: white !important;
+     
+}
+
+.generalInfoTab  {
+	border: none;
+	background-color: #E6E6FA;
+	width: 90%;
+	
+}
+
+.generalInfoTab td,tr {
+	
+	background-color: #FFFFFF ;
+    color: #4F4F4F !important;
+   
+    
+    
+}
+
+.tableAppend{
+	border: 1px solid #A8A8A8 !important;
+	width: 90%;
+	font-size: 12px !important;
+	
+}
+
+.new-icon{
+	
+	background-image: url(../img/add.png) !important;
+}
+
+
+.ui-icon-arrow-open{
+	
+	
+	background-image: url(../img/tree_op.jpeg) !important;
+}
+
+
+.ui-icon-arrow-collapsed{
+	
+	background-image: url(../img/tree_cl.jpeg) !important;
+}
+
+
+.delete-icon{
+	
+	background-image: url(../img/delete.png) !important;
+}
+.undo-icon{
+	
+	background-image: url(../img/undo.png) !important;
+	height: 13px;
+	width: 16px;
+}
+
+.detail-icon{
+	
+	background-image: url(../img/show.png) !important;
+}
+
+
+.columns-icon{
+	
+	background-image: url(../img/columns.jpeg) !important;
+}
+
+
+.generalInfoTab thead, th{
+	
+	background-color:  #E6E6FA !important;
+	
+}
+
+
+.generalInfoTab tr{
+	
+	background-color: white;
+	font-size: 12px;
+	
+}
+
+.generalInfoTab img {
+    height: 16px;
+    width: 16px;
+    margin-left: 10px;
+    
+}
+
+.ui-selectonemenu {
+	width: 160px;
+}
+
+.ui-tabs-nav  {
+	height: 33px 
+}
+
+.ui-datatable table {
+    border-collapse: collapse;
+    font-size: 12px;
+    width: 100%;
+}
+
+.grey-text {
+	color: #666666 !important;
+		
+}
+
+.grey-text td,tr {
+	
+	border: 1px #A8A8A8 solid !important;
+}
+
+.blockMsg {
+	top: 35% !important;
+	left: 25% !important;
+	
+}
+
+

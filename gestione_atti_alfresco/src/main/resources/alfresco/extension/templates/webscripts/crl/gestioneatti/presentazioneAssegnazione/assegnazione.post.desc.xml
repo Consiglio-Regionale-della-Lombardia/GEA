@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Aggiornamento assegnazione dell'atto</shortname>
+  <description>Aggiorna i metadati relativi all'assegnazione dell'atto</description>
+  <url>/crl/atto/assegnazione</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

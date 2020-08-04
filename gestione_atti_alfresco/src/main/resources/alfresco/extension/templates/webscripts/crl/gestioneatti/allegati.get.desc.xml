@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Allegati di un atto</shortname>
+  <description>Restituisce l'elenco degli allegati di una determinata tipologia afferenti ad un atto</description>
+  <url>/crl/atto/allegati?idAtto={idAtto}&amp;tipologiaAllegati={tipologiaAllegati}</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

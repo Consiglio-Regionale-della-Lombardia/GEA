@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Ricerca avanzata paginata atti</shortname>
+  <description>Ricerca avanzata per gli atti</description>
+  <url>/crl/atto/ricerca/avanzata_paginata</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

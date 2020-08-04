@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test emendamenti e clausole</shortname>
+  <description>Test emendamenti e clausole</description>
+  <url>/crl/test/post/atto/esamecommissioni/emendamenticlausole</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

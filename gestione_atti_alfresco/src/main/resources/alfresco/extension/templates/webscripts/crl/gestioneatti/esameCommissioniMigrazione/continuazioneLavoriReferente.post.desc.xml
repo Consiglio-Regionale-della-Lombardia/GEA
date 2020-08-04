@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Continuazione lavori in commissione referente</shortname>
+  <description>Continuazione lavori in commissione referente</description>
+  <url>/crl/atto/esamecommissionimigrazione/continuazionereferente</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

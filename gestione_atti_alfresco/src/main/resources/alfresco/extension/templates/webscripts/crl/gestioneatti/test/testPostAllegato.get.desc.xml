@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test upload allegato</shortname>
+  <description>Test per l'upload di un allegato</description>
+  <url>/crl/test/post/allegato</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

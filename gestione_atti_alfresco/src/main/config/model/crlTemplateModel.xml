@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model name="crltemplate:gestioneTemplateModel" xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+
+	<description>CRL Template Model</description>
+	<author>Sourcesense</author>
+	<version>1.0</version>
+
+	<imports>
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+	
+	<namespaces>
+		<namespace uri="http://www.regione.lombardia.it/content/model/template/1.0"
+			prefix="crltemplate" />
+	</namespaces>
+
+	<types>
+	
+		<type name="crltemplate:lettera">
+			<title>Lettera</title>
+			<parent>cm:content</parent>
+			<properties>		
+				<property name="crltemplate:firmatario">
+					<title>Firmatario</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+		
+		
+		<!-- Servizio Commissioni -->
+	
+		<type name="crltemplate:letteraServComm">
+			<title>Lettera Servizio Commissioni</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		
+		
+		<!-- Servizio Commissioni (PDL) -->
+		
+		
+		<type name="crltemplate:letteraTrasmissioneCommissioneReferenteServComm">
+			<title>Lettera Trasmissione Commissione Referente</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaServComm">
+			<title>Lettera Trasmissione Commissione Referente e Consultiva</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneCommissioneReferenteConsultivaOrganismoServComm">
+			<title>Lettera Trasmissione Commissione Referente, Consultiva e Organismo Statutario</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraRettificaAssegnazioneServComm">
+			<title>Lettera Rettifica Assegnazione</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraIntegrazioneCPOServComm">
+			<title>Lettera Integrazione CPO</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraRitiroServComm">
+			<title>Lettera Ritiro</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraAggiuntaFirmaServComm">
+			<title>Lettera aggiunta firma</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraRitiroFirmaServComm">
+			<title>Lettera ritiro firma</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraAssestamentoBilancioServComm">
+			<title>Lettera assestamento bilancio</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraBilancioProgrammaticoServComm">
+			<title>Lettera bilancio programmatico</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraIniziativaPresidenteGiuntaFusioneDistaccoComuniServComm">
+			<title>Lettera Iniziativa Presidente Giunta: fusione e distacchi di comuni</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraIniziativaPopolareServComm">
+			<title>Lettera Iniziativa Popolare</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraRendicontoGeneraleServComm">
+			<title>Lettera Rendiconto Generale</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraLeggeFinanziariaServComm">
+			<title>Lettera Legge Finanziaria</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		
+		<!-- Servizio Commissioni (DOC) -->
+		
+		<type name="crltemplate:letteraDOCAssegnazionePSRServComm">
+			<title>Lettera DOC assegnazione PSR</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraDOCAssegnazioneDSAServComm">
+			<title>Lettera DOC assegnazione DSA</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraAssegnazioneProgrammaLavoroCommEuropeaServComm">
+			<title>Lettera Assegnazione Programma Lavoro Commissione Europea</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		
+		
+		<!-- Servizio Commissioni (PAR) -->
+		
+		<type name="crltemplate:letteraParereCommissioneServComm">
+			<title>Lettera Parere Commissione</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraIntesaCommissioneGiuntaServComm">
+			<title>Lettera Intesa Commissione Giunta</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraParereCommissioneConSospPausaEstivaServComm">
+			<title>Lettera Parere Commissione con sospensione pausa estiva</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraIntesaCommissioneGiuntaConSospPausaEstivaServComm">
+			<title>Lettera Intesa Commissione Giunta con sospensione pausa estiva</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraParerePropostaDiRegolamentoServComm">
+			<title>Lettera Parere Proposta di Regolamento</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		
+		<!-- Servizio Commissioni (PDA) -->
+		
+		<type name="crltemplate:letteraAssegnazioneInSedeDeliberantePDAServComm">
+			<title>Lettera Assegnazione in sede deliberante</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		<type name="crltemplate:letteraAssegnazioneInSedeReferentePDAServComm">
+			<title>Lettera Assegnazione in sede referente</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		
+		<!-- Servizio Commissioni (PLP) -->
+		
+		<type name="crltemplate:letteraAssegnazionePerIstruttoriaPLPServComm">
+			<title>Lettera Assegnazione per istruttoria</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		
+		<!-- Servizio Commissioni (REL) -->
+		
+		<type name="crltemplate:letteraRelazionePresentataDallaGiuntaServComm">
+			<title>Lettera Relazione presentata dalla giunta</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		
+		<!-- Servizio Commissioni (PRE) -->
+		
+		<type name="crltemplate:letteraAssegnazionePerIstruttoriaPREServComm">
+			<title>Lettera Assegnazione per istruttoria</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		
+		<!-- Servizio Commissioni (REF) -->
+		
+		<type name="crltemplate:letteraAssegnazionePerIstruttoriaREFServComm">
+			<title>Lettera Assegnazione per istruttoria</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+		
+		<!-- Servizio Commissioni (INP) -->
+		
+		<type name="crltemplate:letteraAssegnazionePerIstruttoriaINPServComm">
+			<title>Lettera Assegnazione per istruttoria</title>
+			<parent>crltemplate:letteraServComm</parent>
+		</type>
+		
+	
+	
+	
+		
+		<!-- Commissioni -->
+		
+		<type name="crltemplate:letteraCommissioni">
+			<title>Lettera Commissioni</title>
+			<parent>crltemplate:lettera</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissionePDLCommissioni">
+			<title>Lettera di Trasmissione PDL</title>
+			<parent>crltemplate:letteraCommissioni</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissionePDACommissioni">
+			<title>Lettera di Trasmissione PDA</title>
+			<parent>crltemplate:letteraCommissioni</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissionePDAUrgenzaCommissioni">
+			<title>Lettera di Trasmissione PDA con urgenza</title>
+			<parent>crltemplate:letteraCommissioni</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissionePARCommissioni">
+			<title>Lettera di Trasmissione PAR</title>
+			<parent>crltemplate:letteraCommissioni</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissionePLPCommissioni">
+			<title>Lettera di Trasmissione PLP</title>
+			<parent>crltemplate:letteraCommissioni</parent>
+		</type>
+		
+		<type name="crltemplate:letteraPresaAttoRELCommissioni">
+			<title>Lettera di Presa Atto REL</title>
+			<parent>crltemplate:letteraCommissioni</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneREFCommissioni">
+			<title>Lettera di Trasmissione REF</title>
+			<parent>crltemplate:letteraCommissioni</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneParereDaSedeConsultivaCommissioni">
+			<title>Lettera di Trasmissione Parere da sede consultiva</title>
+			<parent>crltemplate:letteraCommissioni</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneAulaLeggeRiordinoCommissioni">
+			<title>Lettera di Trasmissione ad Aula legge di riordino (normativo)</title>
+			<parent>crltemplate:letteraCommissioni</parent>
+		</type>
+		
+			<type name="crltemplate:letteraTrasmissioneAulaTestoUnico">
+			<title>Lettera di Trasmissione in Aula testo unico (compilativo)</title>
+			<parent>crltemplate:letteraCommissioni</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneDocRisDsaCommissioni">
+			<title>Lettera di trasmissione DOC RIS DSA</title>
+			<parent>crltemplate:letteraCommissioni</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneDocRisProgrammaEuropeoCommissioni">
+			<title>Lettera di trasmissione DOC RIS Programma Europeo</title>
+			<parent>crltemplate:letteraCommissioni</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneParereSuDOCCommissioni">
+			<title>Lettera di trasmissione parere su DOC</title>
+			<parent>crltemplate:letteraCommissioni</parent>
+		</type>
+		
+		<type name="crltemplate:letteraRichiestaParereNormaFinanziariaCommissioni">
+			<title>Lettera di richiesta parere su Norma finanziaria</title>
+			<parent>crltemplate:letteraCommissioni</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneParereSuNormaFinanziariaCommissioni">
+			<title>Lettera di trasmissione parere su Norma finanziaria</title>
+			<parent>crltemplate:letteraCommissioni</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneRISCommissioni">
+			<title>Lettera di Trasmissione RIS</title>
+			<parent>crltemplate:letteraCommissioni</parent>
+		</type>
+		
+		
+	
+		<!-- Aula -->
+		
+		<type name="crltemplate:letteraAula">
+			<title>Lettera Aula</title>
+			<parent>crltemplate:lettera</parent>
+			<properties>		
+				<property name="crltemplate:ufficio">
+					<title>Ufficio</title>
+					<type>d:text</type>
+				</property>
+                                <property name="crltemplate:direzione">
+					<title>Direzione</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneLCRAula">
+			<title>Lettera di Trasmissione LCR</title>
+			<parent>crltemplate:letteraAula</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissionePDAAula">
+			<title>Lettera di Trasmissione PDA</title>
+			<parent>crltemplate:letteraAula</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissionePDABilancioAula">
+			<title>Lettera di Trasmissione PDA Bilancio</title>
+			<parent>crltemplate:letteraAula</parent>
+                        <properties>		
+				<property name="crltemplate:assessore">
+					<title>Assessore</title>
+					<type>d:text</type>
+				</property> 	
+			</properties>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissionePDAVariazioneBilancioAula">
+			<title>Lettera di Trasmissione PDA Variazione Bilancio</title>
+			<parent>crltemplate:letteraAula</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneREFAula">
+			<title>Lettera di Trasmissione REF</title>
+			<parent>crltemplate:letteraAula</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneORGAula">
+			<title>Lettera di Trasmissione ORG</title>
+			<parent>crltemplate:letteraAula</parent>
+		</type>
+		
+		<type name="crltemplate:letteraConvalidaORGAula">
+			<title>Lettera di Convalida ORG</title>
+			<parent>crltemplate:letteraAula</parent>
+		</type>
+		
+		<type name="crltemplate:letteraTrasmissioneBURLAula">
+			<title>Lettera di Trasmissione BURL</title>
+			<parent>crltemplate:letteraAula</parent>
+			<properties>		
+				<property name="crltemplate:numeroTelFirmatario">
+					<title>Numero telefono firmatario</title>
+					<type>d:text</type>
+				</property>
+				<property name="crltemplate:emailFirmatario">
+					<title>Email firmatario</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+	
+	</types>
+	
+	
+
+</model>

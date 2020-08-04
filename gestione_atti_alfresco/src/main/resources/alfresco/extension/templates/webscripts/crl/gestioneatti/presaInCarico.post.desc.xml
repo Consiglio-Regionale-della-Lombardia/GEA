@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Presa in carico</shortname>
+  <description>Memorizza e cambia lo stato della presa in carico di un atto</description>
+  <url>/crl/atto/presaincarico</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

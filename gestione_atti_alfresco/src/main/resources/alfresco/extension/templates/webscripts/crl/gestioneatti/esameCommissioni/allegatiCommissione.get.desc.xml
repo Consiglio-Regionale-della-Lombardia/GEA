@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Allegati di un atto (in commissione)</shortname>
+  <description>Restituisce l'elenco degli allegati di una determinata tipologia afferenti ad un atto (in commissione)</description>
+  <url>/crl/atto/esamecommissioni/allegati?idAtto={idAtto}&amp;tipologiaAllegati={tipologiaAllegati}&amp;commissione={commissione}&amp;passaggio={passaggio}</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Relatori</shortname>
+  <description>Restituisce l'elenco di tutti i relatori</description>
+  <url>/crl/anagrafica/atto/relatori</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

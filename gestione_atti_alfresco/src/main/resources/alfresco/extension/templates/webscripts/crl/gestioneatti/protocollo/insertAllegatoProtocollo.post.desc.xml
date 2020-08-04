@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Protocollo - inserimento nuovo allegato atto</shortname>
+  <description>Protocollo - inserimento di un allegato per un atto specifico</description>
+  <url>/crl/protocollo/synch/atto/allegato/insert</url>
+  <format default="json"/>
+  <authentication>admin</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti - Protocollo - Synch</family>
+</webscript>

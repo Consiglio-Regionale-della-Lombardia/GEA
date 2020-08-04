@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test Esame assemblea aula</shortname>
+  <description>Test Esame assemblea aula</description>
+  <url>/crl/test/post/atto/esameaula/esameassemblea</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

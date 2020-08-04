@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Gruppi utente</shortname>
+  <description>Restituisce l'elenco dei gruppi a cui appartiene l'utente</description>
+  <url>/crl/gruppi</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

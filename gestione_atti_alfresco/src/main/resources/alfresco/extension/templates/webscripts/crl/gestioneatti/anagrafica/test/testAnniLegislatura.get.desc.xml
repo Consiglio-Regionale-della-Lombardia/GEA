@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test Anni Legislatura</shortname>
+  <description>Permette di testare la funzionalità di reperimento degli anni di una legislatura</description>
+  <url>/crl/test/anagrafica/legislatura</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

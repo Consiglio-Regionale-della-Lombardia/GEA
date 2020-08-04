@@ -1,0 +1,1753 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model name="crlatti:gestioneAttiModel" xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+
+	<description>CRL Gestione Atti Model</description>
+	<author>Sourcesense</author>
+	<version>1.0</version>
+
+	<imports>
+		<import uri="http://www.alfresco.org/model/dictionary/1.0"
+			prefix="d" />
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+
+	<namespaces>
+		<namespace uri="http://www.regione.lombardia.it/content/model/atti/1.0"
+			prefix="crlatti" />
+	</namespaces>
+
+	<types>
+		<type name="crlatti:atto">
+			<title>Atto</title>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="crlatti:organismiStatutari">
+					<title>Organismi statutari</title>
+					<type>d:text</type>
+					<multiple>true</multiple>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:assegnazione">
+					<title>Assegnazione</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:descrizioneIniziativa">
+					<title>Descrizione iniziativa</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:numeroRepertorio">
+					<title>Numero repertorio</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:urlFascicolo">
+					<title>URL fascicolo</title>
+					<type>d:text</type>
+					<index enabled="false"/>
+				</property>
+				<property name="crlatti:dataRepertorio">
+					<title>Data repertorio</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:classificazione">
+					<title>Classificazione</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:legislatura">
+					<title>Legislatura</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:statoAtto">
+					<title>Stato</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:numeroAtto">
+					<title>Numero</title>
+					<type>d:int</type>
+				</property>
+				<property name="crlatti:estensioneAtto">
+					<title>Estensione</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataIniziativa">
+					<title>Data iniziativa</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:numeroProtocollo">
+					<title>Numero protocollo</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:tipoIniziativa">
+					<title>Tipo iniziativa</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:numeroDcr">
+					<title>Numero DCR</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:oggetto">
+					<title>Oggetto</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:nuovoOggetto">
+					<title>Nuovo Oggetto</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:oggettoOriginale">
+					<title>Oggetto Originale</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataPubblicazione">
+					<title>Data pubblicazione</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:esitoVotoComRef">
+					<title>Esito voto com ref</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataSedutaSc">
+					<title>Data seduta sc</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:esitoVotoAula">
+					<title>Esito voto aula</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataSedutaComm">
+					<title>Data seduta comm</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:commReferente">
+					<title>Commissioni referenti</title>
+					<type>d:text</type>
+					<multiple>true</multiple>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:dataSedutaAula">
+					<title>Data seduta aula</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataAssegnazioneCommissioneReferente">
+					<title>Data assegnazione commissione referente</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:commConsultiva">
+					<title>Commissioni consultive</title>
+					<type>d:text</type>
+					<multiple>true</multiple>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:relatori">
+					<title>Relatori</title>
+					<type>d:text</type>
+					<multiple>true</multiple>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:commCoreferente">
+					<title>Commissione Co-Referente</title>
+					<type>d:text</type>
+					<multiple>true</multiple>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:commRedigente">
+					<title>Commissione Redigente</title>
+					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:commDeliberante">
+					<title>Commissione Deliberante</title>
+					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:redigente">
+					<title>Redigente</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:deliberante">
+					<title>Deliberante</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:numeroLcr">
+					<title>Numero LCR</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:soggettoConsultato">
+					<title>Soggetto consultato</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:anno">
+					<title>Anno</title>
+					<type>d:int</type>
+				</property>
+				<property name="crlatti:emendato">
+					<title>Emendato Commissione</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:emendatoAulaAtto">
+					<title>Emendato Aula</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:rinviato">
+					<title>Rinviato</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:sospeso">
+					<title>Sospeso</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:abbinamento">
+					<title>Abbinamento</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:stralcio">
+					<title>Stralcio</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:dataPresaInCarico">
+					<title>Data presa in carico</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataChiusura">
+					<title>Data chiusura</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:tipoChiusura">
+					<title>Tipo chiusura</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:noteChiusura">
+					<title>Note chiusura</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:numeroLr">
+					<title>Numero LR</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataLr">
+					<title>Data LR</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:numeroPubblicazioneBURL">
+					<title>Numero BURL</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataPubblicazioneBURL">
+					<title>Data BURL</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:scadenza60gg">
+					<title>Scadenza 60 gg</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+				<property name="crlatti:iterAula">
+					<title>Iter Aula</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+				<property name="crlatti:numeroDgrSeguito">
+					<title>Numero DGR a seguito Parere </title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataDgrSeguito">
+					<title>Data DGR a seguito Parere</title>
+					<type>d:date</type>
+				</property>
+                                <property name="crlatti:attoProseguente">
+					<title>Atto proseguente</title>
+					<type>d:boolean</type>
+				</property>                              
+                                <property name="crlatti:numRegolamento">
+					<title>Numero regolamento</title>
+					<type>d:text</type>
+				</property>
+                                <property name="crlatti:dataRegolamento">
+					<title>Data regolamento</title>
+					<type>d:date</type>
+				</property>
+                               <property name="crlatti:noteCollegamenti">
+					<title>Note collegamenti</title>
+					<type>d:text</type>
+				</property>
+        <property name="crlatti:firmatariDeleted">
+          <title>Firmatari cancellati in GEA</title>
+          <type>d:text</type>
+          <multiple>true</multiple>
+        </property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:pubblicabile</aspect>
+				<aspect>crlatti:tipizzabile</aspect>
+				<aspect>crlatti:protocollato</aspect>
+			</mandatory-aspects>
+		</type>
+		
+		<type name="crlatti:testo">
+			<title>Testo</title>
+			<parent>cm:content</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:tipizzabile</aspect>
+				<aspect>crlatti:pubblicabile</aspect>
+				<aspect>crlatti:provenienzaAspect</aspect>
+				<aspect>crlatti:protocollato</aspect>
+			</mandatory-aspects>
+		</type>
+		
+		<type name="crlatti:allegato">
+			<title>Allegato</title>
+			<parent>cm:content</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:tipizzabile</aspect>
+				<aspect>crlatti:pubblicabile</aspect>
+				<aspect>crlatti:provenienzaAspect</aspect>
+				<aspect>crlatti:protocollato</aspect>
+			</mandatory-aspects>
+		</type>
+		
+		<type name="crlatti:testoComitatoRistretto">
+			<title>Testo del comitato ristretto</title>
+			<parent>crlatti:allegato</parent>
+			<properties>
+				<property name="crlatti:dataSedutaTestoCR">
+					<title>Data seduta</title>
+					<type>d:date</type>
+				</property>
+			</properties>
+		</type>
+		
+		<type name="crlatti:collegamento">
+			<title>Collegamento</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:noteCollegamento">
+					<title>note</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+			<associations>
+				<association name="crlatti:attoAssociatoCollegamento">
+				<title>Atto collegato</title>
+				<source>
+					<mandatory>false</mandatory>
+					<many>true</many>
+				</source>
+				<target>
+					<class>crlatti:atto</class>
+					<mandatory>false</mandatory>
+					<many>false</many>
+				</target>
+				</association>
+			</associations>
+		</type>
+
+		<type name="crlatti:abbinamento">
+			<title>Abbinamento</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:tipoTestoAbbinamento">
+					<title>Tipo testo</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataAbbinamento">
+					<title>Data abbinamento</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataDisabbinamento">
+					<title>Data disabbinamento</title>
+					<type>d:date</type>
+				</property>
+			</properties>
+			<associations>
+				<association name="crlatti:attoAssociatoAbbinamento">
+				<title>Atto associato</title>
+				<source>
+					<mandatory>false</mandatory>
+					<many>true</many>
+				</source>
+				<target>
+					<class>crlatti:atto</class>
+					<mandatory>false</mandatory>
+					<many>false</many>
+				</target>
+				</association>
+			</associations>
+		</type>
+		
+
+		<type name="crlatti:attoDoc">
+			<title>Documento generico</title>
+			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:dgr</aspect>
+				<aspect>crlatti:firmatariAspect</aspect>
+				<aspect>crlatti:ammissibilitaBaseAspect</aspect>
+			</mandatory-aspects>
+		</type>
+
+		<type name="crlatti:attoPdl">
+			<title>Progetto di Legge</title>
+			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:dgr</aspect>
+				<aspect>crlatti:firmatariAspect</aspect>
+				<aspect>crlatti:ammissibilitaNormaFinanziariaAspect</aspect>
+				<aspect>crlatti:emendamentiAspect</aspect>
+				<aspect>crlatti:clausolaValutativaAspect</aspect>
+			</mandatory-aspects>
+		</type>
+
+		<type name="crlatti:attoInp">
+			<title>Petizione popolare</title>
+			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:ammissibilitaBaseAspect</aspect>
+				<aspect>crlatti:dataScadenzaAspect</aspect>
+			</mandatory-aspects>
+		</type>
+
+		<type name="crlatti:attoPar">
+			<title>Atto Parere</title>
+			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:dgr</aspect>
+				<aspect>crlatti:ammissibilitaBaseAspect</aspect>
+				<aspect>crlatti:dataScadenzaAspect</aspect>
+			</mandatory-aspects>
+		</type>
+
+		<type name="crlatti:attoPda">
+			<title>Proposta Atto Amministrativo</title>
+			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:dgr</aspect>
+				<aspect>crlatti:firmatariAspect</aspect>
+				<aspect>crlatti:ammissibilitaAiutiStatoAspect</aspect>
+			</mandatory-aspects>
+		</type>
+
+		<type name="crlatti:attoPlp">
+			<title>Proposta Legge Parlamentare</title>
+			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:dgr</aspect>
+				<aspect>crlatti:firmatariAspect</aspect>
+				<aspect>crlatti:ammissibilitaAiutiStatoAspect</aspect>
+			</mandatory-aspects>
+		</type>
+
+		<type name="crlatti:attoPre">
+			<title>Proposta di Regolamento</title>
+			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:dgr</aspect>
+				<aspect>crlatti:ammissibilitaBaseAspect</aspect>
+				<aspect>crlatti:firmatariAspect</aspect>
+			</mandatory-aspects>
+		</type>
+		
+		<type name="crlatti:attoOrg">
+			<title>Atto Organizzazione Interna</title>
+			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:relatoriAttoAspect</aspect>
+			</mandatory-aspects>
+		</type>
+
+		<type name="crlatti:attoRef">
+			<title>Proposta di Referendum</title>
+			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:dgr</aspect>
+				<aspect>crlatti:firmatariAspect</aspect>
+				<aspect>crlatti:ammissibilitaBaseAspect</aspect>
+			</mandatory-aspects>
+		</type>
+
+		<type name="crlatti:attoRel">
+			<title>Relazione</title>
+			<parent>crlatti:atto</parent>
+			<mandatory-aspects>
+				<aspect>crlatti:dgr</aspect>
+				<aspect>crlatti:ammissibilitaBaseAspect</aspect>
+			</mandatory-aspects>
+		</type>
+
+		<type name="crlatti:attoEac">
+			<title>Elenchi di Atti Comunitari</title>
+			<parent>crlatti:atto</parent>
+			<properties>
+				<property name="crlatti:dataAtto">
+					<title>Data atto</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:noteEac">
+					<title>Note</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:dgr</aspect>
+			</mandatory-aspects>
+		</type>
+		
+		<type name="crlatti:attoMis">
+			<title>Missioni valutative</title>
+			<parent>crlatti:atto</parent>
+			<properties>
+				<property name="crlatti:dataIniziativaComitatoMis">
+					<title>Data iniziativa comitato</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataPropostaCommissioneMis">
+					<title>Data proposta commissione</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:commissioneCompetenteMis">
+					<title>Commissione competente</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:esitoVotoIntesaMis">
+					<title>Esito voto intesa</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataIntesaMis">
+					<title>Data intesa</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataRispostaComitatoMis">
+					<title>Data risposta comitato</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataApprovazioneProgettoMis">
+					<title>Data approvazione progetto</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataApprovazioneUdpMis">
+					<title>Data approvazione progetto</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:numeroAttoUdpMis">
+					<title>Numero atto UDP</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:istitutoIncaricatoMis">
+					<title>Istituto incaricato</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:scadenzaMvMis">
+					<title>Scadenza MV</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataEsameRapportoFinaleMis">
+					<title>Data esame rapporto finale</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataTrasmissioneACommissioniMis">
+					<title>Data trasmissione a commissioni</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:noteMis">
+					<title>Note</title>
+					<type>d:text</type>
+				</property>
+                                <property name="crlatti:dataTrasmissioneUdpMis">
+					<title>Data trasmissione a commissioni</title>
+					<type>d:date</type>
+				</property>
+                                <property name="crlatti:relatore1Mis">
+					<title>Relatore 1</title>
+					<type>d:text</type>
+				</property>
+                                <property name="crlatti:relatore2Mis">
+					<title>Relatore 2</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+		
+		
+		
+		
+		<type name="crlatti:relatore">
+			<title>Relatore</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:dataNominaRelatore">
+					<title>Data nomina</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataUscitaRelatore">
+					<title>Data uscita</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:tipoAttoRelatore">
+					<title>Tipo atto</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:numeroAttoRelatore">
+					<title>Numero atto</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:commissioneRelatore">
+					<title>Commissione</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+		
+		<type name="crlatti:membroComitatoRistretto">
+			<title>Membro comitato ristretto</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:dataNominaMCR">
+					<title>Data nomina</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataUscitaMCR">
+					<title>Data uscita</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:coordinatoreMCR">
+					<title>Coordinatore</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+			</properties>
+		</type>
+		
+		<type name="crlatti:comitatoRistretto">
+			<title>Comitato ristretto</title>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="crlatti:presenzaCR">
+					<title>Presenza</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+				<property name="crlatti:dataIstituzioneCR">
+					<title>Data istituzione</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataFineLavoriCR">
+					<title>Data fine lavori</title>
+					<type>d:date</type>
+				</property>
+                                <property name="crlatti:tipologiaCR">
+					<title>Tipologia Comitato</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+
+		<!-- anagrafica -->
+
+		<type name="crlatti:legislaturaAnagrafica">
+			<title>Legislatura</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:anni">
+					<title>Anni</title>
+					<type>d:int</type>
+					<multiple>true</multiple>
+				</property>
+				<property name="crlatti:dataInizioLegislatura">
+					<title>Data Inizio Legislatura</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataFineLegislatura">
+					<title>Data Fine Legislatura</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:correnteLegislatura">
+					<title>Corrente</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:chiusuraLegislatura">
+					<title>Chiudi Legislatura</title>
+					<type>d:boolean</type>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:importatoDaAnagrafica</aspect>
+			</mandatory-aspects>
+		</type>
+
+
+		<type name="crlatti:firmatarioAnagrafica">
+			<title>Firmatario Anagrafica</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:gruppoConsiliare">
+					<title>Gruppo Consiliare</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+		
+		<type name="crlatti:consigliereAnagrafica">
+			<title>Anagrafica consigliere</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:nomeConsigliereAnagrafica">
+					<title>Nome</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:cognomeConsigliereAnagrafica">
+					<title>Cognome</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:legislaturaConsigliereAnagrafica">
+					<title>Legislatura</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:gruppoConsigliereAnagrafica">
+					<title>Gruppo</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:codiceGruppoConsigliereAnagrafica">
+					<title>Codice Gruppo</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:importatoDaAnagrafica</aspect>
+			</mandatory-aspects>
+		</type>
+		
+		
+		<type name="crlatti:gruppoConsiliareAnagrafica">
+			<title>Gruppo consiliare</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:codiceGruppoConsiliareAnagrafica">
+					<title>Codice</title>
+					<type>d:text</type>
+                                        <index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>both</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:nomeGruppoConsiliareAnagrafica">
+					<title>Nome</title>
+					<type>d:text</type>
+                                        <index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>both</tokenised>
+					</index>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:importatoDaAnagrafica</aspect>
+			</mandatory-aspects>
+		</type>
+		
+		<type name="crlatti:commissioneAnagrafica">
+			<title>Anagrafica Commissione</title>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="crlatti:numeroOrdinamentoCommissioneAnagrafica">
+					<title>Ordinamento</title>
+					<type>d:int</type>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:importatoDaAnagrafica</aspect>
+			</mandatory-aspects>
+		</type>
+		
+		<!-- fine anagrafica -->
+		
+		<type name="crlatti:firmatario">
+			<title>Firmatario</title>
+			<parent>crlatti:firmatarioAnagrafica</parent>
+			<properties>
+				<property name="crlatti:nomeFirmatario">
+					<title>Nome</title>
+					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>both</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:dataFirma">
+					<title>Data firma</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataRitiro">
+					<title>Data ritiro</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:isPrimoFirmatario">
+					<title>Primo firmatario</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:isFirmatarioPopolare">
+					<title>Firmatario popolare</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+        <property name="crlatti:isfirmatarioModified">
+          <title>Firmatario modificato in GEA</title>
+          <type>d:boolean</type>
+        </property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:ordinamentoAspect</aspect>
+			</mandatory-aspects>
+		</type>
+
+
+		<type name="crlatti:commissione">
+			<title>Commissione</title>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="crlatti:materiaCommissione">
+					<title>Materia</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataPropostaCommissione">
+					<title>Data proposta</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataAssegnazioneCommissione">
+					<title>Data assegnazione</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataPresaInCaricoCommissione">
+					<title>Data presa in carico</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataScadenzaCommissione">
+					<title>Data scadenza</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:sospensioneFerialeCommissione">
+					<title>Sospensione feriale</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:dataInterruzioneCommissione">
+					<title>Data Interruzione</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataRicezioneIntegrazioniCommissione">
+					<title>Data Ricez Integrazioni</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataNominaCommissione">
+					<title>Data nomina</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:tipoVotazioneCommissione">
+					<title>Tipo votazione</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:esitoVotazioneCommissione">
+					<title>Esito votazione</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataVotazioneCommissione">
+					<title>Data votazione</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataTrasmissioneCommissione">
+					<title>Data trasmissione</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataRichiestaIscrizioneAulaCommissione">
+					<title>Data richiesta iscrizione aula</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:passaggioDirettoInAulaCommissione">
+					<title>Passaggio diretto in aula</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+				<property name="crlatti:motivazioniContinuazioneInReferente">
+					<title>Motivazioni continuazione lavori in referente</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataSedutaContinuazioneInReferente">
+					<title>Data seduta continuazione lavori in referente</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataAnnulloCommissione">
+					<title>Data annullo</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:ruoloCommissione">
+					<title>Ruolo</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:statoCommissione">
+					<title>Stato</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataSedutaStralcioCommissione">
+					<title>Data seduta stralcio</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataStralcioCommissione">
+					<title>Data stralcio</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataIniziativaStralcioCommissione">
+					<title>Data iniziativa stralcio</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:articoliCommissione">
+					<title>Artcoli aula</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:noteStralcioCommissione">
+					<title>Note stralcio</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:quorumEsameCommissione">
+					<title>Quorum</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:nomeAttoCommissione">
+					<title>Nome Atto (numero + estensione)</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:numeroAttoCommissione">
+					<title>Numero Atto</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:tipoAttoCommissione">
+					<title>Tipo Atto</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataSedutaCommAttoCommissione">
+					<title>Data Seduta Commissione Atto</title>
+					<type>d:date</type>
+				</property>	                           
+                                <property name="crlatti:dataCalendarizzazioneCommissione">
+					<title>Data Calendarizzazione Commissione</title>
+					<type>d:date</type>
+				</property>
+                                <property name="crlatti:dataDcrCommissione">
+					<title>Data Dcr Commissione</title>
+					<type>d:date</type>
+				</property>
+                                <property name="crlatti:numeroDcrCommissione">
+					<title>Numero Dcr Commissione</title>
+					<type>d:text</type>
+				</property>
+                                <property name="crlatti:dataRisCommissione">
+					<title>Data Ris Commissione</title>
+					<type>d:date</type>
+				</property>
+                                <property name="crlatti:numeroRisCommissione">
+					<title>Numero Ris Commissione</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:emendamentiAspect</aspect>
+				<aspect>crlatti:clausolaValutativaAspect</aspect>
+			</mandatory-aspects>
+		</type>
+		
+		<type name="crlatti:aula">
+			<title>Aula</title>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="crlatti:dataPresaInCaricoEsameAula">
+					<title>Data presa in carico</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:relazioneScrittaAula">
+					<title>Relazione scritta</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:esitoVotoPassaggioAula">
+					<title>Esito voto aula</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:tipologiaVotazioneAula">
+					<title>Tipologia votazione</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataSedutaPassaggioAula">
+					<title>Data seduta aula</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:numeroDcrPassaggioAula">
+					<title>Numero DCR</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:numeroLcrPassaggioAula">
+					<title>Numero LCR</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:emendatoAula">
+					<title>Emendato</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+				<property name="crlatti:noteVotazioneAula">
+					<title>Note votazione</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataSedutaRinvioAula">
+					<title>Data seduta rinvio aula</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataTermineMassimoAula">
+					<title>Data termine massimo aula</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:motivazioneRinvioAula">
+					<title>Motivazione rinvio aula</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataSedutaStralcioAula">
+					<title>Data seduta stralcio</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataStralcioAula">
+					<title>Data stralcio</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataIniziativaStralcioAula">
+					<title>Data iniziativa stralcio</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:articoliAula">
+					<title>Artcoli aula</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:noteStralcioAula">
+					<title>Note stralcio</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:quorumEsameAula">
+					<title>Quorum</title>
+					<type>d:text</type>
+				</property>	
+                                <property name="crlatti:numeroRegAula">
+					<title>Numero Reg</title>
+					<type>d:text</type>
+				</property>
+                                <property name="crlatti:rinvioCommBilancioAula">
+					<title>Rinvio Commissione Bilancio</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>                                                                                                                                                                                                                                                   		
+			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:emendamentiAspect</aspect>
+			</mandatory-aspects>
+		</type>
+
+		
+		<type name="crlatti:link">
+			<title>Link</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:indirizzoCollegamento">
+					<title>Indirizzo collegamento</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:pubblicabile</aspect>
+			</mandatory-aspects>
+		</type>
+		
+		
+		<type name="crlatti:parere">
+			<title>Parere</title>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="crlatti:organismoStatutarioParere">
+					<title>Organismo statutario</title>
+					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:dataAssegnazioneParere">
+					<title>Data assegnazione</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataAnnulloParere">
+					<title>Data annullo</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataRicezioneParere">
+					<title>Data ricezione Parere</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:commissioneDestinatariaParere">
+					<title>Commissione Destinataria</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataRicezioneOrganoParere">
+					<title>Data ricezione organo</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:noteParere">
+					<title>Note</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:esitoParere">
+					<title>Esito</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:tipoAttoParere">
+					<title>Tipo Atto</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:numeroAttoParere">
+					<title>Numero Atto</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+			<mandatory-aspects>
+				<aspect>crlatti:obbligatorioAspect</aspect>
+			</mandatory-aspects>
+		</type>
+		
+		
+		<type name="crlatti:consultazione">
+			<title>Consultazione</title>
+			<parent>cm:folder</parent>
+			<properties>		
+				<property name="crlatti:descrizioneConsultazione">
+					<title>Descrizione</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataConsultazione">
+					<title>Data consultazione</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:previstaConsultazione">
+					<title>Prevista</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:discussaConsultazione">
+					<title>Discussa</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:dataSedutaConsultazione">
+					<title>Data seduta</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:noteConsultazione">
+					<title>Note</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:commissioneConsultazione">
+					<title>Commissione</title>
+					<type>d:text</type>
+                                        <index enabled="true">
+                                                <atomic>true</atomic>
+                                                <stored>false</stored>
+                                                <tokenised>false</tokenised>
+                                        </index>
+				</property>
+			</properties>
+		</type>
+		
+		
+		<type name="crlatti:soggettoInvitato">
+			<title>Soggetto invitato</title>
+			<parent>cm:content</parent>
+			<properties>		
+				<property name="crlatti:descrizioneSoggettoInvitato">
+					<title>Descrizione</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:intervenutoSoggettoInvitato">
+					<title>Intervenuto</title>
+					<type>d:boolean</type>
+				</property>
+			</properties>
+		</type>
+		
+		
+		<type name="crlatti:sedutaODG">
+			<title>Seduta</title>
+			<parent>cm:folder</parent>
+			<properties>		
+				<property name="crlatti:dataSedutaSedutaODG">
+					<title>Data Seduta</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dalleOreSedutaODG">
+					<title>Dalle ore</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:alleOreSedutaODG">
+					<title>Alle ore</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:numVerbaleSedutaODG">
+					<title>Numero Verbale</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:noteSedutaODG">
+					<title>Note</title>
+					<type>d:text</type>
+				</property>
+                                <property name="crlatti:legislaturaSedutaODG">
+					<title>Legislatura</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+		
+		<type name="crlatti:attoTrattatoODG">
+			<title>Atto trattato OdG</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:tipoAttoTrattatoODG">
+					<title>Tipo Atto</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:numeroAttoTrattatoODG">
+					<title>Numero Atto</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:previstoAttoTrattatoODG">
+					<title>Previsto</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:discussoAttoTrattatoODG">
+					<title>Discusso</title>
+					<type>d:boolean</type>
+				</property>
+			</properties>
+			<associations>
+				<association name="crlatti:attoTrattatoSedutaODG">
+				<title>Atto collegato</title>
+				<source>
+					<mandatory>false</mandatory>
+					<many>true</many>
+				</source>
+				<target>
+					<class>crlatti:atto</class>
+					<mandatory>false</mandatory>
+					<many>false</many>
+				</target>
+				</association>
+			</associations>
+			<mandatory-aspects>
+				<aspect>crlatti:ordinamentoAspect</aspect>
+			</mandatory-aspects>
+		</type>
+		
+		
+		<type name="crlatti:audizione">
+			<title>Audizione</title>
+			<parent>cm:content</parent>
+			<properties>		
+				<property name="crlatti:previstoAudizione">
+					<title>Previsto</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:discussoAudizione">
+					<title>Discusso</title>
+					<type>d:boolean</type>
+				</property>
+			</properties>
+		</type>
+		
+		
+		<type name="crlatti:attoIndirizzo">
+			<title>Atto Indirizzo</title>
+			<parent>cm:folder</parent>
+			<properties>
+				<property name="crlatti:IdAttoIndirizzo">
+					<title>Id</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:IdLegislaturaAttoIndirizzo">
+					<title>Id legislatura</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:tipoAttoIndirizzo">
+					<title>Tipo Atto</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:numeroAttoIndirizzo">
+					<title>Numero Atti</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:oggettoAttoIndirizzo">
+					<title>Oggetto Atto</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</type>
+		
+		<type name="crlatti:firmatarioAttoIndirizzo">
+			<title>Firmatario Atto Indirizzo</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:IdFirmatarioAttoIndirizzo">
+					<title>Id Firmatario</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:idGruppoFirmatarioAttoIndirizzo">
+					<title>Id Gruppo Firmatario</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:nomeFirmatarioAttoIndirizzo">
+					<title>Nome Firmatario</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:cognomeFirmatarioAttoIndirizzo">
+					<title>Cognome Firmatario</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:gruppoFirmatarioAttoIndirizzo">
+					<title>Gruppo Firmatario</title>
+					<type>d:text</type>
+				</property>	
+			</properties>
+		</type>
+		
+		<type name="crlatti:collegamentoAttoIndirizzo">
+			<title>Collegamento Atto Indirizzo</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="crlatti:descrizioneCollegamentoAttiIndirizzo">
+					<title>Descrizione collegamento</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+			<associations>
+				<association name="crlatti:attoAssociatoCollegamentoAttiIndirizzo">
+				<title>Atto collegato</title>
+				<source>
+					<mandatory>false</mandatory>
+					<many>true</many>
+				</source>
+				<target>
+					<class>crlatti:attoIndirizzo</class>
+					<mandatory>false</mandatory>
+					<many>false</many>
+				</target>
+				</association>
+			</associations>
+		</type>
+		
+		<type name="crlatti:attoIndirizzoTrattatoODG">
+			<title>Atto trattato OdG</title>
+			<parent>cm:content</parent>
+			<associations>
+				<association name="crlatti:attoIndirizzoTrattatoSedutaODG">
+				<title>Atto indirizzo collegato</title>
+				<source>
+					<mandatory>false</mandatory>
+					<many>true</many>
+				</source>
+				<target>
+					<class>crlatti:attoIndirizzo</class>
+					<mandatory>false</mandatory>
+					<many>false</many>
+				</target>
+				</association>
+			</associations>
+			<mandatory-aspects>
+				<aspect>crlatti:ordinamentoAspect</aspect>
+			</mandatory-aspects>
+		</type>
+		
+	</types>
+	
+	<aspects>
+		
+		<aspect name="crlatti:obbligatorioAspect">
+			<title>Obbligatorio</title>
+			<properties>
+				<property name="crlatti:obbligatorio">
+					<title>Obbligatorio</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:tipizzabile">
+			<title>Tipizzabile</title>
+			<properties>
+				<property name="crlatti:tipologia">
+					<title>Tipologia</title>
+					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:pubblicabile">
+			<title>Pubblicabile</title>
+			<properties>
+				<property name="crlatti:pubblico">
+					<title>Pubblico</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+				<property name="crlatti:pubblicoOpendata">
+					<title>Pubblico Opendata</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:dgr">
+			<title>DGR</title>
+			<properties>
+				<property name="crlatti:numeroDgr">
+					<title>Numero DGR</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:dataDgr">
+					<title>Data DGR</title>
+					<type>d:date</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:firmatariAspect">
+			<title>Firmatari</title>
+			<properties>
+				<property name="crlatti:firmatari">
+					<title>Firmatari</title>
+					<type>d:text</type>
+					<multiple>true</multiple>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:gruppoFirmatari">
+					<title>Gruppo Firmatari</title>
+					<type>d:text</type>
+					<multiple>true</multiple>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:firmatariOriginari">
+					<title>Firmatari Originari</title>
+					<type>d:text</type>
+					<multiple>true</multiple>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:primoFirmatario">
+					<title>Primo firmatario</title>
+					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+				<property name="crlatti:gruppoPrimoFirmatario">
+					<title>Gruppo Primo firmatario</title>
+					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:relatoriAttoAspect">
+			<title>Relatori Diretti Atto</title>
+		</aspect>
+		
+		
+		<aspect name="crlatti:ammissibilitaBaseAspect">
+			<title>Ammissibilità base</title>
+			<properties>
+				<property name="crlatti:ammissibilitaValutazione">
+					<title>Valutazione ammissibilita</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:ammissibilitaDataRichiestaInformazioni">
+					<title>Data richiesta informazioni</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:ammissibilitaDataRicevimentoInformazioni">
+					<title>Data ricevimento informazioni</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:ammissibilitaNote">
+					<title>Note ammissibilita</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:ammissibilitaAiutiStatoAspect">
+			<title>Amissibilità con Aiuti Stato</title>
+			<parent>crlatti:ammissibilitaBaseAspect</parent>
+			<properties>
+				<property name="crlatti:ammissibilitaAiutiStato">
+					<title>Aiuti stato</title>
+					<type>d:boolean</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:ammissibilitaUrgenzaAspect">
+			<title>Ammissibilità con urgenza</title>
+			<parent>crlatti:ammissibilitaAiutiStatoAspect</parent>
+			<properties>
+				<property name="crlatti:ammissibilitaRichiestaUrgenza">
+					<title>Richiesta urgenza</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:ammissibilitaVotazioneUrgenza">
+					<title>Votazione urgenza</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="crlatti:ammissibilitaDataVotazioneUrgenza">
+					<title>Data votazione urgenza</title>
+					<type>d:date</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:ammissibilitaNormaFinanziariaAspect">
+			<title>Ammissibilità con norma finanziaria</title>
+			<parent>crlatti:ammissibilitaUrgenzaAspect</parent>
+			<properties>
+				<property name="crlatti:ammissibilitaNormaFinanziaria">
+					<title>Norma finanziaria</title>
+					<type>d:boolean</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:dataScadenzaAspect">
+			<title>Data scadenza aspect</title>
+			<properties>
+				<property name="crlatti:dataScadenza">
+					<title>Data scadenza</title>
+					<type>d:date</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		
+		
+		<aspect name="crlatti:provenienzaAspect">
+			<title>Provenienza aspect</title>
+			<properties>
+				<property name="crlatti:provenienza">
+					<title>Provenienza</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:ordinamentoAspect">
+			<title>Ordinamento</title>
+			<properties>
+				<property name="crlatti:numeroOrdinamento">
+					<title>Numero ordinamento</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:emendamentiAspect">
+			<title>Emendamenti aspect</title>
+			<properties>
+				<property name="crlatti:numEmendPresentatiMaggiorEsame">
+					<title>Numero emendamenti presentati maggioranza</title>
+					<type>d:int</type>
+				</property>
+				<property name="crlatti:numEmendPresentatiMinorEsame">
+					<title>Numero emendamenti presentati minoranza</title>
+					<type>d:int</type>
+				</property>				
+				<property name="crlatti:numEmendPresentatiGiuntaEsame">
+					<title>Numero emendamenti presentati maggioranza</title>
+					<type>d:int</type>
+				</property>
+				<property name="crlatti:numEmendPresentatiMistoEsame">
+					<title>Numero emendamenti presentati misto</title>
+					<type>d:int</type>
+				</property>	
+				<property name="crlatti:numEmendApprovatiMaggiorEsame">
+					<title>Numero emendamenti approvati maggioranza</title>
+					<type>d:int</type>
+				</property>
+				<property name="crlatti:numEmendApprovatiMinorEsame">
+					<title>Numero emendamenti approvati minoranza</title>
+					<type>d:int</type>
+				</property>
+				<property name="crlatti:numEmendApprovatiGiuntaEsame">
+					<title>Numero emendamenti approvati giunta</title>
+					<type>d:int</type>
+				</property>
+				<property name="crlatti:numEmendApprovatiMistoEsame">
+					<title>Numero emendamenti approvati misto</title>
+					<type>d:int</type>
+				</property>
+				<property name="crlatti:numEmendNonAmmissibiliEsame">
+					<title>Numero emendamenti non ammissibili</title>
+					<type>d:int</type>
+				</property>
+				<property name="crlatti:numEmendDecadutiEsame">
+					<title>Numero emendamenti decaduti</title>
+					<type>d:int</type>
+				</property>
+				<property name="crlatti:numEmendRitiratiEsame">
+					<title>Numero emendamenti ritirati</title>
+					<type>d:int</type>
+				</property>
+				<property name="crlatti:numEmendRespintiEsame">
+					<title>Numero emendamenti respinti</title>
+					<type>d:int</type>
+				</property>
+				<property name="crlatti:noteEmendamentiEsame">
+					<title>Note emendamenti</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+
+
+		<aspect name="crlatti:clausolaValutativaAspect">
+			<title>Emendamenti aspect</title>
+			<properties>
+				<property name="crlatti:dataPresaInCaricoPropClausolaValutEsame">
+					<title>Data presa in carico proposta clausola valutativa</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:dataIntesaClausolaValutEsame">
+					<title>Data intesa clausola valutativa</title>
+					<type>d:date</type>
+				</property>
+				<property name="crlatti:esitoVotazioneIntesaClausolaValutEsame">
+					<title>Esito votazione intesa clausola valutativa</title>
+					<type>d:text</type>
+				</property>
+				<property name="crlatti:noteClausolaValutativaEsame">
+					<title>Note clausola valutativa</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:protocollato">
+			<title>Protocollato</title>
+			<properties>
+				<property name="crlatti:idProtocollo">
+					<title>ID protocollo</title>
+					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:importatoDaProtocollo">
+			<title>Importato da protocollo</title>
+			<description>Aspetto creato inizialmente per la gestione dell'importazione degli allegati in modo asincrono</description>
+			<properties>
+				<property name="crlatti:idProtocolloAtto">
+					<title>ID protocollo atto</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:importatoDaAnagrafica">
+			<title>Importato da protocollo</title>
+			<description>Aspetto creato per la sincronizzazione con il database dell'anagrafica</description>
+			<properties>
+				<property name="crlatti:idAnagrafica">
+					<title>ID anagrafica</title>
+					<type>d:int</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		
+		<aspect name="crlatti:attiIndirizzoAspect">
+			<title>Atti Indirizzo Aspect</title>
+			<description>Aspetto creato per la gestione dell'integrazione con il sistema Atti di Indirizzo</description>
+			<properties>
+				<property name="crlatti:statoExportAttiIndirizzo">
+					<title>Stato Export Atti Indirizzo</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		
+		<aspect name="crlatti:coreferenziabile">
+			<title>Coreferenziabile</title>
+			<description>Aspetto dedicato alla gestione della commissione Co-Referente</description>
+			<properties>
+				<property name="crlatti:coreferentePrimaria">
+					<title>Primaria</title>
+					<type>d:boolean</type>
+					<default>false</default>
+				</property>
+			</properties>
+		</aspect>
+		
+	</aspects>
+
+</model>

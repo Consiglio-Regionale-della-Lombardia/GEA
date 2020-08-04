@@ -1,0 +1,903 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<h:form id="insertattoform">
+
+	<p:ajaxStatus onstart="statusDialog.show();"
+		onsuccess="statusDialog.hide();" />
+
+	<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
+		draggable="false" closable="false">
+		<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
+	</p:dialog>
+
+
+
+
+	<p:confirmDialog id="confirmTableDialog"
+		message="Scegli Colonne da visualizzare" header="Layout lista"
+		widgetVar="tableDialog" style="">
+		<p:scrollPanel style="width:250px;height:250px">
+			<p:dataTable id="listaColonne" var="col"
+				value="#{userBean.colonneTotali}">
+				<p:column>
+					<f:facet name="header">Nome</f:facet>
+					<h:outputText value="#{col.nome}" />
+				</p:column>
+
+				<c:set
+					value="#{(col.attoProperty ne 'numeroAtto') or (col.attoProperty ne 'tipo')}"
+					var="readonly">
+				</c:set>
+
+				<p:column>
+					<f:facet name="header">Visibile</f:facet>
+					<p:selectBooleanCheckbox rendered="#{readonly}"
+						value="#{col.visible}"></p:selectBooleanCheckbox>
+				</p:column>
+
+
+			</p:dataTable>
+		</p:scrollPanel>
+		<p:commandButton id="confirmCommissione" value="Salva"
+			oncomplete="tableDialog.hide()"
+			action="#{userBean.refreshSearch}" ajax="false" />
+
+
+		<p:commandButton id="declineCommissione" value="Annulla"
+			onclick="tableDialog.hide()" type="button" />
+
+	</p:confirmDialog>
+
+
+	<p:panel style="text-align:left;margin-bottom:5px;font-size:12px"
+		id="mainPanel">
+
+
+		<!-- Pannello ricerca -->
+
+		<p:panelGrid
+			style="width:100%;margin-bottom:7px;border:1px solid #4F4F4F;"
+			id="globalPanel">
+
+			<f:facet name="header">
+				<p:row>
+					<p:column style="text-align:left" colspan="6">
+						Ricerca Atto:
+			    </p:column>
+				</p:row>
+			</f:facet>
+
+			<p:row>
+				<p:column>
+
+					<div>
+
+						<p:panelGrid id="searchPanel">
+
+							<p:messages id="msgs" />
+
+							<p:row style="width:100%;padding-bottom:7px;">
+
+								<p:column style="width:5%;vertical-align: middle;">
+									Tipo atto:
+								</p:column>
+								<p:column style="width:30%;">
+									<p:selectOneMenu id="tipoatto"
+										value="#{searchAttoController.tipoatto}">
+										<f:selectItem itemLabel="Scegli Tipo" itemValue="" />
+										<f:selectItems value="#{searchAttoController.tipiAtto}" />
+									</p:selectOneMenu>
+								</p:column>
+
+								<p:column style="vertical-align: middle;width:5%;">
+									Numero Atto
+								</p:column>
+								<p:column style="width:20%;">	
+										da:&nbsp;<p:inputText size="7" id="numeroattoDa"
+										value="#{searchAttoController.numeroAttoDa}"></p:inputText>
+										a:&nbsp;<p:inputText size="7" id="numeroattoA"
+										value="#{searchAttoController.numeroAttoA}"></p:inputText>
+								</p:column>
+
+
+								<p:column style="vertical-align: middle;width:5%;">
+									Legislatura:
+								</p:column>
+								<p:column style="width:20%;">
+									<p:selectOneMenu id="legislatura"
+										value="#{searchAttoController.legislatura}">
+										<!-- <f:selectItem itemLabel="Scegli Legislatura" itemValue="" /> -->
+										<f:selectItems value="#{searchAttoController.legislature}" />
+									</p:selectOneMenu>
+								</p:column>
+
+
+							</p:row>
+
+							<p:row style="width:100%;padding-bottom:7px;">
+
+								<p:column style="vertical-align: middle;">
+
+									Numero Fascicolo:
+								</p:column>
+								<p:column>
+									<p:inputText id="numeroprotocollo"
+										value="#{searchAttoController.numeroprotocollo}"></p:inputText>
+								</p:column>
+
+								<p:column style="vertical-align: middle;">
+									Tipo Iniziativa:
+								</p:column>
+								<p:column>
+									<p:selectOneMenu id="tipoiniziativa"
+										value="#{searchAttoController.tipoiniziativa}">
+										<f:selectItem itemLabel="Scegli Tipo Iniziativa" itemValue="" />
+										
+										<f:selectItem itemLabel="Altra Iniziativa"
+											itemValue="08_ATTO DI ALTRA INIZIATIVA" />
+											
+										<f:selectItem itemLabel="Commissioni"
+											itemValue="04_ATTO DI INIZIATIVA COMMISSIONI" />	
+											
+										<f:selectItem itemLabel="Consiglio delle Autonomie locali"
+											itemValue="07_ATTO DI INIZIATIVA AUTONOMIE LOCALI" />
+											
+                                         <f:selectItem itemLabel="Consiliare"
+											itemValue="01_ATTO DI INIZIATIVA CONSILIARE" />
+											
+										<f:selectItem itemLabel="Giunta"
+											itemValue="02_ATTO DI INIZIATIVA DI GIUNTA" />	
+											
+										<f:selectItem itemLabel="Popolare"
+											itemValue="03_ATTO DI INIZIATIVA POPOLARE" />	
+											
+										<f:selectItem itemLabel="Presidente della Giunta"
+											itemValue="06_ATTO DI INIZIATIVA PRESIDENTE GIUNTA" />	
+											
+										<f:selectItem itemLabel="Ufficio di Presidenza"
+											itemValue="05_ATTO DI INIZIATIVA UFFICIO PRESIDENZA" />
+											
+
+
+									</p:selectOneMenu>
+								</p:column>
+
+
+								<p:column style="vertical-align: middle;">
+									Data Iniziativa
+								</p:column>
+								<p:column>	
+									da:&nbsp; 
+								   <p:calendar size="8" locale="it" id="datainiziativa_da"
+										pattern="dd/MM/yyyy"
+										value="#{searchAttoController.dataIniziativaDa}" />
+									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
+										pattern="dd/MM/yyyy" id="datainiziativa_a"
+										value="#{searchAttoController.dataIniziativaA}" />
+								</p:column>
+
+
+							</p:row>
+
+							<p:row style="width:100%;padding-bottom:7px;">
+
+								<p:column style="vertical-align: middle;">
+
+								   Oggetto:
+								</p:column>
+								<p:column>
+									<p:inputText id="oggetto" size="45"
+										value="#{searchAttoController.oggetto}"></p:inputText>
+								</p:column>
+
+								<p:column style="vertical-align: middle;">
+									Stato:
+								</p:column>
+								<p:column>
+									<p:selectOneMenu id="stato"
+										value="#{searchAttoController.stato}">
+										<f:selectItem itemLabel="Scegli Stato" itemValue="" />
+										<f:selectItems value="#{searchAttoController.stati}" />
+									</p:selectOneMenu>
+								</p:column>
+
+
+								<p:column style="vertical-align: middle;">
+									Tipo Chiusura:
+								</p:column>
+								<p:column>
+									<p:selectOneMenu id="tipoChiusura"
+										value="#{searchAttoController.tipoChiusura}">
+										<f:selectItem itemLabel="Scegli Tipo Chiusura" itemValue="" />
+										<f:selectItem itemLabel="Pubblicato" itemValue="Pubblicato" />
+										<f:selectItem
+											itemLabel="Parere favorevole trasmesso alla Giunta"
+											itemValue="Parere favorevole trasmesso alla Giunta" />
+										<f:selectItem
+											itemLabel="Parere negativo trasmesso alla Giunta"
+											itemValue="Parere negativo trasmesso alla Giunta" />
+										<!--<f:selectItem itemLabel="Respinto" itemValue="Respinto" />
+										 <f:selectItem itemLabel="Rifiutato e trasmesso alla Giunta"
+											itemValue="Rifiutato e trasmesso alla Giunta" /> -->
+										<f:selectItem itemLabel="Respinto dall'Aula"
+											itemValue="Respinto dall'Aula" />
+										<f:selectItem itemLabel="Inammissibile"
+											itemValue="Inammissibile" />
+
+										<f:selectItem itemLabel="Ritirato dai promotori"
+											itemValue="Ritirato dai promotori" />
+										<f:selectItem itemLabel="Abbinato ad altro atto"
+											itemValue="Abbinato ad altro atto" />
+										<f:selectItem itemLabel="Per decadenza (fine legislatura)"
+											itemValue="Per decadenza (fine legislatura)" />
+										<f:selectItem itemLabel="Per motivi diversi"
+											itemValue="Per motivi diversi" />
+									</p:selectOneMenu>
+								</p:column>
+
+
+							</p:row>
+
+
+
+
+
+						</p:panelGrid>
+
+					</div>
+
+					<div id="ricercaAvanzataDiv">
+
+
+
+						<p:panelGrid id="RicercaAvanzataPanel">
+
+							<p:row>
+								<p:column style="text-align:left;height:50px" colspan="6">
+									<b>Ricerca Atto Avanzata - filtri aggiuntivi</b>
+								</p:column>
+							</p:row>
+
+							<!-- new -->
+							<p:row style="width:100%;padding-bottom:7px;">
+
+								<p:column style="width:5%;vertical-align: middle;">
+								   Firmatario:
+								</p:column>
+								<p:column style="width:30%">
+									<p:selectOneMenu id="firmatario"
+										value="#{searchAttoController.firmatario}">
+										<f:selectItem itemLabel="Scegli Firmatario" itemValue="" />
+										<f:selectItems value="#{searchAttoController.firmatari}"
+											var="relatore" itemLabel="#{relatore}"
+											itemValue="#{relatore}" />
+									</p:selectOneMenu>
+										
+								</p:column>
+
+								<p:column colspan="2" style="vertical-align: middle;width:5%">
+								   Primo Firmatario:
+								</p:column>
+								<p:column colspan="2" style="width:20%">
+									<p:selectOneMenu id="primoFirmatario"
+										value="#{searchAttoController.primofirmatario}">
+										<f:selectItem itemLabel="Scegli Primo Firmatario" itemValue="" />
+										<f:selectItems value="#{searchAttoController.firmatari}"
+											var="relatore" itemLabel="#{relatore}"
+											itemValue="#{relatore}" />
+									</p:selectOneMenu>
+								</p:column>
+
+							</p:row>
+							
+							<p:row style="width:100%;padding-bottom:7px;">
+
+								<p:column style="width:5%;vertical-align: middle;">
+								   Gruppo Consiliare:
+								</p:column>
+								<p:column style="width:30%">
+									<p:selectOneMenu id="gruppoConsiliare"
+										value="#{searchAttoController.gruppoFirmatario}">
+										<f:selectItem itemLabel="Scegli Gruppo Consiliare" itemValue="" />
+										<f:selectItems value="#{searchAttoController.gruppiConsiliari}" />
+									</p:selectOneMenu>
+										
+								</p:column>
+
+								<p:column colspan="2" style="vertical-align: middle;width:5%">
+								   Gruppo Consiliare Primo Firmatario:
+								</p:column>
+								<p:column colspan="2" style="width:20%">
+									<p:selectOneMenu id="gruppoConsiliarePF"
+										value="#{searchAttoController.gruppoPrimoFirmatario}">
+										<f:selectItem itemLabel="Scegli Gruppo Consiliare Primo Firmatario" itemValue="" />
+										<f:selectItems value="#{searchAttoController.gruppiConsiliari}" />
+									</p:selectOneMenu>
+								</p:column>
+
+							</p:row>
+				
+							<!-- /new -->
+
+
+
+							<p:row style="width:100%;padding-bottom:7px;">
+
+								<p:column style="width:5%;vertical-align: middle;">
+
+								   Numero <br /> DGR:
+								</p:column>
+								<p:column style="width:30%">
+									<p:inputText id="numerodgr"
+										value="#{searchAttoController.numeroDGR}"></p:inputText>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								</p:column>
+
+
+
+								<p:column style="vertical-align: middle;width:5%">
+								   Data DGR:
+								</p:column>
+								<p:column style="width:20%">
+									<p:calendar size="8" locale="it" id="datadgr"
+										pattern="dd/MM/yyyy" value="#{searchAttoController.dataDGR}" />
+								</p:column>
+
+
+
+								<p:column style="vertical-align: middle;width:5%">
+									Data Assegnazione
+								</p:column>
+								<p:column style="width:20%">	
+									da:&nbsp; 
+								   <p:calendar size="8" locale="it" id="dataassegnazione_da"
+										pattern="dd/MM/yyyy"
+										value="#{searchAttoController.dataAssegnazioneDa}" />
+									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
+										pattern="dd/MM/yyyy" id="dataassegnazione_a"
+										value="#{searchAttoController.dataAssegnazioneA}" />
+								</p:column>
+
+							</p:row>
+							<br></br>
+							<p:row style="border-top:1px solid;">
+								<p:column style="vertical-align: middle;width:11%">
+									Commissione : &nbsp;
+								</p:column>
+								<p:column>
+
+									<p:selectOneMenu id="commissione1" style="width:160px"
+										value="#{searchAttoController.commissione1}">
+										<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
+										<f:selectItems var="commissione"
+											itemLabel="#{commissione}"
+											itemValue="#{commissione}"
+											value="#{searchAttoController.commissioni}" />
+									</p:selectOneMenu>
+								</p:column>
+
+								<p:column style="vertical-align: middle;width:10%">
+									Competenza : &nbsp;
+								</p:column>
+								<p:column colspan="3">
+
+									<p:selectOneMenu id="ruolo1"
+										value="#{searchAttoController.ruoloCommissione1}">
+										<f:selectItem itemLabel="Scegli Competenza" itemValue="" />
+										<f:selectItem itemLabel="Referente" itemValue="Referente" />
+										<f:selectItem itemLabel="Co-Referente"
+											itemValue="Co-Referente" />
+										<f:selectItem itemLabel="Consultiva" itemValue="Consultiva" />
+										<f:selectItem itemLabel="Redigente" itemValue="Redigente" />
+										<f:selectItem itemLabel="Deliberante" itemValue="Deliberante" />
+									</p:selectOneMenu>
+								</p:column>
+
+							</p:row>
+
+
+							<p:row>
+								<p:column style="vertical-align: middle;width:10%">
+									Commissione : &nbsp;
+								</p:column>
+								<p:column>
+
+									<p:selectOneMenu id="commissione2" style="width:160px"
+										value="#{searchAttoController.commissione2}">
+										<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
+										<f:selectItems var="commissione"
+											itemLabel="#{commissione}"
+											itemValue="#{commissione}"
+											value="#{searchAttoController.commissioni}" />
+									</p:selectOneMenu>
+								</p:column>
+
+								<p:column style="vertical-align: middle;width:10%">
+									Competenza : &nbsp;
+								</p:column>
+								<p:column colspan="3">
+
+									<p:selectOneMenu id="ruolo2"
+										value="#{searchAttoController.ruoloCommissione2}">
+										<f:selectItem itemLabel="Scegli Competenza" itemValue="" />
+										<f:selectItem itemLabel="Referente" itemValue="Referente" />
+										<f:selectItem itemLabel="Co-Referente"
+											itemValue="Co-Referente" />
+										<f:selectItem itemLabel="Consultiva" itemValue="Consultiva" />
+										<f:selectItem itemLabel="Redigente" itemValue="Redigente" />
+										<f:selectItem itemLabel="Deliberante" itemValue="Deliberante" />
+									</p:selectOneMenu>
+								</p:column>
+
+							</p:row>
+
+							<p:row>
+								<p:column style="vertical-align: middle;width:10%">
+									Commissione : &nbsp;
+								</p:column>
+								<p:column>
+
+									<p:selectOneMenu id="commissione3" style="width:160px"
+										value="#{searchAttoController.commissione3}">
+										<f:selectItem itemLabel="Scegli Commissione" itemValue="" />
+										<f:selectItems var="commissione" 
+											itemLabel="#{commissione}"
+											itemValue="#{commissione}"
+											value="#{searchAttoController.commissioni}" />
+									</p:selectOneMenu>
+								</p:column>
+
+								<p:column style="vertical-align: middle;width:10%">
+									Competenza : &nbsp;
+								</p:column>
+								<p:column colspan="3">
+
+									<p:selectOneMenu id="ruolo3"
+										value="#{searchAttoController.ruoloCommissione3}">
+										<f:selectItem itemLabel="Scegli Competenza" itemValue="" />
+										<f:selectItem itemLabel="Referente" itemValue="Referente" />
+										<f:selectItem itemLabel="Co-Referente"
+											itemValue="Co-Referente" />
+										<f:selectItem itemLabel="Consultiva" itemValue="Consultiva" />
+										<f:selectItem itemLabel="Redigente" itemValue="Redigente" />
+										<f:selectItem itemLabel="Deliberante" itemValue="Deliberante" />
+									</p:selectOneMenu>
+								</p:column>
+
+							</p:row>
+
+
+
+							<p:row>
+
+								<p:column style="vertical-align: middle;width:10%">
+
+									Relatore:
+
+								</p:column>
+								<p:column>
+
+									<p:selectOneMenu id="relatore"
+										value="#{searchAttoController.relatore}">
+										<f:selectItem itemLabel="Scegli Relatore" itemValue="" />
+										<f:selectItems value="#{searchAttoController.relatori}"
+											var="relatore" itemLabel="#{relatore.descrizione}"
+											itemValue="#{relatore.descrizione}" />
+									</p:selectOneMenu>
+									<!--value="#{searchAttoController.relatori}"  -->
+
+								</p:column>
+
+
+								<p:column style="vertical-align: middle;width:10%">
+
+									Abbinamento:
+
+								</p:column>
+
+								<p:column>
+
+									<p:selectBooleanCheckbox id="abbonamento"
+										value="#{searchAttoController.abbinamento}" />
+								</p:column>
+
+								<p:column style="vertical-align: middle;width:10%">
+
+									Esito voto Commissione:
+
+								</p:column>
+								<p:column>
+
+									<p:selectOneMenu id="esitoVotoComRef"
+										value="#{searchAttoController.esitoVotoCommissioneReferente}">
+										<f:selectItem itemLabel="Scegli Esito" itemValue="" />
+
+										<f:selectItem itemLabel="Approvato" itemValue="Approvato" />
+										<f:selectItem itemLabel="Respinto" itemValue="Respinto" />
+										<f:selectItem itemLabel="Proposta di non passaggio all'esame"
+											itemValue="Proposta di non passaggio all'esame" />
+										<f:selectItem itemLabel="Parere favorevole"
+											itemValue="Parere favorevole" />
+										<f:selectItem itemLabel="Parere favorevole con osservazioni"
+											itemValue="Parere favorevole con osservazioni" />
+										<f:selectItem itemLabel="Parere negativo"
+											itemValue="Parere negativo" />
+										<f:selectItem itemLabel="Parere negativo con osservazioni"
+											itemValue="Parere negativo con osservazioni" />
+										<f:selectItem itemLabel="Intesa espressa senza condizioni"
+											itemValue="Intesa espressa senza condizioni" />
+										<f:selectItem itemLabel="Intesa espressa con condizioni"
+											itemValue="Intesa espressa con condizioni" />
+										<f:selectItem itemLabel="Mancata intesa"
+											itemValue="Mancata intesa" />
+										<f:selectItem itemLabel="Archiviazione"
+											itemValue="Archiviazione" />
+										<f:selectItem itemLabel="Presa d'atto"
+											itemValue="Presa d'atto" />
+
+
+									</p:selectOneMenu>
+
+								</p:column>
+
+							</p:row>
+
+							<p:row>
+
+								<p:column style="vertical-align: middle;width:5%">
+									Data votazione Comm: 
+								 </p:column>
+
+								<p:column style="width:20%">	
+									da:&nbsp; 
+									
+								<p:calendar size="8" locale="it" id="dataSedutaComm_da"
+										pattern="dd/MM/yyyy"
+										value="#{searchAttoController.dataSedutaCommissioneDa}" />
+									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
+										pattern="dd/MM/yyyy" id="dataSedutaComm_a"
+										value="#{searchAttoController.dataSedutaCommissioneA}" />
+								</p:column>
+
+								<p:column style="vertical-align: middle;width:5%">
+									<h:outputLabel for="emendato" value="Emendato: " />
+								</p:column>
+								<p:column>
+									<p:selectBooleanCheckbox id="emendato"
+										value="#{searchAttoController.emendato}" />
+								</p:column>
+
+								<p:column>
+
+										Organismo Statutario:
+
+									</p:column>
+								<p:column>
+
+									<p:selectOneMenu id="organismoStatutario"
+										value="#{searchAttoController.organismoStatutario}">
+										<f:selectItem itemLabel="Scegli Organismo Statutario"
+											itemValue="" />
+										<f:selectItems
+											value="#{searchAttoController.organismiStatutari}" />
+									</p:selectOneMenu>
+
+								</p:column>
+							</p:row>
+							<p:row>
+
+								<p:column style="vertical-align: middle;width:5%">
+									Soggetto consultato: 
+								 </p:column>
+
+								<p:column colspan="5">
+
+									<p:inputText id="soggettoConsultato" size="45"
+										value="#{searchAttoController.soggettoConsultato}" />
+
+								</p:column>
+
+							</p:row>
+
+
+							<p:row>
+								<p:column style="text-align:left;height: 50px;" colspan="6">
+
+								</p:column>
+							</p:row>
+
+
+							<p:row>
+
+								<p:column colspan="">
+
+									Esito voto Aula:
+
+								</p:column>
+
+								<p:column>
+
+									<p:selectOneMenu id="esitoVotoAula"
+										value="#{searchAttoController.esitoVotoAula}">
+										<f:selectItem itemLabel="Scegli Esito Voto Aula" itemValue="" />
+										<f:selectItem itemLabel="Approvato" itemValue="Approvato" />
+										<f:selectItem itemLabel="Approvato non passaggio all'esame"
+											itemValue="Approvato non passaggio all'esame" />
+										<f:selectItem itemLabel="Respinto dall'aula"
+											itemValue="Respinto dall'aula" />
+									</p:selectOneMenu>
+
+								</p:column>
+
+							</p:row>
+							<p:row>
+
+
+								<p:column style="vertical-align: middle;width:5%">
+									Numero DCR: 
+								 </p:column>
+
+								<p:column>
+
+									<p:inputText id="numeroDcr" size="7" maxlength="7"
+										value="#{searchAttoController.numeroDcr}" />
+
+								</p:column>
+
+								<p:column>
+							      Numero LCR:
+							    </p:column>
+								<p:column>
+
+									<p:inputText id="numeroLCR" size="5" maxlength="5"
+										value="#{searchAttoController.numeroLCR}" />
+								</p:column>
+
+								<p:column>
+
+									Data seduta Aula:
+
+								</p:column>
+								<p:column>
+										
+									da:&nbsp; 
+									
+								  <p:calendar size="8" locale="it" id="dataSedutaAula_da"
+										pattern="dd/MM/yyyy"
+										value="#{searchAttoController.dataSedutaAulaDa}" />
+									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
+										pattern="dd/MM/yyyy" id="dataSedutaAula_a"
+										value="#{searchAttoController.dataSedutaAulaA}" />
+								</p:column>
+
+
+							</p:row>
+							<p:row>
+
+
+
+								<p:column style="vertical-align: middle;width:5%">
+									Emendato Aula:
+								</p:column>
+								<p:column>
+									<p:selectBooleanCheckbox id="emendatoemendatoAula"
+										value="#{searchAttoController.emendatoAula}" />
+								</p:column>
+
+								<p:column style="vertical-align: middle;width:5%">
+								 Rinvio: 
+								</p:column>
+								<p:column>
+									<p:selectBooleanCheckbox id="rinviato"
+										value="#{searchAttoController.rinviato}" />
+
+								</p:column>
+
+								<p:column>
+                                Stralcio:
+                                </p:column>
+								<p:column colspan="5">
+
+
+									<p:selectBooleanCheckbox id="stralcio"
+										value="#{searchAttoController.stralcio}" />
+
+								</p:column>
+
+							</p:row>
+
+
+
+
+							<p:row>
+								<p:column style="text-align:left;height: 50px;" colspan="6">
+
+								</p:column>
+							</p:row>
+
+
+							<p:row>
+
+								<p:column style="vertical-align: middle;width:5%">
+									Data Chiusura: 
+								 </p:column>
+
+								<p:column style="width:20%">	
+									da:&nbsp; 
+									
+								<p:calendar size="8" locale="it" id="dataChiusura_da"
+										pattern="dd/MM/yyyy"
+										value="#{searchAttoController.dataChiusuraDa}" />
+									&nbsp;a:&nbsp;<p:calendar size="8" locale="it"
+										pattern="dd/MM/yyyy" id="dataChiusura_a"
+										value="#{searchAttoController.dataChiusuraA}" />
+								</p:column>
+
+								<p:column>
+
+									Numero LR:
+								</p:column>
+								<p:column>
+
+									<p:inputText id="numeroLR" size="5" maxlength="5"
+										value="#{searchAttoController.numeroLR}" />
+								</p:column>
+
+								<p:column>
+
+									Data LR:
+								</p:column>
+								<p:column>
+									<p:calendar size="8" locale="it" id="dataLR"
+										pattern="dd/MM/yyyy" value="#{searchAttoController.dataLR}" />
+
+								</p:column>
+
+							</p:row>
+
+							<p:row>
+								<p:column style="height: 50px;" colspan="6">
+
+									<p:commandButton type="button" outcome="productDetail"
+										value="Ricerca semplice"
+										onclick="hidePanel('ricercaAvanzataDiv', 'ricercaAvanzataButton')">
+
+									</p:commandButton>
+								</p:column>
+							</p:row>
+
+						</p:panelGrid>
+
+					</div>
+
+
+					<p:panelGrid style="width:90%">
+
+
+						<p:row>
+
+							<p:column>
+								<div id="ricercaAvanzataButton">
+									<p:commandButton type="button" outcome="productDetail"
+										value="Ricerca avanzata"
+										onclick="showPanel('ricercaAvanzataDiv', 'ricercaAvanzataButton')" />
+								</div>
+
+
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="2">
+
+								<p:commandButton value="Cerca" update="listaAtti"
+									style="color:white; background: #045491;"
+									id="btncercaatto_cerca"
+									actionListener="#{searchAttoController.searchAtti}" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<h:commandLink value="Esporta Excel" id="btncercaatto_exl">
+									<p:dataExporter type="xls" target="listaAtti"
+										postProcessor="#{searchAttoController.postProcessXLS}"
+										fileName="lista_atti" />
+								</h:commandLink>
+							</p:column>
+							<p:column style="text-align:right">
+								<p:commandButton value="Reimposta"
+									update="searchPanel,RicercaAvanzataPanel"
+									actionListener="#{searchAttoController.reset}"
+									id="btncercaatto_reset" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+
+		<p:panelGrid id="listaLavoroPanel"
+			rendered="#{!navigationBean.isGuest() }"
+			style="width:100%;margin-bottom:7px;border:1px solid #4F4F4F">
+
+			<p:row>
+				<p:column>
+					<h:outputLabel for="listaLavoro" value="Lista di Lavoro : "
+						style="valign:middle" />
+					<p:selectOneMenu id="listaLavoro"
+						value="#{searchAttoController.listaLavoro}">
+						<p:ajax event="change" update="listaAtti"
+							process="@this searchPanel RicercaAvanzataPanel"
+							listener="#{searchAttoController.searchAtti}" />
+						<f:selectItem itemLabel=" In istruttoria"
+							itemValue="inlavorazione" />
+						<f:selectItem itemDisabled="#{navigationBean.isCPCVUser() }"
+							itemLabel="Conclusa istruttoria" itemValue="lavorati" />
+						<f:selectItem itemLabel="Tutti gli Atti" itemValue="tutti" />
+					</p:selectOneMenu>
+
+				</p:column>
+			</p:row>
+
+		</p:panelGrid>
+
+
+		<!-- Pannello ricerca end -->
+
+		<p style="text-align: right">
+
+			<p:graphicImage style="cursor: hand; cursor: pointer; " height="30"
+				width="30" value="resources/img/columns.jpeg"
+				onclick="tableDialog.show()" />
+		</p>
+
+
+		<p:dataTable id="listaAtti" var="atto"
+			value="#{searchAttoController.listAtti}" rows="10" paginator="true"
+			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}"
+			paginatorAlwaysVisible="false" paginatorPosition="bottom" draggableColumns="true">
+		<p:column sortBy="#{atto.tipo}">
+				<f:facet name="header">Tipo</f:facet>
+				<h:outputText value="#{atto.tipo}" />
+			</p:column>
+
+			<p:column headerText="N.Atto" sortBy="#{atto.numeroAtto}"
+				sortFunction="#{searchAttoController.sortNumeriAtto}">
+				<c:set value="#{atto.id}" var="idAttoParam" />
+				<c:set value="#{atto.tipo}" var="tipoAttoParam" />
+				<p:commandLink
+					action="#{searchAttoController.attoDetail(idAttoParam,tipoAttoParam)}"
+					update="listaAtti">
+					<!-- SCRL-387 tolto atto.numeroAtto e messo atto.nome per visualizzare i BIS-->
+					<h:outputText value="#{atto.nome}" />
+				</p:commandLink>
+			</p:column>
+
+			<p:columns value="#{userBean.colonneUser}" var="column"
+				columnIndexVar="colIndex" sortBy="#{atto[column.attoProperty]}">
+
+				<f:facet name="header">  
+                #{column.nome}  
+            </f:facet>
+
+				<h:outputText value="#{atto[column.attoProperty]}">
+					<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+				</h:outputText>
+
+			</p:columns>
+
+		</p:dataTable>
+
+	</p:panel>
+</h:form>
+
+</html>

@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test POST presa in carico atto</shortname>
+  <description>Test POST presa in carico atto</description>
+  <url>/crl/test/post/atto/chiusuraatto</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

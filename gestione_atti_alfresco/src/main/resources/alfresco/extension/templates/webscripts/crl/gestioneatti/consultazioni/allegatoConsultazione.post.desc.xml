@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Upload allegato consultazione atto</shortname>
+  <description>Upload di un allegato alla consultazione per un atto</description>
+  <url>/crl/atto/consultazioni/allegato</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

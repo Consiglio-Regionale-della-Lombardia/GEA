@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test registrazione votazione commissione</shortname>
+  <description>Test registrazione votazione commissione</description>
+  <url>/crl/test/post/atto/esamecommissioni/registravotazione</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

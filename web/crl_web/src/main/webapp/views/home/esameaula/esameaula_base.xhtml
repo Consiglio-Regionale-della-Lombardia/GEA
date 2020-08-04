@@ -1,0 +1,37 @@
+<ui:composition xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/resources/template/base-2leftmenus.xhtml">
+    
+    <ui:define name="title">CRL Home</ui:define>
+
+    <ui:define name="content">
+        <ui:include src="./esameaula.xhtml"/>
+    </ui:define>
+    
+    <ui:define name="top">
+        <ui:include src="../../../resources/template/header.xhtml"/>
+    </ui:define>
+    
+    <ui:define name="navigationbar" >
+        <ui:include  src="../../../resources/template/navigationbar.xhtml"/>
+    </ui:define>
+    
+    <ui:define name="informationbar">
+        <ui:include src="../../../resources/template/informationBar.xhtml"/>
+    </ui:define>
+    
+    <ui:define name="left">
+        <ui:include src="../../../leftmenu.xhtml"/>
+    </ui:define>
+    
+    <ui:define name="left2">
+        <ui:include src="../leftmenuatto.xhtml"/>
+    </ui:define>
+    
+    <ui:define name="bottom">
+        <ui:include src="../../../resources/template/footer.xhtml"/>
+    </ui:define>
+    
+    
+</ui:composition>

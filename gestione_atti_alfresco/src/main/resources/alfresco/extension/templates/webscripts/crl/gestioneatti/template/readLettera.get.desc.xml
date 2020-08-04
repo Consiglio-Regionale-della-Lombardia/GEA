@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Dati di un template lettera</shortname>
+  <description>Restituisce i metadati relativi ad un template lettera</description>
+  <url>/crl/template/lettere/readlettera?tipoTemplate={tipoTemplate}</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

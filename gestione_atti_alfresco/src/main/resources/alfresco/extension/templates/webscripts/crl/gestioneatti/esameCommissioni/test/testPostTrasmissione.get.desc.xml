@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test trasmissione atto in aula</shortname>
+  <description>Test trasmissione atto in aula da parte di una commissione</description>
+  <url>/crl/test/post/atto/esamecommissioni/trasmissione</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

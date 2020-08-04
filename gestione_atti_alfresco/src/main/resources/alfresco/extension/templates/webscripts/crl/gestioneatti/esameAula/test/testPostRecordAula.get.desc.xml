@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test upload testo aula</shortname>
+  <description>Test per l'upload di un testo aula</description>
+  <url>/crl/test/post/atto/esameaula/record</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

@@ -1,0 +1,1386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+<h:head>
+	<style type="text/css">
+.ui-dialog {
+	z-index: -1 !important;
+	opacity: 0;
+}
+</style>
+
+</h:head>
+
+
+<pe:tooltip value="Click per Espandere / Comprimere"
+	forSelector="legend" shared="true" targetPosition="top center"
+	position="left center" />
+
+<p:panelGrid style="width:100%; text-align:right">
+	<p:row>
+		<p:column>
+			<p:commandButton onclick="showDialog()" value="Stampa" type="button"
+				icon="ui-icon-print">
+				<p:printer target="printPanel">
+
+				</p:printer>
+				
+			</p:commandButton>
+			<!-- SCRL-396 fascicolo archivistico  -->
+			<p:button onclick="window.open('#{attoBean.urlFascicolo}'); return false;" value="Visualizza Fascicolo" 
+			rendered="#{not empty attoBean.urlFascicolo and attoBean.urlFascicolo ne null}"/>
+		</p:column>
+		
+	</p:row>
+
+</p:panelGrid>
+
+<p:fieldset legend="Informazioni Generali" toggleable="true"
+	id="fieldsetone" collapsed="false" toggleSpeed="500">
+
+
+
+	<p:panelGrid styleClass="infoTable" id="infogeneralipane">
+		<p:row>
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Legislatura: " />
+				<h:outputText value="#{attoBean.legislatura}" />
+			</p:column>
+
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Tipo Atto: " />
+				<h:outputText value="#{attoBean.tipoAtto}" />
+			</p:column>
+
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="N° Atto: " />
+				<h:outputText value="#{attoBean.numeroAtto}" />
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column colspan="3">
+				<h:outputText style="font-weight: bold;" value="Stato Attuale: " />
+				<h:outputText value="#{attoBean.stato}" />
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Classificazione: " />
+				<h:outputText value="#{attoBean.classificazione}" />
+			</p:column>
+
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Numero Fascicolo: " />
+				<h:outputText value="#{attoBean.numeroRepertorio}" />
+			</p:column>
+
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Data Fascicolo: " />
+				<h:outputText value="#{attoBean.dataRepertorio}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+		</p:row>
+
+		<p:row>
+
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Tipo Iniziativa: " />
+				<h:outputText value="#{riepilogoAttoController.tipoIniziativa}" />
+			</p:column>
+
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Data Iniziativa: " />
+				<h:outputText value="#{attoBean.dataIniziativa}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="N° DGR: " />
+				<h:outputText value="#{attoBean.numeroDGR}" />
+			</p:column>
+
+
+		</p:row>
+
+		<p:row style="margin-bottom:20px">
+			<p:column colspan="3">
+				<h:outputText style="font-weight: bold;" value="Oggetto: " />
+				<h:outputText value="#{attoBean.oggetto}" />
+			</p:column>
+
+		</p:row>
+
+		<p:row style="margin-bottom:20px"
+			rendered="#{navigationBean.isSessionAttoORG()}">
+			<p:column colspan="3">
+				<h:outputText style="font-weight: bold;" value="Relatore: " />
+				<h:outputText value="#{attoBean.getRelatoreORG()}" />
+			</p:column>
+
+		</p:row>
+
+
+		<p:row rendered="#{navigationBean.isFirmatariEnabled()}">
+			<p:column colspan="3">
+
+				<p:dataTable styleClass="generalInfoTab grey-text" sortBy="#{firmatario.numeroOrdinamento}"
+					value="#{attoBean.atto.firmatari}" var="firmatario">
+
+
+
+					<p:column>
+						<f:facet name="header">Nome Firmatario</f:facet>
+						<h:outputText value="#{firmatario.descrizione}" />
+
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Primo firmatario</f:facet>
+
+						<h:outputText value="si" rendered="#{firmatario.primoFirmatario}" />
+						<h:outputText value="no" rendered="#{!firmatario.primoFirmatario}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Data Firma</f:facet>
+
+						<h:outputText value="#{firmatario.dataFirma}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<f:facet name="header">Data Ritiro</f:facet>
+						<h:outputText value="#{firmatario.dataRitiro}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+
+					</p:column>
+
+				</p:dataTable>
+
+
+
+			</p:column>
+		</p:row>
+
+		<p:row rendered="#{not empty attoBean.descrizioneIniziativa}">
+			<p:column colspan="3">
+				<h:outputText style="font-weight: bold;" value="Promotori: " />
+				<h:outputText value="#{attoBean.descrizioneIniziativa}" />
+			</p:column>
+		</p:row>
+
+		<p:row rendered="#{navigationBean.isFirmatariEnabled()}">
+			<p:column colspan="3">
+
+				<p:dataTable styleClass="generalInfoTab grey-text"
+					value="#{attoBean.getAbbinamentiAttivi()}" var="atto">
+
+
+
+					<p:column sortBy="#{atto.tipoAttoAbbinato}">
+						<f:facet name="header">Abbinamenti</f:facet>
+						<c:set value="#{atto.idAttoAbbinato}" var="idAttoParam" />
+						<c:set value="#{atto.tipoAttoAbbinato}" var="tipoAttoParam" />
+						<h:commandLink action="#{searchAttoController.attoDetail()}">
+							<f:setPropertyActionListener
+								target="#{searchAttoController.idAttoSelected}"
+								value="#{idAttoParam}" />
+							<f:setPropertyActionListener
+								target="#{searchAttoController.tipoAttoSelected}"
+								value="#{tipoAttoParam}" />
+							<h:outputText
+								value="#{atto.tipoAttoAbbinato} - #{atto.numeroAttoAbbinato}" />
+						</h:commandLink>
+					</p:column>
+
+					<p:column sortBy="#{atto.dataAbbinamento}">
+						<f:facet name="header">Data abbinamento</f:facet>
+						<h:outputText style="font-weight: bold;"
+							value="#{atto.dataAbbinamento}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+
+					</p:column>
+
+				</p:dataTable>
+
+			</p:column>
+		</p:row>
+
+		<p:row style="margin-bottom:20px"
+			rendered="#{navigationBean.isSessionAttoPAR()}">
+			<p:column colspan="3">
+				<h:outputText style="font-weight: bold;" value="Tipologia: " />
+				<h:outputText value="#{attoBean.tipologia}" />
+			</p:column>
+
+		</p:row>
+
+		<p:row>
+			<p:column colspan="3">
+
+				<h:outputText value="Il presente atto è il proseguente"
+					rendered="#{attoBean.atto.attoProseguente}">
+				</h:outputText>
+			</p:column>
+		</p:row>
+
+	</p:panelGrid>
+
+</p:fieldset>
+
+
+
+<p:fieldset legend="Servizio Commissioni " collapsed="false"
+	toggleable="true" toggleSpeed="500" id="fieldsettwo">
+	<p:panelGrid styleClass="infoTable" id="infoUffServSegrComm">
+		<p:row>
+			<p:column>
+				<h:outputText style="font-weight: bold;"
+					value="Data presa in carico: " />
+				<h:outputText value="#{attoBean.dataPresaInCarico}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
+			<p:column>
+				<h:outputText style="font-weight: bold;"
+					value="Valutazione Ammissibilità: " />
+				<h:outputText value="#{attoBean.valutazioneAmmissibilita}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
+		</p:row>
+
+	</p:panelGrid>
+</p:fieldset>
+
+<p:fieldset id="fsCommissioni" legend="Commissioni" toggleable="true"
+	collapsed="false" toggleSpeed="500">
+	<p:panelGrid styleClass="infoTable" id="infoComm">
+		<p:row>
+			<p:column colspan="2">
+
+				<p:dataTable styleClass="generalInfoTab grey-text"
+					value="#{riepilogoAttoController.commissioni}" var="commissione">
+
+					<p:column>
+						<f:facet name="header">
+						</f:facet>
+						<p:commandButton update=":formRiepilogo"
+							action="#{riepilogoAttoController.showCommissioneDetail}"
+							icon="detail-icon" alt="Clicca per visualizzare"
+							title="Clicca per visualizzare">
+
+							<f:setPropertyActionListener value="#{commissione.descrizione}"
+								target="#{riepilogoAttoController.nomeCommissione}" />
+
+						</p:commandButton>
+					</p:column>
+
+					<p:column sortBy="#{commissione.descrizione}">
+						<f:facet name="header">Commissione</f:facet>
+						<h:outputText value="#{commissione.descrizione}" />
+					</p:column>
+
+					<p:column sortBy="#{commissione.ruolo}">
+						<f:facet name="header">Competenza</f:facet>
+
+						<h:outputText value="#{commissione.ruolo}" />
+					</p:column>
+					<p:column sortBy="#{commissione.stato}">
+						<f:facet name="header">Stato</f:facet>
+						<h:outputText value="#{commissione.stato}" />
+
+					</p:column>
+				</p:dataTable>
+
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+
+	<p:panelGrid styleClass="infoTable" id="dettaglioCommissione">
+
+		<p:row>
+			<p:column colspan="2">
+				<h:outputText style="font-weight: bold;"
+					rendered="#{not empty riepilogoAttoController.commissioneSelected.descrizione}"
+					value="#{riepilogoAttoController.commissioneSelected.descrizione}: " />
+
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Data Assegnazione: " />
+				<h:outputText
+					value="#{riepilogoAttoController.commissioneSelected.dataAssegnazione}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
+			<p:column>
+				<h:outputText style="font-weight: bold;"
+					value="Data Presa in Carico: " />
+				<h:outputText
+					value="#{riepilogoAttoController.commissioneSelected.dataPresaInCarico}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
+
+			</p:column>
+		</p:row>
+
+		<p:row style="height:30px">
+		</p:row>
+		<p:row>
+			<p:column colspan="2" width="500">
+				<h:outputText style="font-weight: bold;" value="Relatore: " />
+
+
+				<p:dataTable style="width:300px"
+					value="#{riepilogoAttoController.commissioneSelected.getValidRelatori()}"
+					var="relatore">
+
+
+					<p:column headerText="Relatore">
+
+						<h:outputText value="#{relatore.descrizione}" />
+
+					</p:column>
+
+					<p:column headerText="Data nomina">
+						<h:outputText value="#{relatore.dataNomina}">
+							<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+
+				</p:dataTable>
+
+			</p:column>
+
+
+		</p:row>
+
+		<p:row>
+			<p:column>
+			</p:column>
+		</p:row>
+		<p:row
+			rendered="#{ riepilogoAttoController.commissioneSelected.ruolo ne 'Consultiva'}">
+
+			<p:column colspan="3">
+				<c:set var="title" value=" " />
+
+				<c:if
+					test="#{ not empty riepilogoAttoController.commissioneSelected.comitatoRistretto.tipologia }">
+
+					<c:set var="title"
+						value="#{riepilogoAttoController.commissioneSelected.comitatoRistretto.tipologia}" />
+
+				</c:if>
+				<h:outputText style="font-weight: bold;" value="#{title}" />
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column colspan="3">
+				<h:outputText value=" " />
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column colspan="3">
+				<h:outputText value=" " />
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column colspan="3">
+				<h:outputText style="font-weight: bold;" value="Votazione Atto " />
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column colspan="3">
+				<h:outputText value=" " />
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Esito Votazione: " />
+
+				<h:outputText
+					value="#{riepilogoAttoController.commissioneSelected.esitoVotazione} - #{riepilogoAttoController.commissioneSelected.quorumEsameCommissioni}" />
+			</p:column>
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Data Votazione: " />
+				<h:outputText
+					value="#{riepilogoAttoController.commissioneSelected.dataSedutaCommissione}">
+					<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
+			<p:column>
+				<h:outputText
+					rendered="#{navigationBean.isCalendarizzazioneTipo() 
+					            and (riepilogoAttoController.commissioneSelected.ruolo eq 'Referente' 
+					                 or riepilogoAttoController.commissioneSelected.ruolo eq 'Co-Referente'
+					                 or riepilogoAttoController.commissioneSelected.ruolo eq 'Redigente' ) }"
+					style="font-weight: bold;" value="Calendarizzato il: " />
+
+				<h:outputText
+					rendered="#{navigationBean.isCalendarizzazioneTipo() 
+					            and (riepilogoAttoController.commissioneSelected.ruolo eq 'Referente' 
+					                 or riepilogoAttoController.commissioneSelected.ruolo eq 'Co-Referente'
+					                 or riepilogoAttoController.commissioneSelected.ruolo eq 'Redigente' ) }"
+					value="#{riepilogoAttoController.commissioneSelected.dataCalendarizzazione}">
+					<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+				</h:outputText>
+
+			</p:column>
+
+		</p:row>
+		<p:row>
+
+			<p:column colspan="3">
+				<h:outputText style="font-weight: bold;"
+					value="#{riepilogoAttoController.getDataTrasmissioneLabel()}" />
+				<h:outputText
+					value="#{riepilogoAttoController.commissioneSelected.dataTrasmissione}">
+					<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+		</p:row>
+
+
+		<p:row
+			rendered="#{riepilogoAttoController.commissioneSelected.ruolo eq 'Deliberante'}">
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Numero DCR: " />
+				<h:outputText
+					value="#{riepilogoAttoController.commissioneSelected.numeroDcr}" />
+			</p:column>
+
+			<p:column colspan="2">
+				<h:outputText style="font-weight: bold;" value="Data DCR: " />
+				<h:outputText
+					value="#{riepilogoAttoController.commissioneSelected.dataDcr}">
+					<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
+		</p:row>
+
+		<p:row
+			rendered="#{navigationBean.isRisTipo() and 
+			          (riepilogoAttoController.commissioneSelected.ruolo eq 'Referente'
+			           or riepilogoAttoController.commissioneSelected.ruolo eq 'Co-Referente'
+			           or riepilogoAttoController.commissioneSelected.ruolo eq 'Deliberante' 
+			           or riepilogoAttoController.commissioneSelected.ruolo eq 'Redigente' 
+			          )}">
+			<p:column>
+				<h:outputText style="font-weight: bold;"
+					value="Proposta di risoluzione n°: " />
+				<h:outputText
+					value="#{riepilogoAttoController.commissioneSelected.numeroRis}" />
+			</p:column>
+
+			<p:column colspan="2">
+				<h:outputText style="font-weight: bold;" value="Data: " />
+				<h:outputText
+					value="#{riepilogoAttoController.commissioneSelected.dataRis}">
+					<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
+		</p:row>
+
+
+	</p:panelGrid>
+
+</p:fieldset>
+
+<p:fieldset legend="Audizioni/Consultazioni" toggleable="true"
+	id="fsAudi" collapsed="false" toggleSpeed="500"
+	rendered="#{not navigationBean.isSessionAttoORG() }">
+	<p:panelGrid styleClass="infoTable" id="infoAudi">
+		<p:row>
+			<p:column>
+
+
+				<p:dataTable value="#{attoBean.getConsultazioni()}"
+					var="consultazione">
+
+
+
+					<p:column headerText="Data consultazione">
+						<h:outputText value="#{consultazione.dataConsultazione}">
+							<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Soggetti">
+
+						<h:outputText value="#{consultazione.getSoggetti()}" />
+					</p:column>
+
+					<p:column headerText="Commissione">
+						<h:outputText
+							value="#{consultazione.commissione} -  #{consultazione.ruoloCommissione}" />
+					</p:column>
+
+
+				</p:dataTable>
+
+			</p:column>
+
+
+		</p:row>
+	</p:panelGrid>
+</p:fieldset>
+
+<p:fieldset legend="Pareri degli Organismi Statutari" toggleable="true"
+	rendered="#{navigationBean.organismiEnabled()}" id="fsOrgan"
+	collapsed="false" toggleSpeed="500">
+	<p:panelGrid styleClass="infoTable" id="infoOrgan">
+		<p:row>
+			<p:column>
+
+
+				<p:dataTable value="#{attoBean.getValidOrganismiStatutari()}"
+					var="organismo">
+
+
+					<p:column headerText="Organismo Statutario">
+						<h:outputText value="#{organismo.descrizione}">
+
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Data deliberazione">
+
+						<h:outputText value="#{organismo.parere.dataRicezioneParere}">
+							<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Esito deliberazione">
+						<h:outputText value="#{organismo.parere.esito}" />
+					</p:column>
+
+
+				</p:dataTable>
+
+			</p:column>
+
+
+		</p:row>
+	</p:panelGrid>
+
+</p:fieldset>
+
+<p:fieldset legend="Aula" toggleable="true" id="fsAula"
+	collapsed="false" toggleSpeed="500"
+	rendered="#{ navigationBean.boxAulaVisible()}">
+	<p:panelGrid styleClass="infoTable" id="infoAula">
+		<p:row>
+			<p:column
+				rendered="#{not navigationBean.hasCommissioneDeliberante()}">
+				<h:outputText style="font-weight: bold;" value="Numero DCR: " />
+				<h:outputText value="#{attoBean.getWorkingAula().numeroDcr}" />
+			</p:column>
+
+
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Data Seduta: " />
+				<h:outputText value="#{attoBean.getWorkingAula().dataSedutaAula}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
+		</p:row>
+
+		<p:row>
+
+
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Tipo Votazione: " />
+				<h:outputText
+					value="#{attoBean.getWorkingAula().tipologiaVotazione}" />
+			</p:column>
+
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Esito Votazione:  " />
+				<h:outputText value="#{attoBean.getWorkingAula().esitoVotoAula}" />
+			</p:column>
+
+
+			<c:set var="emendato" value="No" />
+
+			<c:if test="#{attoBean.getWorkingAula().isEmendato()}">
+				<c:set var="emendato" value="Si" />
+			</c:if>
+
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Emendato: " />
+				<h:outputText value="#{emendato}">
+
+				</h:outputText>
+			</p:column>
+
+		</p:row>
+
+		<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
+
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Numero LCR: " />
+				<h:outputText value="#{attoBean.getWorkingAula().numeroLcr}" />
+			</p:column>
+
+		</p:row>
+
+
+	</p:panelGrid>
+</p:fieldset>
+
+<p:fieldset legend="Chiusura iter" id="fsChiusura" toggleable="true"
+	collapsed="false" toggleSpeed="500"
+	rendered="#{not navigationBean.isSessionAttoINP()}">
+	<p:panelGrid styleClass="infoTable" id="infoChiusuraIter">
+		<p:row>
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Tipo chiusura: " />
+				<h:outputText value="#{attoBean.tipoChiusura}" />
+			</p:column>
+
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Data Chiusura: " />
+				<h:outputText value="#{attoBean.dataChiusura}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+		</p:row>
+
+		<p:row rendered="#{navigationBean.isSessionAttoPAR()}">
+			<p:column>
+				<h:outputText style="font-weight: bold;"
+					value="N° DGR parere/intesa: " />
+				<h:outputText value="#{attoBean.atto.numeroDgrSeguito}" />
+
+			</p:column>
+
+			<p:column>
+				<h:outputText style="font-weight: bold;"
+					value="Data DGR parere/intesa: " />
+				<h:outputText value="#{attoBean.atto.dataDgrSeguito}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
+		</p:row>
+
+		<p:row rendered="#{navigationBean.isBURLEnabled()}">
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Data BURL: " />
+				<h:outputText value="#{attoBean.dataPubblicazioneBURL}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Numero BURL: " />
+				<h:outputText value="#{attoBean.numeroPubblicazioneBURL}" />
+			</p:column>
+		</p:row>
+
+		<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Numero LR:  " />
+				<h:outputText value="#{attoBean.numeroLR}" />
+			</p:column>
+			<p:column>
+				<h:outputText style="font-weight: bold;" value="Data LR:  " />
+				<h:outputText value="#{attoBean.dataLR}">
+					<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+		</p:row>
+
+		<p:row rendered="#{not empty attoBean.atto.noteChiusuraIter }">
+			<p:column colspan="2">
+				<h:outputText style="font-weight: bold;" value="Note:  " />
+				<h:outputText value="#{attoBean.atto.noteChiusuraIter}">
+
+				</h:outputText>
+			</p:column>
+		</p:row>
+
+
+	</p:panelGrid>
+</p:fieldset>
+
+<!-- LAYOUT DI STAMPA!!!!!!!!!!!!!!!! begin -->
+
+<p:dialog widgetVar="printPanelDialog" id="printDialog"
+	position="bottom" style="z-index:-1 !important;width:100%;height:2%">
+
+
+	<p:panel id="printPanel">
+		<p:fieldset legend="Informazioni Generali" toggleable="true"
+			collapsed="false" toggleSpeed="500">
+
+
+
+			<p:panelGrid styleClass="infoTable" id="infogeneralipaneprnt">
+				<p:row>
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Legislatura: " />
+						<h:outputText value="#{attoBean.legislatura}" />
+					</p:column>
+
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Tipo Atto: " />
+						<h:outputText value="#{attoBean.tipoAtto}" />
+					</p:column>
+
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="N° Atto: " />
+						<h:outputText value="#{attoBean.numeroAtto}" />
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column colspan="3">
+						<h:outputText style="font-weight: bold;" value="Stato Attuale: " />
+						<h:outputText value="#{attoBean.stato}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Classificazione: " />
+						<h:outputText value="#{attoBean.classificazione}" />
+					</p:column>
+
+					<p:column>
+						<h:outputText style="font-weight: bold;"
+							value="Numero Fascicolo: " />
+						<h:outputText value="#{attoBean.numeroRepertorio}" />
+					</p:column>
+
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Data Fascicolo: " />
+						<h:outputText value="#{attoBean.dataRepertorio}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Tipo Iniziativa: " />
+						<h:outputText value="#{riepilogoAttoController.tipoIniziativa}" />
+					</p:column>
+
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Data Iniziativa: " />
+						<h:outputText value="#{attoBean.dataIniziativa}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="N° DGR: " />
+						<h:outputText value="#{attoBean.numeroDGR}" />
+					</p:column>
+
+
+				</p:row>
+
+				<p:row style="margin-bottom:20px">
+					<p:column colspan="3">
+						<h:outputText style="font-weight: bold;" value="Oggetto: " />
+						<h:outputText value="#{attoBean.oggetto}" />
+					</p:column>
+
+				</p:row>
+
+				<p:row style="margin-bottom:20px"
+					rendered="#{navigationBean.isSessionAttoORG()}">
+					<p:column colspan="3">
+						<h:outputText style="font-weight: bold;" value="Relatore: " />
+						<h:outputText value="#{attoBean.getRelatoreORG()}" />
+					</p:column>
+
+				</p:row>
+
+				<p:row rendered="#{navigationBean.isFirmatariEnabled()}">
+					<p:column colspan="3">
+
+						<p:dataTable styleClass="generalInfoTab grey-text" sortBy="#{firmatario.numeroOrdinamento}"
+							value="#{attoBean.atto.firmatari}" var="firmatario">
+
+
+
+							<p:column sortBy="#{firmatario.descrizione}">
+								<f:facet name="header">Nome Firmatario</f:facet>
+								<h:outputText value="#{firmatario.descrizione}" />
+
+							</p:column>
+
+							<p:column sortBy="#{firmatario.primoFirmatario}">
+								<f:facet name="header">Primo firmatario</f:facet>
+
+								<h:outputText value="si"
+									rendered="#{firmatario.primoFirmatario}" />
+								<h:outputText value="no"
+									rendered="#{!firmatario.primoFirmatario}" />
+							</p:column>
+
+							<p:column sortBy="#{firmatario.dataFirma}">
+								<f:facet name="header">Data Firma</f:facet>
+
+								<h:outputText value="#{firmatario.dataFirma}">
+									<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+							<p:column sortBy="#{firmatario.dataRitiro}">
+								<f:facet name="header">Data Ritiro</f:facet>
+								<h:outputText value="#{firmatario.dataRitiro}">
+									<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+								</h:outputText>
+
+							</p:column>
+
+						</p:dataTable>
+						<h:outputText value="Nessun firmatario"
+							rendered="#{empty attoBean.atto.firmatari}">
+						</h:outputText>
+
+
+					</p:column>
+				</p:row>
+
+				<p:row rendered="#{not empty attoBean.descrizioneIniziativa}">
+					<p:column colspan="3">
+						<h:outputText style="font-weight: bold;" value="Promotori: " />
+						<h:outputText value="#{attoBean.descrizioneIniziativa}" />
+					</p:column>
+				</p:row>
+
+				<p:row rendered="#{navigationBean.isFirmatariEnabled()}">
+					<p:column colspan="3">
+
+						<p:dataTable styleClass="generalInfoTab grey-text"
+							value="#{attoBean.getAbbinamentiAttivi()}" var="abbinamento">
+
+							<p:column sortBy="#{abbinamento.tipoAttoAbbinato}">
+								<f:facet name="header">Abbinamenti</f:facet>
+								<h:outputText style="font-weight: bold;"
+									value="#{abbinamento.tipoAttoAbbinato} - #{abbinamento.numeroAttoAbbinato} " />
+							</p:column>
+
+							<p:column sortBy="#{abbinamento.dataAbbinamento}">
+								<f:facet name="header">Data abbinamento</f:facet>
+								<h:outputText style="font-weight: bold;"
+									value="#{abbinamento.dataAbbinamento}">
+									<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+								</h:outputText>
+
+							</p:column>
+
+						</p:dataTable>
+						<h:outputText value="Nessun abbinamento"
+							rendered="#{empty attoBean.abbinamenti}">
+						</h:outputText>
+					</p:column>
+				</p:row>
+
+
+				<p:row style="margin-bottom:20px"
+					rendered="#{navigationBean.isSessionAttoPAR()}">
+					<p:column colspan="3">
+						<h:outputText style="font-weight: bold;" value="Tipologia: " />
+						<h:outputText value="#{attoBean.tipologia}" />
+					</p:column>
+
+				</p:row>
+
+				<p:row>
+					<p:column colspan="3">
+
+						<h:outputText value="Il presente atto è il proseguente"
+							rendered="#{attoBean.atto.attoProseguente}">
+						</h:outputText>
+					</p:column>
+				</p:row>
+
+			</p:panelGrid>
+
+		</p:fieldset>
+
+
+
+		<p:fieldset legend="Servizio Commissioni " collapsed="false"
+			toggleable="true" toggleSpeed="500">
+			<p:panelGrid styleClass="infoTable" id="infoUffServSegrCommprnt">
+				<p:row>
+					<p:column>
+						<h:outputText style="font-weight: bold;"
+							value="Data presa in carico: " />
+						<h:outputText value="#{attoBean.dataPresaInCarico}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column>
+						<h:outputText style="font-weight: bold;"
+							value="Valutazione Ammissibilità: " />
+						<h:outputText value="#{attoBean.valutazioneAmmissibilita}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+				</p:row>
+
+			</p:panelGrid>
+		</p:fieldset>
+
+		<p:fieldset legend="Commissioni" toggleable="true" collapsed="false"
+			toggleSpeed="500">
+
+
+			<c:forEach items="#{riepilogoAttoController.commissioni}"
+				var="commissione">
+
+
+				<p:panelGrid styleClass="infoTable">
+
+					<p:row>
+						<p:column colspan="2">
+							<h:outputText style="font-weight: bold;"
+								value="#{commissione.descrizione}" />
+							<h:outputText style="font-weight: bold;"
+								value="(#{commissione.ruolo}) :" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<h:outputText style="font-weight: bold;"
+								value="Data Assegnazione: " />
+							<h:outputText value="#{commissione.dataAssegnazione}">
+								<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column>
+							<h:outputText style="font-weight: bold;"
+								value="Data Presa in Carico: " />
+							<h:outputText value="#{commissione.dataPresaInCarico}">
+								<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+							</h:outputText>
+
+						</p:column>
+					</p:row>
+
+					<p:row style="height:30px">
+					</p:row>
+					<p:row>
+						<p:column colspan="2" width="500">
+							<h:outputText style="font-weight: bold;" value="Relatore: " />
+
+
+							<p:dataTable style="width:300px" value="#{commissione.relatori}"
+								var="relatore">
+
+
+
+
+								<c:set value="#{empty relatore.dataUscita}" var="isRelatore" />
+
+
+								<p:column headerText="Relatore" rendered="#{isRelatore}">
+
+									<h:outputText value="#{relatore.descrizione}" />
+
+								</p:column>
+
+								<p:column headerText="Data nomina" rendered="#{isRelatore}">
+									<h:outputText value="#{relatore.dataNomina}">
+										<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</p:column>
+
+							</p:dataTable>
+
+						</p:column>
+
+
+					</p:row>
+					<p:row style="height:30px">
+					</p:row>
+					<p:row rendered="#{ commissione.ruolo ne 'Consultiva'}">
+
+						<p:column colspan="2" width="500">
+							<h:outputText style="font-weight: bold;" value="#{title}" />
+
+
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText value=" " />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText value=" " />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText style="font-weight: bold;" value="Votazione Atto " />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText value=" " />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText style="font-weight: bold;"
+								value="Esito Votazione: " />
+
+							<h:outputText
+								value="#{commissione.esitoVotazione} - #{commissione.quorumEsameCommissioni}" />
+						</p:column>
+						<p:column>
+							<h:outputText style="font-weight: bold;" value="Data Votazione: " />
+							<h:outputText value="#{commissione.dataSedutaCommissione}">
+								<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column>
+							<h:outputText
+								rendered="#{navigationBean.isCalendarizzazioneTipo() 
+					            and (commissione.ruolo eq 'Referente' 
+					                 or commissione.ruolo eq 'Co-Referente'
+					                 or commissione.ruolo eq 'Redigente' ) }"
+								style="font-weight: bold;" value="Calendarizzato il: " />
+
+							<h:outputText
+								rendered="#{navigationBean.isCalendarizzazioneTipo() 
+					            and (commissione.ruolo eq 'Referente' 
+					                 or commissione.ruolo eq 'Co-Referente'
+					                 or commissione.ruolo eq 'Redigente' ) }"
+								value="#{commissione.dataCalendarizzazione}">
+								<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+							</h:outputText>
+
+						</p:column>
+
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText style="font-weight: bold;"
+								value="#{riepilogoAttoController.getDataTrasmissioneLabelByRuolo(commissione.ruolo)}" />
+
+							<h:outputText value="#{commissione.dataTrasmissione}">
+								<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+					</p:row>
+
+					<p:row rendered="#{commissione.ruolo eq 'Deliberante'}">
+						<p:column
+							rendered="#{not navigationBean.hasCommissioneDeliberante()}">
+							<h:outputText style="font-weight: bold;" value="Numero DCR: " />
+							<h:outputText value="#{commissione.numeroDcr}" />
+						</p:column>
+
+						<p:column colspan="2">
+							<h:outputText style="font-weight: bold;" value="Data DCR: " />
+							<h:outputText value="#{commissione.dataDcr}">
+								<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+
+					</p:row>
+
+					<p:row
+						rendered="#{navigationBean.isRisTipo() and 
+			          (commissione.ruolo eq 'Referente'
+			           or commissione.ruolo eq 'Co-Referente'
+			           or commissione.ruolo eq 'Deliberante' 
+			           or commissione.ruolo eq 'Redigente' 
+			          )}">
+						<p:column>
+							<h:outputText style="font-weight: bold;"
+								value="Proposta di risoluzione n°: " />
+							<h:outputText value="#{commissione.numeroRis}" />
+						</p:column>
+
+						<p:column colspan="2">
+							<h:outputText style="font-weight: bold;" value="Data: " />
+							<h:outputText value="#{commissione.dataRis}">
+								<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+
+					</p:row>
+
+				</p:panelGrid>
+				<br />
+				<br />
+			</c:forEach>
+		</p:fieldset>
+
+
+		<p:fieldset legend="Audizioni/Consultazioni" toggleable="true"
+			collapsed="false" toggleSpeed="500"
+			rendered="#{not navigationBean.isSessionAttoORG() }">
+			<p:panelGrid styleClass="infoTable">
+				<p:row>
+					<p:column>
+
+
+						<p:dataTable value="#{attoBean.getConsultazioni()}"
+							var="consultazione">
+
+
+
+							<p:column headerText="Data consultazione">
+								<h:outputText value="#{consultazione.dataConsultazione}">
+									<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="Soggetti">
+
+								<h:outputText value="#{consultazione.getSoggetti()}" />
+							</p:column>
+
+							<p:column headerText="Commissione">
+								<h:outputText
+									value="#{consultazione.commissione} -  #{consultazione.ruoloCommissione}" />
+							</p:column>
+
+
+						</p:dataTable>
+
+					</p:column>
+
+
+				</p:row>
+			</p:panelGrid>
+		</p:fieldset>
+
+		<p:fieldset legend="Pareri degli Organismi Statutari"
+			rendered="#{navigationBean.organismiEnabled()}" toggleable="true"
+			collapsed="false" toggleSpeed="500">
+			<p:panelGrid styleClass="infoTable">
+				<p:row>
+					<p:column>
+
+
+						<p:dataTable value="#{attoBean.getValidOrganismiStatutari()}"
+							var="organismo">
+
+
+							<p:column headerText="Organismo Statutario">
+								<h:outputText value="#{organismo.descrizione}">
+
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="Data deliberazione">
+
+								<h:outputText value="#{organismo.parere.dataRicezioneParere}">
+									<f:convertDateTime locale="it" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="Esito deliberazione">
+								<h:outputText value="#{organismo.parere.esito}" />
+							</p:column>
+
+
+						</p:dataTable>
+
+					</p:column>
+
+
+				</p:row>
+			</p:panelGrid>
+
+		</p:fieldset>
+
+		<p:fieldset legend="Aula" toggleable="true" collapsed="false"
+			toggleSpeed="500" rendered="#{navigationBean.boxAulaVisible()}">
+			<p:panelGrid styleClass="infoTable">
+				<p:row>
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Numero DCR: " />
+						<h:outputText value="#{attoBean.getWorkingAula().numeroDcr}" />
+					</p:column>
+
+
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Data Seduta: " />
+						<h:outputText value="#{attoBean.getWorkingAula().dataSedutaAula}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+				</p:row>
+
+				<p:row>
+
+
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Tipo Votazione: " />
+						<h:outputText
+							value="#{attoBean.getWorkingAula().tipologiaVotazione}" />
+					</p:column>
+
+					<p:column>
+						<h:outputText style="font-weight: bold;"
+							value="Esito Votazione:  " />
+						<h:outputText value="#{attoBean.getWorkingAula().esitoVotoAula}" />
+					</p:column>
+
+
+					<c:set var="emendato" value="No" />
+
+					<c:if test="#{attoBean.getWorkingAula().isEmendato()}">
+						<c:set var="emendato" value="Si" />
+					</c:if>
+
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Emendato: " />
+						<h:outputText value="#{emendato}">
+
+						</h:outputText>
+					</p:column>
+
+				</p:row>
+
+				<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
+
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Numero LCR: " />
+						<h:outputText value="#{attoBean.getWorkingAula().numeroLcr}" />
+					</p:column>
+
+				</p:row>
+			</p:panelGrid>
+		</p:fieldset>
+
+		<p:fieldset legend="Chiusura iter" toggleable="true" collapsed="false"
+			toggleSpeed="500" rendered="#{not navigationBean.isSessionAttoINP()}">
+			<p:panelGrid styleClass="infoTable">
+				<p:row>
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Tipo chiusura: " />
+						<h:outputText value="#{attoBean.tipoChiusura}" />
+					</p:column>
+
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Data Chiusura: " />
+						<h:outputText value="#{attoBean.dataChiusura}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+				</p:row>
+				<p:row rendered="#{navigationBean.isSessionAttoPAR()}">
+					<p:column>
+						<h:outputText style="font-weight: bold;"
+							value="N° DGR parere/intesa: " />
+						<h:outputText value="#{attoBean.atto.numeroDgrSeguito}" />
+
+					</p:column>
+
+					<p:column>
+						<h:outputText style="font-weight: bold;"
+							value="Data DGR parere/intesa: " />
+						<h:outputText value="#{attoBean.atto.dataDgrSeguito}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+				</p:row>
+				<p:row rendered="#{navigationBean.isBURLEnabled()}">
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Data BURL: " />
+						<h:outputText value="#{attoBean.dataPubblicazioneBURL}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Numero BURL: " />
+						<h:outputText value="#{attoBean.numeroPubblicazioneBURL}" />
+					</p:column>
+				</p:row>
+				<p:row rendered="#{navigationBean.isSessionAttoPDL()}">
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Numero LR:  " />
+						<h:outputText value="#{attoBean.numeroLR}" />
+					</p:column>
+					<p:column>
+						<h:outputText style="font-weight: bold;" value="Data LR:  " />
+						<h:outputText value="#{attoBean.dataLR}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+				</p:row>
+				<p:row rendered="#{not empty attoBean.atto.noteChiusuraIter }">
+					<p:column colspan="2">
+						<h:outputText style="font-weight: bold;" value="Note:  " />
+						<h:outputText value="#{attoBean.atto.noteChiusuraIter}">
+
+						</h:outputText>
+					</p:column>
+				</p:row>
+				<!-- <p:row rendered="#{navigationBean.isSessionAttoPDA()}">
+					<p:column colspan="2">
+						<b><h:outputLabel for="numeroDcrprnt" value="Numero DCR: " />
+						</b>
+						<h:outputText id="numeroDcrprnt"
+							value="#{attoBean.atto.numeroDcr}" />
+					</p:column>
+				</p:row> -->
+
+
+
+
+
+			</p:panelGrid>
+		</p:fieldset>
+	</p:panel>
+
+</p:dialog>
+
+<!-- LAYOUT DI STAMPA!!!!!!!!!!!!!!!! end -->
+
+</html>

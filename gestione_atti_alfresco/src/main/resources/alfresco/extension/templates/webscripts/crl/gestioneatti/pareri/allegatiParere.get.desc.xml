@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Allegati parere di un atto</shortname>
+  <description>Restituisce l'elenco degli allegati al parere di un atto</description>
+  <url>/crl/atto/pareri/allegati?idAtto={idAtto}&amp;tipologiaAllegati={tipologiaAllegati}&amp;organismoStatutario={organismoStatutario}</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Aggiornamento di un atto</shortname>
+  <description>Aggiornamento di un atto</description>
+  <url>/crl/atto?idAtto={idAtto}</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

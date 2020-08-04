@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model name="crlodg:gestioneOdgDocumentModel" xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+
+	<description>CRL Odg Document Model</description>
+	<author>Sourcesense</author>
+	<version>1.0</version>
+
+	<imports>
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+	
+	<namespaces>
+		<namespace uri="http://www.regione.lombardia.it/content/model/odg/1.0"
+			prefix="crlodg" />
+	</namespaces>
+
+	<types>
+	
+		<type name="crlodg:odgDocument">
+			<title>Odg Document</title>
+			<parent>cm:content</parent>
+		</type>
+		
+		
+		<!-- Commissioni -->
+	
+		<type name="crlodg:odgGenericoCommissioniDocument">
+			<title>Documento Ordine del Giorno Commissioni</title>
+			<parent>crlodg:odgDocument</parent>
+		</type>
+	
+		
+		<!-- Aula -->
+		
+		<type name="crlodg:odgGenericoAulaDocument">
+			<title>Documento Ordine del Giorno Commissioni</title>
+			<parent>crlodg:odgDocument</parent>
+		</type>
+		
+		
+	</types>
+	
+	
+
+</model>

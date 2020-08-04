@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Presa in carico atto</shortname>
+  <description>Presa in carico atto da parte della commissione</description>
+  <url>/crl/atto/esamecommissioni/presaincarico</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

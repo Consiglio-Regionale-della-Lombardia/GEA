@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+<h:form id="informationForm">
+	<p:panelGrid styleClass="infoBar" id="informationBar">
+		<!-- begin header -->
+		<c:set value="#{prettyContext.getCurrentInstance().currentMapping.id}"
+			var="function" />
+		<c:set value="Home" var="home" />
+		<c:set value="Gestione_Sedute" var="gestioneSed" />
+		<c:set value="Inserimento_Atto" var="insAtto" />
+		<c:set value="Inserimento_EAC" var="insEAC" />
+		<c:set value="Inserimento_MIS" var="insMIS" />
+		
+		<c:set value="#{navigationBean.getSottoStatoCommissioneConsultiva()}"
+			var="consultiva" />
+		<c:if
+			test="#{ !(function == gestioneSed) and !(function  == insAtto) and !(function == home) and !(function == insEAC) and !(function == insMIS) }"
+			var="attoVisible" />
+		<p:row style="background-color: #E6E6FA !important;">
+
+			<p:column style="width:20%">
+				<h:outputLabel value="     Utente : " />
+				<h:outputLabel value="#{userBean.username}" />
+			</p:column>
+
+			<p:column style="width:20%">
+				<h:outputLabel value="     Ruolo : " />
+				<p:selectOneMenu id="ruolo" style="width:250px"
+								 value="#{userBean.user.sessionGroup}" >
+					<p:ajax event="change" process="@this" listener="#{userBean.handleChangeSessionGroup}" immediate="true" oncomplete="window.location.replace(window.location.href);"/>
+					<f:selectItem itemLabel="Scegli il Ruolo" itemValue="" />
+					onchange="window.location.replace(window.location.href);"
+					<f:selectItems value="#{userBean.user.gruppi}" var="gruppo" itemValue="#{gruppo}" itemLabel="#{gruppo.nome}" />
+				</p:selectOneMenu>
+			</p:column>
+
+			<p:column rendered="#{attoVisible}"
+				style="width:80%; text-align : right">
+			
+				<h:outputLabel value="#{attoBean.tipoAtto}" />
+				&nbsp;
+				
+				<h:outputLabel value="#{attoBean.numeroAtto}" />
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<c:if test="#{attoBean.getAbbinamentiAttivi().size() >0 }">
+					<h:outputLabel value="Abbinato a :" />
+					<c:forEach items="#{attoBean.getAbbinamentiAttivi()}" var="abbinamento">
+					
+						<h:outputLabel value="#{abbinamento.tipoAttoAbbinato} -" />
+						<h:outputLabel value="#{abbinamento.numeroAttoAbbinato}" />
+				        &nbsp;&nbsp;
+					
+					</c:forEach>
+				</c:if>
+				
+				<h:outputLabel value="      Stato :" />
+				<h:outputLabel value="#{attoBean.stato}" />
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				
+				
+				
+				<c:if test="#{not empty  consultiva}" >
+				
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<h:outputLabel value="Stato Lavorazione :" />
+				<h:outputLabel value="#{navigationBean.getSottoStatoCommissioneConsultiva()}" />
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				</c:if>
+			</p:column>
+
+
+		</p:row>
+	</p:panelGrid>
+</h:form>
+</html>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form id="formRiepilogo">
+
+<!-- <p:ajaxStatus onstart="statusDialog.show();"
+		onsuccess="statusDialog.hide();" />
+	<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
+		draggable="false" closable="false">
+		<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
+	</p:dialog>  -->
+	
+	<p:tabView id="tabView" dynamic="false" cache="true" effect="slide">
+
+		<p:tab id="tba1" title="Informazioni Generali">                 
+            
+            <ui:include src="./riepilogoattotab.xhtml"/>
+			
+
+		</p:tab>
+
+		<p:tab id="tab2" title="Documenti Allegati">
+			<ui:include src="./documentiallegatitab.xhtml"/>
+		</p:tab>
+
+		<p:tab id="tab3" title="Sedute">
+		
+			<ui:include src="./sedutetab.xhtml"/>
+			
+		</p:tab>
+
+		<p:tab id="tab4" title="Amministrazione" disabled="#{!navigationBean.isAmministrazioneEnabled()}">
+
+			<ui:include src="./amministrazione.xhtml"/>
+
+		</p:tab>
+	</p:tabView>
+</h:form>
+</html>

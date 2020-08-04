@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Aggiunta degli atti trattati in una seduta</shortname>
+  <description>Aggiunta degli atti trattati in una seduta</description>
+  <url>/crl/sedute/attitrattati</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

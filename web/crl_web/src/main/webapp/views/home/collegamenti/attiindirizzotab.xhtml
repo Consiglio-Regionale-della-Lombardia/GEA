@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<pe:tooltip value="Click per Espandere / Comprimere"
+	forSelector="legend" shared="true" targetPosition="top center"
+	position="left center" />
+
+<div id="blockedAttiIndirizzo">
+	<p:panelGrid styleClass="infoTable" id="attiIndirizzoPanel">
+		<p:row>
+			<p:column>
+				<p:fieldset styleClass="fieldSetTab"
+					legend="Collegamenti con Atti di Indirizzo e di Sindacato Ispettivo: "
+					collapsed="false" toggleable="true" toggleSpeed="500">
+
+					<p:row>
+						<p:column colspan="4">
+
+							<!-- Messaggio azioni -->
+							<p:growl id="attiIndirizzoMsg" showDetail="true" sticky="false" />
+
+							<!-- Confirm dialog -->
+							<p:confirmDialog id="confirmCollegamentoAttoSindacatoDialog"
+								message="Sei sicuro di voler eliminare il Collegamento ?"
+								header="Cancellazione Collegamento" severity="alert"
+								widgetVar="collegamentoAttoSindacatoDialog">
+
+								<p:commandButton id="confirmAttoSindacatoCollegamento"
+									value="Conferma"
+									oncomplete="collegamentoAttoSindacatoDialog.hide()"
+									action="#{collegamentiController.removeCollegamentoAttoSindacato}"
+									update="listaCollegamentiAttiSindacati" />
+								<p:commandButton id="declineCollegamentoAttoSindacato"
+									value="Annulla"
+									onclick="collegamentoAttoSindacatoDialog.hide()" type="button" />
+							</p:confirmDialog>
+
+
+
+							<p:panelGrid id="addAttoSindacatoPanel" styleClass="tableAppend">
+								<f:facet name="header">
+									<p:row>
+										<!-- Modifica aggiunta ricerca per anno -->
+										<p:column>Anno</p:column> 
+										<p:column>Tipo</p:column>
+										<p:column>N. Atto</p:column>
+										<p:column>Descrizione</p:column>
+										<p:column>Azioni</p:column>
+									</p:row>
+								</f:facet>
+								<p:row>
+								
+									<p:column>
+										<p:selectOneMenu id="annoCreazioneAttoSindacato"
+											value="#{collegamentiController.annoCreazione}" >
+											<f:selectItem itemLabel="Anno" itemValue="" />
+											<f:selectItems
+											value="#{gestioneSeduteController.annoCreazioneList(2010)}" />
+											<p:ajax update="numAttoSindacato" 
+													listener="#{collegamentiController.handleAttoSindacatoChange}" />
+										</p:selectOneMenu>
+									</p:column>
+
+									<p:column>
+										<p:selectOneMenu id="tipoAttoSindacato"
+											value="#{collegamentiController.tipoAttoSindacato}">
+											<f:selectItem itemLabel="Scegli tipo Atto" itemValue="" />
+											<f:selectItems value="#{collegamentiController.tipiAttoSindacato}" />
+											<p:ajax update="numAttoSindacato"
+												listener="#{collegamentiController.handleAttoSindacatoChange}" />
+										</p:selectOneMenu>
+									</p:column>
+									
+									<p:column>
+										<p:selectOneMenu id="numAttoSindacato" style="width:200px;left:0 !important"
+											 value="#{collegamentiController.idAttoSindacato}" styleClass="attiSindacatoSelect">
+											<f:selectItem itemLabel="Scegli numero Atto" itemValue="" />
+											<f:selectItems itemValue="#{attoSind.idAtto}" var="attoSind"
+											value="#{collegamentiController.numeriAttoSindacato}"
+											itemLabel="#{attoSind.numeroAtto} - #{attoSind.oggettoAtto}"
+											/>
+										</p:selectOneMenu>
+									</p:column>
+
+									<p:column>
+									   <p:inputText value="#{collegamentiController.descrizioneAttoSindacato}"
+												style="width:100%" />  
+										</p:column>
+									
+
+									<p:column>
+										<p:commandButton value="Aggiungi"
+											action="#{collegamentiController.addCollegamentoAttoSindacato}"
+											id="addCollegamentoAttoSindacato"
+											update="listaCollegamentiAttiSindacati, attiIndirizzoMsg"
+											icon="new-icon" />
+									</p:column>
+
+								</p:row>
+
+							</p:panelGrid>
+
+						</p:column>
+					</p:row>
+
+					<br />
+
+					<p:row>
+						<p:column colspan="4">
+
+
+							<p:dataTable id="listaCollegamentiAttiSindacati"
+								value="#{collegamentiController.collegamentiAttiSindacato}"
+								var="collegamento" styleClass="generalInfoTab" editable="true">
+
+								<p:column headerText="Tipo Atto" style="width:125px"
+									sortBy="#{collegamento.tipoAtto}">
+									<h:outputText value="#{collegamento.tipoAtto}" />
+								</p:column>
+
+								<p:column headerText="N.Atto" style="width:125px"
+									sortBy="#{collegamento.numeroAtto}">
+									<h:outputText value="#{collegamento.numeroAtto}" />
+								</p:column>
+
+                                <p:column headerText="Oggetto" style="width:125px"
+									sortBy="#{collegamento.oggettoAtto}">
+									<h:outputText value="#{collegamento.oggettoAtto}" />
+								</p:column>   
+
+
+								<p:column headerText="Descrizione" style="width:125px"
+									sortBy="#{collegamento.descrizione}">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{collegamento.descrizione}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{collegamento.descrizione}"
+												style="width:100%">
+												<p:ajax event="change"
+													listener="#{collegamentiController.updateAttiIndirizzoHandler}" />
+											</p:inputText>
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+
+								<p:column headerText="Azioni" style="width:125px">
+
+									<p:commandButton
+										oncomplete="collegamentoAttoSindacatoDialog.show()"
+										icon="delete-icon">
+										<f:setPropertyActionListener
+											value="#{collegamento.numeroAtto}"
+											target="#{collegamentiController.attoSindacatoToDelete}" />
+									</p:commandButton>
+								</p:column>
+
+								<p:column headerText="Modifica" style="width:50px">
+									<p:rowEditor />
+								</p:column>
+
+							</p:dataTable>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<br />
+							<p:commandButton value="Salva"
+								action="#{collegamentiController.salvaAttiIndirizzo}"
+								update="attiIndirizzoMsg" />
+						</p:column>
+					</p:row>
+				</p:fieldset>
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+</div>
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+<script>
+		
+if (#{navigationBean.isGuest()}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#blockedAttiIndirizzo').block({ message: null } );}
+</script>
+</html>

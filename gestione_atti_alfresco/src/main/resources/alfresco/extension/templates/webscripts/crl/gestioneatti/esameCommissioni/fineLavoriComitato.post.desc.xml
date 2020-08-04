@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Fine lavori comitato ristretto</shortname>
+  <description> Fine lavori comitato ristretto</description>
+  <url>/crl/atto/esamecommissioni/finelavoricomitato</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

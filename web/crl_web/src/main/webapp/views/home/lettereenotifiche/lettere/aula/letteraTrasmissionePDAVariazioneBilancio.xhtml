@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+
+	<p:panelGrid styleClass="infoTable" id="insertletterapanel">
+
+
+		<p:row>
+
+			<p:column>
+				<h:outputLabel for="firmatario" value="Firmatario: " />
+			</p:column>
+
+			<p:column>
+				<p:inputText id="firmatario"
+					value="#{lettereNotificheController.letteraSelected.firmatario}" />
+			</p:column>
+			
+			
+			
+
+		</p:row>
+
+        <p:row>
+
+			<p:column>
+				<h:outputLabel for="ufficio" value="Ufficio: " />
+			</p:column>
+
+			<p:column>
+				<p:inputText id="ufficio"
+					value="#{lettereNotificheController.letteraSelected.ufficio}" />
+			</p:column>
+			
+			
+			
+
+		</p:row>  
+		
+		<p:row>
+
+			<p:column>
+				<h:outputLabel for="direzione" value="Direzione: " />
+			</p:column>
+
+			<p:column>
+				<p:inputText id="direzione"
+					value="#{lettereNotificheController.letteraSelected.direzione}" />
+			</p:column>
+			
+			
+			
+
+		</p:row>  
+
+
+
+	</p:panelGrid>
+</html>

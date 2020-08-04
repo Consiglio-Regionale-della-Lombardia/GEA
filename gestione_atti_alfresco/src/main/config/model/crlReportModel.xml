@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model name="crlreport:gestioneReportModel" xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+
+	<description>CRL Report Model</description>
+	<author>Sourcesense</author>
+	<version>1.0</version>
+
+	<imports>
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+	
+	<namespaces>
+		<namespace uri="http://www.regione.lombardia.it/content/model/report/1.0"
+			prefix="crlreport" />
+	</namespaces>
+
+	<types>
+	
+		<type name="crlreport:report">
+			<title>Report</title>
+			<parent>cm:content</parent>
+		</type>
+		
+		
+		<!-- Servizio Commissioni -->
+	
+		<type name="crlreport:reportServComm">
+			<title>Report Servizio Commissioni</title>
+			<parent>crlreport:report</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiAssCommissioniServComm">
+			<title>Report Atti Assegnati alle Commissioni - Servizio Commissioni</title>
+			<parent>crlreport:reportServComm</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiIniziativaConsPerConsServComm">
+			<title>Report Atti di iniziativa consiliare per consigliere - Servizio Commissioni</title>
+			<parent>crlreport:reportServComm</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiInviatiOrganiEsterniServComm">
+			<title>Report Atti inviati a organi esterni - Servizio Commissioni</title>
+			<parent>crlreport:reportServComm</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiLicenziatiServComm">
+			<title>Report Atti licenziati - Servizio Commissioni</title>
+			<parent>crlreport:reportServComm</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiRelatoreServComm">
+			<title>Report Atti per relatore - Servizio Commissioni</title>
+			<parent>crlreport:reportServComm</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiRitiratiRevocatiServComm">
+			<title>Report Atti ritirati e revocati - Servizio Commissioni</title>
+			<parent>crlreport:reportServComm</parent>
+		</type>
+		
+		<type name="crlreport:reportComposizioneCommissioniServComm">
+			<title>Report Composizione commissioni- Servizio Commissioni</title>
+			<parent>crlreport:reportServComm</parent>
+		</type>
+		
+		<type name="crlreport:reportConferenzeServComm">
+			<title>Report Conferenze (Atti in istruttoria) - Servizio Commissioni</title>
+			<parent>crlreport:reportServComm</parent>
+		</type>
+		
+		<!-- Commissioni -->
+		
+		<type name="crlreport:reportComm">
+			<title>Report Commissioni</title>
+			<parent>crlreport:report</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiAssCommissioniComm">
+			<title>Report Atti Assegnati alle Commissioni - Commissioni</title>
+			<parent>crlreport:reportComm</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiIstruttoriaCommissioniComm">
+			<title>Report Atti in istruttoria alle commissioni per tipo atto - Commissioni</title>
+			<parent>crlreport:reportComm</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiLicenziatiComm">
+			<title>Report Atti licenziati dalle commissioni - Commissioni</title>
+			<parent>crlreport:reportComm</parent>
+		</type>
+		
+		<type name="crlreport:reportRelatoriDataNominaComm">
+			<title>Report dei relatori nominati in commissione per data nomina - Commissioni</title>
+			<parent>crlreport:reportComm</parent>
+		</type>
+                
+                <type name="crlreport:reportAudizioniCommissioniComm">
+			<title>Report Elenco audizioni delle Commissioni - Commissioni</title>
+			<parent>crlreport:reportComm</parent>
+		</type>
+		
+		<!-- Aula -->
+		
+		<type name="crlreport:reportAula">
+			<title>Report Aula</title>
+			<parent>crlreport:report</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiIstruttoriaAula">
+			<title>Report Atti istruttoria - Aula</title>
+			<parent>crlreport:reportAula</parent>
+		</type>
+		
+		<type name="crlreport:reportAttiRinviatiAula">
+			<title>Report Atti rinviati alle commissioni - Aula</title>
+			<parent>crlreport:reportAula</parent>
+		</type>
+		
+		<type name="crlreport:reportDCRAula">
+			<title>Report DCR - Aula</title>
+			<parent>crlreport:reportAula</parent>
+		</type>
+		
+		<type name="crlreport:reportLCRAula">
+			<title>Report LCR - Aula</title>
+			<parent>crlreport:reportAula</parent>
+		</type>
+		
+		
+	</types>
+	
+	
+
+</model>

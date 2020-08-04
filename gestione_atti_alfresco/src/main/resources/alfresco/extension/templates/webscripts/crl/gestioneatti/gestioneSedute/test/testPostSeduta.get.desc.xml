@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test creazione di una seduta</shortname>
+  <description>Test per la creazione del nodo per una nuova seduta</description>
+  <url>/crl/test/seduta</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form id="gestioneSeduteForm" >
+
+    <p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>  
+ 
+	<p:dialog modal="true" widgetVar="statusDialog" header="Caricamento"
+		draggable="false" closable="false">
+		<p:graphicImage value="resources/img/ajax_loading_bar.gif" />
+	</p:dialog>  
+	
+	
+	<p:growl id="tabGestioneSeduteMsg" showDetail="true" sticky="false" />
+
+	<p:tabView id="gestioneSedute" dynamic="true"  widgetVar="gestioneSeduteTabs"
+		effect="slide">
+		
+
+		<p:tab id="tab1" title="Inserisci Seduta">
+
+
+			<ui:include src="./inseriscisedutatab.xhtml" />
+
+
+		</p:tab>
+
+		<p:tab id="tab2"  title="Inserisci ODG">
+
+			<ui:include src="./inserisciodgtab.xhtml" />
+
+		</p:tab>
+
+
+	</p:tabView>
+</h:form>
+</html>

@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<pe:tooltip value="Click per Espandere / Comprimere"
+	forSelector="legend" shared="true" targetPosition="top center"
+	position="left center" />
+
+
+
+
+<div id="blockedConsultazioni">
+<p:fieldset legend="Consultazioni" toggleable="true" toggleSpeed="500">
+	<p:panelGrid styleClass="infoTable" id="consultazionipanel">
+		<p:row>
+			<p:column>
+				<p:growl id="consultazioneMsg" showDetail="true" sticky="false" />
+
+				<!-- Confirm dialog -->
+				<p:confirmDialog id="confirmConsultazioneDialog"
+					message="Sei sicuro di voler eliminare la Consultazione ?"
+					header="Cancellazione Consultazione" severity="alert"
+					widgetVar="consultazioneDialog">
+
+					<p:commandButton id="confirmConsultazione" value="Conferma"
+						oncomplete="consultazioneDialog.hide()"
+						action="#{consultazioniPareriController.removeConsultazione}"
+						update="listaConsultazioni, dettagliconsultazionepanel" />
+					<p:commandButton id="declineConsultazione" value="Annulla"
+						onclick="consultazioneDialog.hide()" type="button" />
+
+				</p:confirmDialog>
+				<p:confirmDialog id="confirmSoggettoInvitatoDialog"
+					message="Sei sicuro di voler eliminare il Soggetto Invitato ?"
+					header="Cancellazione Soggetto Invitato" severity="alert"
+					widgetVar="soggettoInvitatoDialog">
+
+					<p:commandButton id="confirmSoggettoInvitato" value="Conferma"
+						oncomplete="soggettoInvitatoDialog.hide()"
+						action="#{consultazioniPareriController.removeSoggettoInvitato}"
+						update="listaSoggettiInvitati" />
+					<p:commandButton id="declineSoggettoInvitato" value="Annulla"
+						onclick="soggettoInvitatoDialog.hide()" type="button" />
+
+				</p:confirmDialog>
+
+				<p:confirmDialog id="confirmAllegatoConsultazioneDialog"
+					message="Sei sicuro di voler eliminare l'allegato ?"
+					header="Cancellazione Allegato" severity="alert"
+					widgetVar="allegatoConsultazioneDialog">
+
+					<p:commandButton id="confirmAllegatoConsultazioneComponente"
+						value="Conferma" oncomplete="allegatoConsultazioneDialog.hide()"
+						action="#{consultazioniPareriController.removeAllegatoConsultazione}"
+						update="listaDocumentazioneConsultazione" />
+					<p:commandButton id="declineAllegatoConsultazione" value="Annulla"
+						onclick="allegatoConsultazioneDialog.hide()" type="button" />
+
+				</p:confirmDialog>
+
+				<p:confirmDialog id="uploadFileConsultazioneAttributes"
+					header="Caricamento"
+					widgetVar="uploadFileConsultazioneAttributesDialog"
+					style="width:450px" message="Allega Testo">
+					<p:panelGrid id="uploadpanelConsultazione">
+						<p:row>
+							<p:column>
+								<h:outputLabel for="ispubblicoConsultazione" value="Pubblica su Internet: " />
+								<p:selectBooleanCheckbox id="ispubblicoConsultazione"
+									value="#{consultazioniPareriController.currentFilePubblico}">
+									<p:ajax event="change" immediate="true"></p:ajax>
+								</p:selectBooleanCheckbox>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:fileUpload label="Sfoglia"  uploadLabel="Carica" cancelLabel="Cancella"
+									oncomplete="uploadFileConsultazioneAttributesDialog.hide()"
+									auto="false"
+									update="listaDocumentazioneConsultazione, pareriMsg"
+									fileUploadListener="#{consultazioniPareriController.uploadAllegatoConsultazione}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:commandButton id="declineUploadFileConsultazione"
+									value="Annulla"
+									onclick="uploadFileConsultazioneAttributesDialog.hide()"
+									type="button" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:confirmDialog>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column colspan="4">
+				<p:panelGrid id="addConsultazionePanel"  styleClass="tableAppend">
+					<f:facet name="header">
+						<p:row>
+							<p:column>Data Consultazione</p:column>
+							<p:column>Soggetti invitati</p:column>
+							<p:column>Aggiungi</p:column>
+							<p:column></p:column>
+						</p:row>
+					</f:facet>
+					<p:row>
+						<p:column>
+							<p:calendar size="10" locale="it" id="dataConsultazione"
+								pattern="dd/MM/yyyy"
+								value="#{consultazioniPareriController.dataConsultazione}" />
+						</p:column>
+
+
+						<p:column>
+							<p:inputTextarea id="nomeSoggettoConsultato" cols="100" rows="2"
+								value="#{consultazioniPareriController.soggettoConsultato}" />
+						</p:column>
+
+						<p:column>
+							<p:commandButton value="Aggiungi"
+								action="#{consultazioniPareriController.addConsultazione}"
+								id="addConsultazione"
+								update="addConsultazionePanel,listaConsultazioni, consultazioneMsg, dettagliconsultazionepanel"
+								icon="new-icon" />
+						</p:column>
+
+					</p:row>
+
+				</p:panelGrid>
+			</p:column>
+		</p:row>
+
+		<p:row>
+			<p:column colspan="4">
+
+				<p:dataTable id="listaConsultazioni"
+					value="#{consultazioniPareriController.consultazioniList}"
+					var="consultazione" styleClass="generalInfoTab grey-text">
+
+					<p:column
+						sortBy="#{consultazioniPareriController.descrizioneConsultazioneSelected}">
+						<p:commandButton value="Mostra dettaglio" icon="detail-icon"
+							action="#{consultazioniPareriController.showConsultazioneDetail}"
+							update=":consultazioniPareriForm:tabView:dettagliconsultazionepanel">
+							<f:setPropertyActionListener value="#{consultazione.descrizione}"
+								target="#{consultazioniPareriController.descrizioneConsultazioneSelected}" />
+						</p:commandButton>
+					</p:column>
+
+					<p:column sortBy="#{consultazione.commissione}">
+						<f:facet name="header">Commissione</f:facet>
+						<h:outputText value="#{consultazione.commissione}" />
+					</p:column>
+
+					<p:column sortBy="#{consultazione.dataConsultazione}">
+						<f:facet name="header">Data Consultazione</f:facet>
+						<h:outputText value="#{consultazione.dataConsultazione}">
+							<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column sortBy="#{consultazione.descrizione}">
+						<f:facet name="header">Soggetti</f:facet>
+						<h:outputText value="#{consultazione.descrizione}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Elimina</f:facet>
+
+						<p:commandButton oncomplete="consultazioneDialog.show()"
+							icon="delete-icon">
+
+							<f:setPropertyActionListener value="#{consultazione.descrizione}"
+								target="#{consultazioniPareriController.consultazioneToDelete}" />
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column colspan="6">
+				<p:fieldset legend="Dettagli consultazione" collapsed="false"
+					toggleable="true" toggleSpeed="500">
+					<p:panelGrid styleClass="infoTable" id="dettagliconsultazionepanel">
+
+						<p:row>
+							<p:column>
+								<b> <h:outputLabel for="commissioniSel" value="Commissione: " />
+								</b>
+							</p:column>
+							<p:column>
+
+								<p:selectOneMenu id="commissioniSel" style="align: right"
+									value="#{consultazioniPareriController.commissioneSelected}">
+									<f:selectItem itemLabel="Scegli una Commissione"
+									itemValue="" /> 
+									<f:selectItems
+										value="#{consultazioniPareriController.commissioni}" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<b> <h:outputLabel for="dataseduta" value="Data seduta: " />
+								</b>
+							</p:column>
+							<p:column>
+								<p:calendar size="10" locale="it" id="dataseduta" pattern="dd/MM/yyyy"
+									value="#{consultazioniPareriController.dataSedutaConsultazione}" />
+							</p:column>
+							
+
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<b> <h:outputLabel for="dataconsultazione"
+										value="Data consultazione: " /> </b>
+							</p:column>
+							<p:column>
+								<p:inputText id="dataconsultazione" readonly="true"
+									value="#{consultazioniPareriController.consultazioneSelected.dataConsultazione}">
+									<f:convertDateTime locale="it_IT" pattern="dd/MM/yyyy" />
+								</p:inputText>
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<h:outputText style="font-weight: bold;" value="Note: " />
+							</p:column>
+							<p:column colspan="6">
+								<p:inputTextarea rows="2" cols="82" id="noteConsultazione"
+									value="#{consultazioniPareriController.noteConsultazione}" />
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column colspan="3">
+								<p:panelGrid id="addSoggettoInvitatoPanel"
+									styleClass="tableAppend">
+									<f:facet name="header">
+										<p:row>
+											<p:column style="text-align:center">Soggetto Invitato</p:column>
+											<p:column style="text-align:center" >Presente</p:column>
+											<p:column style="text-align:center"></p:column>
+										</p:row>
+									</f:facet>
+									<p:row>
+
+										<p:column style="text-align:center">
+											<p:inputTextarea id="nomeSoggettoInvitato" rows="2" cols="82"
+												value="#{consultazioniPareriController.nomeSoggettoInvitato}" />
+										</p:column>
+
+										<p:column style="text-align:center">
+											<p:selectBooleanCheckbox id="soggettoInvitatoIntervenuto"
+												value="#{consultazioniPareriController.intervenuto}" />
+										</p:column>
+
+										<p:column style="text-align:center">
+											<p:commandButton value="Aggiungi"
+												action="#{consultazioniPareriController.addSoggettoInvitato}"
+												id="addSoggettoInvitato"
+												update="addSoggettoInvitatoPanel,listaSoggettiInvitati, consultazioneMsg"
+												icon="new-icon" />
+										</p:column>
+
+									</p:row>
+
+								</p:panelGrid>
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column colspan="3">
+
+								<p:dataTable id="listaSoggettiInvitati"
+									value="#{consultazioniPareriController.soggettiInvitatiList}"
+									var="soggettoInvitato" styleClass="generalInfoTab grey-text" editable ="true">
+
+									<p:column sortBy="#{soggettoInvitato.descrizione}">
+										<f:facet name="header">Soggetti Invitati</f:facet>
+										<h:outputText value="#{soggettoInvitato.descrizione}" />
+										
+										<f:facet name="footer">  
+ 							              Totale: #{consultazioniPareriController.totSoggettiInvitati()}
+  										</f:facet>  
+            
+									</p:column>
+
+									<p:column sortBy="#{soggettoInvitato.intervenuto}">
+										
+										<f:facet name="header">Presenti</f:facet>
+										<p:cellEditor >
+											<f:facet name="output">
+											<h:outputText value="si"
+												rendered="#{soggettoInvitato.intervenuto}" />
+											<h:outputText value="no"
+												rendered="#{!soggettoInvitato.intervenuto}" />
+											</f:facet>	
+											<f:facet  name="input">
+												<p:selectBooleanCheckbox 
+												value="#{soggettoInvitato.intervenuto}" />
+											</f:facet>
+										</p:cellEditor>
+										<f:facet name="footer">  
+           								  Totale: #{consultazioniPareriController.totSogettiPresenti()}
+      									     </f:facet> 
+										
+									</p:column>
+									
+								<p:column headerText="Modifica" style="width:50px">
+										<p:rowEditor   />
+								</p:column>
+									<p:column>
+										<f:facet name="header">Elimina</f:facet>
+
+										<p:commandButton oncomplete="soggettoInvitatoDialog.show()"
+											icon="delete-icon">
+
+											<f:setPropertyActionListener
+												value="#{soggettoInvitato.descrizione}"
+												target="#{consultazioniPareriController.soggettoInvitatoToDelete}" />
+										</p:commandButton>
+									</p:column>
+
+								</p:dataTable>
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+									&nbsp;
+								</p:column>
+						</p:row>
+
+
+						<p:row>
+							<p:column colspan="4">
+
+
+								<p:commandButton value="Carica Allegato"
+									oncomplete="uploadFileConsultazioneAttributesDialog.show()">
+								</p:commandButton>
+
+
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="4">
+
+								<p:dataTable id="listaDocumentazioneConsultazione" 
+									value="#{consultazioniPareriController.consultazioneSelected.allegati}"
+									var="allegato" styleClass="generalInfoTab grey-text" editable="true">
+									
+									<p:ajax event="rowEdit" update="@this" listener="#{fileDownloadController.fileUpdate}" />
+
+									<p:column sortBy="#{allegato.nome}">
+										<f:facet name="header">Documentazione allegata</f:facet>
+										<h:outputText value="#{allegato.nome}" />
+									</p:column>
+
+									<!-- <p:column sortBy="#{allegato.mimetype}">
+										<f:facet name="header">Documento</f:facet>
+										<h:outputText value="#{allegato.mimetype}" />
+									</p:column>-->
+
+									<p:column sortBy="#{allegato.pubblico}">
+										<f:facet name="header">Pubblico</f:facet>
+										
+										<p:cellEditor >
+								<f:facet name="output">
+									<h:outputText value="si"
+								rendered="#{allegato.pubblico}" />
+							<h:outputText value="no"
+								rendered="#{!allegato.pubblico}" />
+								</f:facet>
+								<f:facet  name="input">
+									<p:selectBooleanCheckbox 
+									value="#{allegato.pubblico}" />
+								</f:facet>
+							</p:cellEditor> 
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Elimina</f:facet>
+										<p:commandButton
+											oncomplete="allegatoConsultazioneDialog.show()"
+											icon="delete-icon">
+
+											<f:setPropertyActionListener value="#{allegato.id}"
+												target="#{consultazioniPareriController.allegatoConsultazioneToDelete}" />
+										</p:commandButton>
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Scarica</f:facet>
+
+										<p:commandButton id="downloadLinkemendamento"
+											icon="detail-icon" ajax="false"
+											onclick="PrimeFaces.monitorDownload(start, stop)">
+											<f:setPropertyActionListener value="#{allegato.id}"
+												target="#{fileDownloadController.fileId}" />
+											<f:setPropertyActionListener value="#{allegato.nome}"
+												target="#{fileDownloadController.fileName}" />
+											<f:setPropertyActionListener value="#{allegato.mimetype}"
+												target="#{fileDownloadController.fileMimetype}" />
+											<p:fileDownload value="#{fileDownloadController.file}" />
+										</p:commandButton>
+
+									</p:column>
+									
+									<p:column headerText="Modifica" style="width:50px">
+							<p:rowEditor   />
+						</p:column>
+
+
+								</p:dataTable>
+
+
+
+
+							</p:column>
+						</p:row>
+
+
+						<p:row>
+							<p:column colspan="2">
+								<p:commandButton value="Salva Consultazioni"
+									action="#{consultazioniPareriController.salvaConsultazione}"
+									update="consultazioneMsg,listaConsultazioni" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:fieldset>
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+</p:fieldset>
+</div>
+<script type="text/javascript" src="resources/javascript/blockUI.js"></script>
+<script>
+		
+if (#{navigationBean.isGuest()}==true) {
+	$.blockUI.defaults.overlayCSS.opacity = 0; 
+	$('#blockedConsultazioni').block({ message: null } );}
+</script>
+
+</html>

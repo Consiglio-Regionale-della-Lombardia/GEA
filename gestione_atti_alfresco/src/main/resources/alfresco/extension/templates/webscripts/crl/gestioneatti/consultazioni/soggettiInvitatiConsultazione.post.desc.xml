@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Creazione o modifica soggetti invitati consultazione</shortname>
+  <description>Aggiunge o aggiorna i soggetti invitati alla consultazione di un determinato atto</description>
+  <url>/crl/atto/consultazione/soggettiinvitati</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test Rinvio aula</shortname>
+  <description>Test Rinvio aula</description>
+  <url>/crl/test/post/atto/esameaula/rinvio</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

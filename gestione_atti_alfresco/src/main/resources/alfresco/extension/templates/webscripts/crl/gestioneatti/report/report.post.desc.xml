@@ -1,0 +1,8 @@
+<webscript>
+  <shortname>Creazione report</shortname>
+  <description>creazione report</description>
+  <url>/crl/template/report/creareport</url>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test fine lavori comitato commissione</shortname>
+  <description>Test fine lavori comitato ristretto commissione di un atto</description>
+  <url>/crl/test/post/atto/esamecommissioni/continuazionereferente</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

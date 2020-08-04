@@ -1,0 +1,100 @@
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.3.2" 
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+               xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.2
+                                   		http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.2.xsd">
+
+    
+    
+    <url-mapping id="login"> 
+        <pattern value="/" /> 
+        <view-id value="/authenticate.xhtml" />
+        
+    </url-mapping>
+    
+    <url-mapping id="Home"> 
+        <pattern value="/home" /> 
+        <view-id value="/home.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="Inserimento_Atto"> 
+        
+        <pattern value="/inserisciatto" /> 
+        <view-id value="views/inserisciatto/inserisciatto_base.xhtml" />
+        
+    </url-mapping>
+    
+    <url-mapping id="Inserimento_EAC"> 
+        <pattern value="/inserisciattoEAC" /> 
+        <view-id value="views/inserisciatto/inserisciatto_baseEAC.xhtml" />
+        
+    </url-mapping>
+    
+    <url-mapping id="Inserimento_MIS"> 
+        <pattern value="/inserisciattoMIS" /> 
+        <view-id value="views/inserisciatto/inserisciatto_baseMIS.xhtml" />
+        
+    </url-mapping>
+    
+    <url-mapping id="Gestione_Sedute"> 
+        <pattern value="/gestionesedute" /> 
+        <view-id value="views/gestionesedute/gestionesedute_base.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="Riepilogo_Atto" > 
+        <pattern  value="/atto" /> 
+        <query-param name="numeroatto"> #{attoBean.numeroAtto} </query-param>
+        <view-id value="views/home/riepilogoatto/riepilogoatto_base.xhtml" />                
+    </url-mapping> 
+    
+    <url-mapping id="Presentazione_e_Assegnazione"> 
+        <pattern value="/presentazioneassegnazione" /> 
+        <view-id value="views/home/presentazioneassegnazione/presentazioneassegnazione_base.xhtml" />   
+    </url-mapping> 
+    
+     <url-mapping id="Esame_Commissioni"> 
+        <pattern value="/esamecommissioni" /> 
+        <view-id value="views/home/esamecommissioni/esamecommissioni_base.xhtml" />      
+    </url-mapping> 
+    
+    <url-mapping id="Chiusura_Iter"> 
+        <pattern value="/chiusuraiter" /> 
+        <view-id value="views/home/chiusuraiter/chiusuraiter_base.xhtml" />      
+          
+    </url-mapping> 
+
+     <url-mapping id="Esame_Aula"> 
+        <pattern value="/esameaula" /> 
+        <view-id value="views/home/esameaula/esameaula_base.xhtml" />      
+          
+    </url-mapping> 
+    
+
+     <url-mapping id="Collegamenti"> 
+        <pattern value="/collegamenti" /> 
+        <view-id value="views/home/collegamenti/collegamenti_base.xhtml" />      
+          
+    </url-mapping> 
+    
+
+      <url-mapping id="Consultazione_e_Pareri"> 
+        <pattern value="/consultazioneepareri" /> 
+        <view-id value="views/home/consultazioneepareri/consultazioneepareri_base.xhtml" />      
+          
+    </url-mapping> 
+    
+     <url-mapping id="Lettere_e_Notifiche"> 
+        <pattern value="/lettereenotifiche" /> 
+        <view-id value="views/home/lettereenotifiche/lettereenotifiche_base.xhtml" />      
+          
+    </url-mapping> 
+
+       <url-mapping id="Reportistica"> 
+        
+        <pattern value="/reportistica" /> 
+        <view-id value="views/reportistica/reportistica_base.xhtml" />
+        
+    </url-mapping>
+          
+
+
+</pretty-config>

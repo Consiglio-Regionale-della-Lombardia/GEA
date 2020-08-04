@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Relatori</shortname>
+  <description>Restituisce l'elenco di tutti i membri del comitato ristretto di una commissione</description>
+  <url>/crl/anagrafica/atto/membriComitato</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

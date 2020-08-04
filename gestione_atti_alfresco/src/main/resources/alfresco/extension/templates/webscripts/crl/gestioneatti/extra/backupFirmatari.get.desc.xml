@@ -1,0 +1,7 @@
+<webscript>
+  <shortname>Backup Firmatari</shortname>
+  <description>Backup Firmatari</description>
+  <url>/crl/extra/backupFirmatari?noderef={noderef}</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+</webscript>

@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test lettura note e links atto</shortname>
+  <description>Test per il reperimento dei metadati note e links di un atto</description>
+  <url>/crl/test/get/atto/noteallegati</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

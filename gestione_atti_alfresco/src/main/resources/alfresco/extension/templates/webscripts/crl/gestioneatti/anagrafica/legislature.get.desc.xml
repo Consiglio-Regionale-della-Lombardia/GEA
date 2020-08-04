@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Legislature</shortname>
+  <description>Restituisce l'elenco delle legislature disponibili</description>
+  <url>/crl/anagrafica/legislature</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

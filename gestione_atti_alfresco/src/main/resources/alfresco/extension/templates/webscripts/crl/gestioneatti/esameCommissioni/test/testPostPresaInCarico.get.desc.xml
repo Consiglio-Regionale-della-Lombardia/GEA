@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Test presa in carico atto commissione</shortname>
+  <description>Test per la presa in carico da parte di una commissione di un atto</description>
+  <url>/crl/test/post/atto/esamecommissioni/presaincarico</url>
+  <format default="html"/>
+  <authentication>admin</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>
