@@ -1,0 +1,87 @@
+# This repository adheres to the publiccode.yml standard by including this 
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+publiccodeYmlVersion: '0.2'
+categories:
+  - document-management
+  - workflow-management
+dependsOn:
+  open:
+    - name: Alfresco
+      optional: false
+      version: '4.2'
+      versionMax: Alfresco community 4.2
+      versionMin: Alfresco community 4.0
+    - name: MySQL
+      optional: false
+      version: '5.5'
+      versionMax: '5.5'
+      versionMin: '5.5'
+    - name: Apache Tomcat
+      optional: false
+      version: 7.0.30
+      versionMax: 7.0.30
+      versionMin: 7.0.30
+description:
+  it:
+    features:
+      - Crea atto
+      - Modifica atto
+      - Ricerca atto
+      - Assegnazione atto
+      - Pubblicazione atto
+    genericName: Document Management
+    longDescription: |2
+       Il sistema “gestione atti” è volto alla gestione di determinate categorie di atti : progetto di legge (PDL), progetto di atto amministrativo (PDA), parere (PAR), relazione (REL), petizione popolare (INP), documento generico (DOC), proposta di referendum (REF) elenco atti comunitari (EAC), MIS (missioni valutative), proposte di atto amministrativo di iniziativa dell’ufficio di Presidenza del Consiglio (PDA-UDP), atti di organizzazione interna (ORG). Gli atti sono di competenza del Servizio Commissioni, di ciascuna Commissione permanente e speciale, del Servizio Assemblea e del Comitato paritetico di Controllo. Gli uffici preposti a questi organi provvedono all’inserimento dei dati e degli atti di propria competenza. In via generale, per quanto concerne gli atti formali istruiti dalle Commissioni consiliari vengono inseriti i testi, la documentazione e i dati relativi a ciascuna fase dell’atto, dalla protocollazione dello stesso sino alla sua approvazione in Commissione (PAR , REL, INP) o in Aula consiliare (PDA, PDL, DOC, REF). Quanto inserito generalmente è visibile sul sito internet del Consiglio. In GEA è presente una sezione denominata EAC in cui sono pubblicati l’elenco degli atti comunitari inviati dalla Conferenza dei Presidenti delle Assemblee legislative unitamente alla nota di assegnazione alle Commissioni consiliari a firma del Presidente del Consiglio. In questa sezione non sono presenti flussi procedimentali . Questi atti non sono visibili sul sito internet del Consiglio. E’ inserita, altresì, una pagina dedicata all’inserimento di missioni valutative implementata dal Comitato Paritetico di Controllo e Valutazione. La pagina consente la creazione manuale di una scheda a cui gli utenti possono accedere mediante modalità di sola lettura. 
+    shortDescription: Gestione Atti consiliari
+developmentStatus: stable
+intendedAudience:
+  countries:
+    - it
+  scope:
+    - government
+it:
+  conforme:
+    gdpr: false
+    lineeGuidaDesign: false
+    misureMinimeSicurezza: false
+    modelloInteroperabilita: false
+  countryExtensionVersion: '0.2'
+  piattaforme:
+    anpr: false
+    cie: false
+    pagopa: false
+    spid: false
+legal:
+  license: AGPL-3.0-only
+  mainCopyrightOwner: Consiglio regionale della Lombardia
+  repoOwner: Consiglio regionale della Lombardia
+localisation:
+  availableLanguages:
+    - it
+  localisationReady: true
+maintenance:
+  contacts:
+    - email: max.pagliaro@consiglio.regione.lombardia.it
+      name: Massimiliano Pagliaro
+      phone: '+390267486238'
+    - email: jesus.rabadan@sourcesense.com
+      name: Jesus Joaquin Rabadan Zaldivar
+      phone: '+39800596346'
+  contractors:
+    - name: Sourcesense spa
+      until: '2021-08-07'
+      website: 'https://www.sourcesense.com'
+  type: contract
+name: GeA
+platforms:
+  - linux
+  - windows
+  - web
+releaseDate: '2013-04-16'
+softwareType: standalone/web
+softwareVersion: '1.3'
+url: 'https://github.com/Consiglio-Regionale-della-Lombardia/GEA'
+usedBy:
+  - Consiglio regionale della Lombardia
