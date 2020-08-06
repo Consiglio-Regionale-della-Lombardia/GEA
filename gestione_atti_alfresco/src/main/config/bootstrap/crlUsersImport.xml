@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<view:view xmlns:view="http://www.alfresco.org/view/repository/1.0"
+	xmlns:cm="http://www.alfresco.org/model/content/1.0"
+	xmlns:sys="http://www.alfresco.org/model/system/1.0"
+	xmlns:usr="http://www.alfresco.org/model/user/1.0"
+	xmlns:app="http://www.alfresco.org/model/application/1.0">
+    
+    
+           		<usr:user view:childName="usr:protocollo">
+    				<view:aspects>
+      					<sys:referenceable></sys:referenceable>
+    				</view:aspects>
+    				<view:properties>
+      					<usr:username>protocollo</usr:username>
+      					<usr:password></usr:password>
+      					<usr:credentialsExpire>false</usr:credentialsExpire>
+      					<usr:accountExpires>false</usr:accountExpires>
+      					<usr:accountLocked>false</usr:accountLocked>
+      					<usr:enabled>true</usr:enabled>
+      					<usr:salt>
+        					<view:value view:isNull="true"></view:value>
+      					</usr:salt>
+    				</view:properties>
+  				</usr:user>
+
+				<usr:user view:childName="usr:attiIndirizzo">
+					<view:aspects>
+      					<sys:referenceable></sys:referenceable>
+    				</view:aspects>
+    				<view:properties>
+      					<usr:username>attiIndirizzo</usr:username>
+      					<usr:password></usr:password>
+      					<usr:credentialsExpire>false</usr:credentialsExpire>
+      					<usr:accountExpires>false</usr:accountExpires>
+      					<usr:accountLocked>false</usr:accountLocked>
+      					<usr:enabled>true</usr:enabled>
+      					<usr:salt>
+        					<view:value view:isNull="true"></view:value>
+      					</usr:salt>
+    				</view:properties>
+  				</usr:user>
+
+</view:view>
