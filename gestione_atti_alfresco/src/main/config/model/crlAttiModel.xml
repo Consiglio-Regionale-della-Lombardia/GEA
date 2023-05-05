@@ -283,27 +283,27 @@
 					<title>Data DGR a seguito Parere</title>
 					<type>d:date</type>
 				</property>
-                                <property name="crlatti:attoProseguente">
+				<property name="crlatti:attoProseguente">
 					<title>Atto proseguente</title>
 					<type>d:boolean</type>
 				</property>                              
-                                <property name="crlatti:numRegolamento">
+				<property name="crlatti:numRegolamento">
 					<title>Numero regolamento</title>
 					<type>d:text</type>
 				</property>
-                                <property name="crlatti:dataRegolamento">
+				<property name="crlatti:dataRegolamento">
 					<title>Data regolamento</title>
 					<type>d:date</type>
 				</property>
-                               <property name="crlatti:noteCollegamenti">
+				<property name="crlatti:noteCollegamenti">
 					<title>Note collegamenti</title>
 					<type>d:text</type>
 				</property>
-        <property name="crlatti:firmatariDeleted">
-          <title>Firmatari cancellati in GEA</title>
-          <type>d:text</type>
-          <multiple>true</multiple>
-        </property>
+				<property name="crlatti:firmatariDeleted">
+					<title>Firmatari cancellati in GEA</title>
+					<type>d:text</type>
+					<multiple>true</multiple>
+				</property>
 			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:pubblicabile</aspect>
@@ -580,15 +580,15 @@
 					<title>Note</title>
 					<type>d:text</type>
 				</property>
-                                <property name="crlatti:dataTrasmissioneUdpMis">
+				<property name="crlatti:dataTrasmissioneUdpMis">
 					<title>Data trasmissione a commissioni</title>
 					<type>d:date</type>
 				</property>
-                                <property name="crlatti:relatore1Mis">
+				<property name="crlatti:relatore1Mis">
 					<title>Relatore 1</title>
 					<type>d:text</type>
 				</property>
-                                <property name="crlatti:relatore2Mis">
+				<property name="crlatti:relatore2Mis">
 					<title>Relatore 2</title>
 					<type>d:text</type>
 				</property>
@@ -662,7 +662,7 @@
 					<title>Data fine lavori</title>
 					<type>d:date</type>
 				</property>
-                                <property name="crlatti:tipologiaCR">
+				<property name="crlatti:tipologiaCR">
 					<title>Tipologia Comitato</title>
 					<type>d:text</type>
 				</property>
@@ -752,7 +752,7 @@
 				<property name="crlatti:codiceGruppoConsiliareAnagrafica">
 					<title>Codice</title>
 					<type>d:text</type>
-                                        <index enabled="true">
+						<index enabled="true">
 						<atomic>true</atomic>
 						<stored>false</stored>
 						<tokenised>both</tokenised>
@@ -761,7 +761,7 @@
 				<property name="crlatti:nomeGruppoConsiliareAnagrafica">
 					<title>Nome</title>
 					<type>d:text</type>
-                                        <index enabled="true">
+						<index enabled="true">
 						<atomic>true</atomic>
 						<stored>false</stored>
 						<tokenised>both</tokenised>
@@ -780,6 +780,10 @@
 				<property name="crlatti:numeroOrdinamentoCommissioneAnagrafica">
 					<title>Ordinamento</title>
 					<type>d:int</type>
+				</property>
+				<property name="crlatti:idCommissioneAnagrafica">
+					<title>Identificatore</title>
+					<type>d:text</type>
 				</property>
 			</properties>
 			<mandatory-aspects>
@@ -819,10 +823,10 @@
 					<type>d:boolean</type>
 					<default>false</default>
 				</property>
-        <property name="crlatti:isfirmatarioModified">
-          <title>Firmatario modificato in GEA</title>
-          <type>d:boolean</type>
-        </property>
+				<property name="crlatti:isfirmatarioModified">
+					<title>Firmatario modificato in GEA</title>
+					<type>d:boolean</type>
+				</property>
 			</properties>
 			<mandatory-aspects>
 				<aspect>crlatti:ordinamentoAspect</aspect>
@@ -1059,11 +1063,11 @@
 					<title>Quorum</title>
 					<type>d:text</type>
 				</property>	
-                                <property name="crlatti:numeroRegAula">
+				<property name="crlatti:numeroRegAula">
 					<title>Numero Reg</title>
 					<type>d:text</type>
 				</property>
-                                <property name="crlatti:rinvioCommBilancioAula">
+				<property name="crlatti:rinvioCommBilancioAula">
 					<title>Rinvio Commissione Bilancio</title>
 					<type>d:boolean</type>
 					<default>false</default>
@@ -1177,11 +1181,11 @@
 				<property name="crlatti:commissioneConsultazione">
 					<title>Commissione</title>
 					<type>d:text</type>
-                                        <index enabled="true">
-                                                <atomic>true</atomic>
-                                                <stored>false</stored>
-                                                <tokenised>false</tokenised>
-                                        </index>
+					<index enabled="true">
+							<atomic>true</atomic>
+							<stored>false</stored>
+							<tokenised>false</tokenised>
+					</index>
 				</property>
 			</properties>
 		</type>
@@ -1227,7 +1231,7 @@
 					<title>Note</title>
 					<type>d:text</type>
 				</property>
-                                <property name="crlatti:legislaturaSedutaODG">
+				<property name="crlatti:legislaturaSedutaODG">
 					<title>Legislatura</title>
 					<type>d:text</type>
 				</property>
@@ -1714,7 +1718,7 @@
 		</aspect>
 		
 		<aspect name="crlatti:importatoDaAnagrafica">
-			<title>Importato da protocollo</title>
+			<title>Importato da Anagrafica</title>
 			<description>Aspetto creato per la sincronizzazione con il database dell'anagrafica</description>
 			<properties>
 				<property name="crlatti:idAnagrafica">

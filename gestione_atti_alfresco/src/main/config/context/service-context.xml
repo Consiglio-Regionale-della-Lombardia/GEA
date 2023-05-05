@@ -99,10 +99,10 @@
              	<prop key="location">alfresco/module/crl_gestione_atti_alfresco/bootstrap/crlGroupsImport.xml</prop>
              </props>
 	      
-            <props>
+            <!--  props>
                 <prop key="path">/${spaces.company_home.childname}/${spaces.dictionary.childname}/${spaces.scripts.childname}</prop>
                 <prop key="location">alfresco/module/crl_gestione_atti_alfresco/bootstrap/scripts.acp</prop>
-            </props>
+            </props -->
 	         <props>
 	            <prop key="path">/${spaces.company_home.childname}</prop>
 	            <prop key="location">alfresco/module/crl_gestione_atti_alfresco/bootstrap/anagrafica-spaces.acp</prop>

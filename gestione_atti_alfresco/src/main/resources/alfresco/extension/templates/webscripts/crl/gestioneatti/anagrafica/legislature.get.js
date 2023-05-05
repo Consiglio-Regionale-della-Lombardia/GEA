@@ -21,7 +21,7 @@ legislatureArrayTemp.reverse();
 var legislatureArray = new Array();
 
 
-for(var i=0; i<4 && i<legislatureArrayTemp.length; i++){
+for(var i=0; i<7 && i<legislatureArrayTemp.length; i++){
 	
 	legislatureArray.push(romanize(legislatureArrayTemp[i]));
 	

@@ -36,6 +36,26 @@ if(legislaturaCorrente != null){
 
 model.gruppi = commissioneGroups;
 
+function getLabelGruppoCommissione(gruppo) {
+
+	var labelSplittedLength = gruppo.properties['cm:authorityDisplayName'].split("_").length;
+
+	var label = gruppo.properties['cm:authorityDisplayName'].split("_")[labelSplittedLength - 1];
+
+	return "COMM_" + label;
+
+}
+
+function getLabelGruppoDefault(gruppo) {
+	var labelGroup = "";
+	// * I gruppi ALFRESCO_ADMINISTRATORS e EMAIL_CONTRIBUTORS non hanno di default la property 'cm:authorityDisplayName'
+	if (gruppo.properties['cm:authorityDisplayName'] == null) {
+		labelGroup = gruppo.properties['cm:authorityName'].substring(6);
+	} else {
+		labelGroup = gruppo.properties['cm:authorityDisplayName'];
+	}
+	return labelGroup;
+}
 
 function getCommissioneGroups(gruppi){
 	
@@ -46,14 +66,13 @@ function getCommissioneGroups(gruppi){
 		var gruppo = groups.getGroup(gruppi[i].properties["cm:authorityName"].substring(6));
 		if(gruppo.getParentGroups().length>0){
 			if(gruppo.getParentGroups()[0].getShortName() == "Commissioni"){
-				var gruppoToken = gruppi[i].properties['cm:authorityName'].split("_");
-				gruppiCommissione.push("COMM_" + gruppoToken[2]);
+				gruppiCommissione.push(getLabelGruppoCommissione(gruppi[i]));
 			}else{
-				gruppiCommissione.push(gruppi[i].properties['cm:authorityName'].substring(6));
+				gruppiCommissione.push(getLabelGruppoDefault(gruppi[i]));
 			}
 		}else{
 			if (gruppo.getShortName()!="Commissioni"){
-				gruppiCommissione.push(gruppi[i].properties['cm:authorityName'].substring(6));
+				gruppiCommissione.push(getLabelGruppoDefault(gruppi[i]));
 			}
 		}
 	}

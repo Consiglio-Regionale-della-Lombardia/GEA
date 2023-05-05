@@ -5,7 +5,7 @@
 	   { 
 		   	"commissioneReferente" : 
 		   	{
-				"descrizione":"${commissioneReferente.name}"
+				"descrizione":"${commissioneReferente}"
 		    }
 	   }<#if commissioneReferente_has_next>,</#if>
 	   </#list>

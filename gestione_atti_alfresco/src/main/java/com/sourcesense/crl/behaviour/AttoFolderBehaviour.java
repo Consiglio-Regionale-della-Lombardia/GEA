@@ -63,6 +63,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * Behaviour creato in Alfresco per gestire gli eventi degli atti prima di cancellare un documento/atto in Alfresco e quando si aggiornano le proprietà di un documento/atto in Alfresco
@@ -523,15 +524,25 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
             if (attoNodeRef != null && ((after.containsKey(AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME)
                     || (dictionaryService.isSubClass(nodeService.getType(nodeRef), AttoUtil.TYPE_ATTO))) && !nodeService.getType(attoNodeRef).equals(AttoUtil.TYPE_ATTO_EAC))) {
                 try {
-
+                	logger.debug("Accesso a  numero atto da model:" + AttoUtil.PROP_NUMERO_ATTO_QNAME);
+                	logger.debug("Inizio struttura Alfter");
+                	
+                	for (Iterator iterator = after.entrySet().iterator(); iterator.hasNext();) {
+						Entry<QName,Serializable> ent = (Entry<QName,Serializable>)iterator.next();
+                		 
+						logger.debug(((QName)ent.getKey()).getLocalName() + "\n");
+					}
+                	logger.debug("Mappatura proprietà AttoUtil: " + after.get(AttoUtil.PROP_LEGISLATURA_QNAME) + "; Numero atto:" + after.containsKey(AttoUtil.PROP_NUMERO_ATTO_QNAME) + "; Numero atto:" + after.get(AttoUtil.PROP_NUMERO_ATTO_QNAME)
+                	+ "; oggetto: " + after.get(AttoUtil.PROP_OGGETTO_ATTO_QNAME) + "; Data iniziativa " + after.get(AttoUtil.PROP_DATA_INIZIATIVA_ATTO_QNAME) + "; " + after.get(AttoUtil.PROP_STATO_ATTO_QNAME)
+                	+"; Referenti commissione: " + after.get(AttoUtil.PROP_COMMISSIONI_REFERENTI_QNAME) + "; Data Assegnazione:" + after.get(AttoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONI_REFERENTI_QNAME));
                     if (
                             after.containsKey(AttoUtil.PROP_LEGISLATURA_QNAME) && after.get(AttoUtil.PROP_LEGISLATURA_QNAME) != null && !((String) after.get(AttoUtil.PROP_LEGISLATURA_QNAME)).isEmpty()
-                                    && after.containsKey(AttoUtil.PROP_NUMERO_ATTO_QNAME) && after.get(AttoUtil.PROP_NUMERO_ATTO_QNAME) != null && !((String) after.get(AttoUtil.PROP_NUMERO_ATTO_QNAME)).isEmpty()
+                                    && after.containsKey(AttoUtil.PROP_NUMERO_ATTO_QNAME) && (after.get(AttoUtil.PROP_NUMERO_ATTO_QNAME)) != null
                                     && after.containsKey(AttoUtil.PROP_OGGETTO_ATTO_QNAME) && after.get(AttoUtil.PROP_OGGETTO_ATTO_QNAME) != null && !((String) after.get(AttoUtil.PROP_OGGETTO_ATTO_QNAME)).isEmpty()
-                                    && after.containsKey(AttoUtil.PROP_DATA_INIZIATIVA_ATTO_QNAME) && after.get(AttoUtil.PROP_DATA_INIZIATIVA_ATTO_QNAME) != null && !((String) after.get(AttoUtil.PROP_DATA_INIZIATIVA_ATTO_QNAME)).isEmpty()
+                                    && after.containsKey(AttoUtil.PROP_DATA_INIZIATIVA_ATTO_QNAME) && after.get(AttoUtil.PROP_DATA_INIZIATIVA_ATTO_QNAME) != null 
                                     && after.containsKey(AttoUtil.PROP_STATO_ATTO_QNAME) && after.get(AttoUtil.PROP_STATO_ATTO_QNAME) != null && !((String) after.get(AttoUtil.PROP_STATO_ATTO_QNAME)).isEmpty()
-                                    && after.containsKey(AttoUtil.PROP_COMMISSIONI_REFERENTI_QNAME) && after.get(AttoUtil.PROP_COMMISSIONI_REFERENTI_QNAME) != null && !((String) after.get(AttoUtil.PROP_COMMISSIONI_REFERENTI_QNAME)).isEmpty()
-                                    && after.containsKey(AttoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONI_REFERENTI_QNAME) && after.get(AttoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONI_REFERENTI_QNAME) != null && !((String) after.get(AttoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONI_REFERENTI_QNAME)).isEmpty()
+                                    && after.containsKey(AttoUtil.PROP_COMMISSIONI_REFERENTI_QNAME) && after.get(AttoUtil.PROP_COMMISSIONI_REFERENTI_QNAME) != null && !((ArrayList)after.get(AttoUtil.PROP_COMMISSIONI_REFERENTI_QNAME)).isEmpty()
+                                    && after.containsKey(AttoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONI_REFERENTI_QNAME) && after.get(AttoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONI_REFERENTI_QNAME) != null 
 
                     ) {
                         logger.info("Notifica aggiornamento dell'atto " + nodeService.getType(attoNodeRef) + " "

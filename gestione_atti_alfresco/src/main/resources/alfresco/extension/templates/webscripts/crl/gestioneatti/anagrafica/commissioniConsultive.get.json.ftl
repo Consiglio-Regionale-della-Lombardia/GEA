@@ -5,7 +5,7 @@
 	   { 
 		   	"commissioneConsultiva" : 
 		   	{
-				"descrizione":"${commissioneConsultiva.name}"
+				"descrizione":"${commissioneConsultiva}"
 		    }
 	   }<#if commissioneConsultiva_has_next>,</#if>
 	   </#list>

@@ -10,6 +10,7 @@
     </bean>
     
     <import resource="classpath:alfresco/module/${artifactId}/context/service-context.xml" />
+    <import resource="classpath:alfresco/module/${artifactId}/context/utils-context.xml" />
     <import resource="classpath:alfresco/module/${artifactId}/context/lettere-web-script-context.xml" />
     <import resource="classpath:alfresco/module/${artifactId}/context/report-web-script-context.xml" />
     <import resource="classpath:alfresco/module/${artifactId}/context/odg-web-script-context.xml" />
@@ -30,5 +31,8 @@
 	
     <!-- Moduli per l'integrazione del sistema di Protocollo -->
     <import resource="classpath:alfresco/module/${artifactId}/context/protocollo-import-job-script-context.xml" />
-        
+
+    <!-- Moduli per la gestione delle commissioni -->
+    <import resource="classpath:alfresco/module/${artifactId}/context/commissioni-update-job-context.xml" />
+
 </beans>

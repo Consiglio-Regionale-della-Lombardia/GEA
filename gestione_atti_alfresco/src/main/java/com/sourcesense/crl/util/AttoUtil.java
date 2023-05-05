@@ -102,9 +102,13 @@ public class AttoUtil {
 
 
 	public static final String PROP_COMMISSIONI_CONSULTIVE = "commConsultiva";
+	public static final QName PROP_COMMISSIONI_CONSULTIVE_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_COMMISSIONI_CONSULTIVE);
 	public static final String PROP_COMMISSIONE_COREFERENTE = "commCoreferente";
+	public static final QName PROP_COMMISSIONE_COREFERENTE_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_COMMISSIONE_COREFERENTE);
 	public static final String PROP_COMMISSIONE_REDIGENTE = "commRedigente";
+	public static final QName PROP_COMMISSIONE_REDIGENTE_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_COMMISSIONE_REDIGENTE);
 	public static final String PROP_COMMISSIONE_DELIBERANTE = "commDeliberante";
+	public static final QName PROP_COMMISSIONE_DELIBERANTE_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_COMMISSIONE_DELIBERANTE);
 	public static final String PROP_ORGANISMI_STATUTARI = "organismiStatutari";
 	public static final String PROP_FIRMATARI = "firmatari";
 	public static final String PROP_NUMERO_REPERTORIO = "numeroRepertorio";

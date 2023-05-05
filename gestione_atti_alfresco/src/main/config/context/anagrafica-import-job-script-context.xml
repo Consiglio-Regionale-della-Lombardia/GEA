@@ -25,11 +25,16 @@ language governing permissions and limitations under the License. -->
         </property>
     </bean>
 
+    <bean id="utilCommissioni" class="com.sourcesense.crl.util.CommissioneUtil">
+    </bean>
+
     <bean id="templateActionModelFactory" class="org.alfresco.repo.action.scheduled.FreeMarkerWithLuceneExtensionsModelFactory">
         <property name="serviceRegistry">
             <ref bean="ServiceRegistry"/>
         </property>
     </bean>
+    
+    
 
     <bean id="crlAnagraficaImportScriptBean" parent="baseJavaScriptExtension" class="com.sourcesense.crl.job.anagrafica.AnagraficaImportScript">
         <property name="extensionName">
@@ -53,6 +58,9 @@ language governing permissions and limitations under the License. -->
         <property name="dataExtractor">
             <ref bean="dataExtractor" />
         </property>
+        <property name="commissioneUtil">
+            <ref bean="utilCommissioni" />
+        </property> 
     </bean>
 
     <!--

@@ -35,6 +35,7 @@ public class Committee {
     private int id;
     private String name;
     private int order;
+    private boolean deleted;
 
     public Committee() {
     }
@@ -61,6 +62,16 @@ public class Committee {
 
 	public void setOrder(int order) {
 		this.order = order;
+	}
+	
+	
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 <import resource="classpath:alfresco/extension/templates/webscripts/crl/gestioneatti/common.js">
 
+var atto = json.get("atto");
 var username = person.properties.userName;
 if (username == "protocollo" || username == "admin") {
 
@@ -13,7 +14,6 @@ if (username == "protocollo" || username == "admin") {
     var importProtocolloLuceneQuery = "PATH:\"" + importProtocolloPath + "\"";
     var importProtocolloFolderNode = search.luceneSearch(importProtocolloLuceneQuery)[0];
 
-    var atto = json.get("atto");
     var tipoAtto = atto.get("tipoAtto");
     var idProtocollo = atto.get("idProtocollo");
     var numeroAtto = atto.get("numeroAtto");
@@ -312,7 +312,11 @@ if (username == "protocollo" || username == "admin") {
                     attoFolderNode.addAspect("crlatti:importatoDaProtocollo");
                     model.atto = attoFolderNode;
 
-                    protocolloLogger.info("Atto trasferito correttamente dal sistema di protocollo. Atto numero:" + numeroAtto + " estensione:" + estensioneAtto + " tipo:" + tipoAtto + " idProtocollo:" + idProtocollo);
+                    // se tutto è andato bene
+                    status.code = 200;
+                    status.message = "Atto trasferito correttamente dal sistema di protocollo. Atto numero:" + numeroAtto + " estensione:" + estensioneAtto + " tipo:" + tipoAtto + " idProtocollo:" + idProtocollo;
+                    protocolloLogger.info(status.message);
+                    status.redirect = true;
 
                 } else {
                     status.code = 400;

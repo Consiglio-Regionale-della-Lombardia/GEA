@@ -159,6 +159,7 @@ public class DataExtractor {
         Connection conn = null;
         PreparedStatement ps=null;
         ResultSet rs= null;
+        String boolIntValue; 
         try {
             conn = dataSource.getConnection();
             ps = conn.prepareStatement(Constant.QUERY_ALL_COUNCILORS_FILTERED_BY_LEGISLATURE);
@@ -188,10 +189,22 @@ public class DataExtractor {
                                 name = name.replace('"', '\'');
                             }
                             c.setName(name.trim());
-                            if (strArray.length > 1) {
+                            if (strArray.length == 4)  {
                                 c.setOrder(Integer.valueOf(comm.split("!")[1]));
+                                c.setId(Integer.valueOf(comm.split("!")[2]));
+                            	 boolIntValue = comm.split("!")[3];
+                            	 if(boolIntValue.equals("0"))
+                            		 c.setDeleted(false);
+                            	 else
+                            		 c.setDeleted(true);
                             } else {
                                 c.setOrder(1000);
+                                c.setId(Integer.valueOf(comm.split("!")[1]));
+                           	 boolIntValue = comm.split("!")[2];
+                           	 if(boolIntValue.equals("0"))
+                           		 c.setDeleted(false);
+                           	 else
+                           		 c.setDeleted(true);
                             }
                         }
 

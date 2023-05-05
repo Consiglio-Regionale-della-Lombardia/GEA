@@ -205,6 +205,8 @@
 			<type name="crlatti:sedutaODG" />
 			<type name="crlatti:attoIndirizzo" />
 			<type name="crlatti:collegamentoAttoIndirizzo" />
+<!-- Aggiunto per HUBERT-->
+			<type name="crlatti:commissioneAnagrafica" />
 			<type name="crltemplate:lettera" />
 			<type name="crltemplate:letteraServComm" />
 			<type name="crltemplate:letteraTrasmissioneCommissioneReferenteServComm" />
@@ -275,7 +277,7 @@
 			<type name="crlreport:reportAttiIstruttoriaCommissioniComm" />
 			<type name="crlreport:reportAttiLicenziatiComm" />
 			<type name="crlreport:reportRelatoriDataNominaComm" />
-                        <type name="crlreport:reportAudizioniCommissioniComm" />    
+                        <type name="crlreport:reportAudizioniCommissioniComm" />
 			<type name="crlreport:reportAttiIstruttoriaAula" />
 			<type name="crlreport:reportAttiRinviatiAula" />
 			<type name="crlreport:reportDCRAula" />
@@ -297,6 +299,9 @@
 			<aspect name="crlatti:protocollato" />
 			<aspect name="crlatti:importatoDaProtocollo" />
 			<aspect name="crlatti:coreferenziabile" />
+			<!-- Aggiunto per Hubert -->
+			<aspect name="crlatti:importatoDaAnagrafica" />
+
 		</aspects>
 	</config>
 
@@ -315,6 +320,8 @@
 			<type name="crlatti:attoEac" />
 			<type name="crlatti:attoMis" />
 			<type name="crlatti:comitatoRistretto" />
+			<!--  aggiunto per HUBERT -->
+			<type name="crlatti:commissioneAnagrafica" />
 			<type name="crlatti:commissione" />
 			<type name="crlatti:aula" />
 			<type name="crlatti:parere" />
@@ -484,7 +491,7 @@
 			<show-property name="crlatti:noteMis" />
                         <show-property name="crlatti:dataTrasmissioneUdpMis" />
                         <show-property name="crlatti:relatore1Mis" />
-                        <show-property name="crlatti:relatore2Mis" />     
+                        <show-property name="crlatti:relatore2Mis" />
 		</property-sheet>
 	</config>
 
@@ -600,7 +607,7 @@
 			<show-property name="crlatti:articoliCommissione" />
 			<show-property name="crlatti:noteStralcioCommissione" />
 			<show-property name="crlatti:dataStralcioCommissione" />
-			
+
 			<show-property name="crlatti:dataScadenzaCommissione" />
 			<show-property name="crlatti:sospensioneFerialeCommissione" />
 			<show-property name="crlatti:dataInterruzioneCommissione" />
@@ -629,7 +636,7 @@
 			<show-property name="crlatti:numeroAttoCommissione" />
 			<show-property name="crlatti:tipoAttoCommissione" />
 			<show-property name="crlatti:dataSedutaCommAttoCommissione" />
-			
+
 
 		</property-sheet>
 	</config>
@@ -692,7 +699,7 @@
 		<property-sheet>
 			<show-property name="crlatti:tipoTestoAbbinamento" />
 			<show-property name="crlatti:dataAbbinamento" />
-			<show-property name="crlatti:dataDisabbinamento" />                       
+			<show-property name="crlatti:dataDisabbinamento" />
 			<show-association name="crlatti:attoAssociatoAbbinamento" />
 		</property-sheet>
 	</config>
@@ -723,8 +730,8 @@
 			<show-property name="crlatti:isFirmatarioPopolare" />
 		</property-sheet>
 	</config>
-	
-	
+
+
 
 	<config evaluator="node-type" condition="crlatti:attoPdl">
 		<property-sheet>
@@ -788,7 +795,7 @@
 			<show-property name="crlatti:dataPubblicazioneBURL" />
 			<show-property name="crlatti:pubblico" />
 			<show-property name="crlatti:statoExportAttiIndirizzo" />
-			
+
 
 		</property-sheet>
 	</config>
@@ -850,13 +857,13 @@
 			<show-property name="crlatti:dataPubblicazioneBURL" />
 			<show-property name="crlatti:pubblico" />
 			<show-property name="crlatti:statoExportAttiIndirizzo" />
-			
+
 			<show-property name="crlatti:numeroDgrSeguito" />
 			<show-property name="crlatti:dataDgrSeguito" />
 			<show-property name="crlatti:attoProseguente" />
 		</property-sheet>
 	</config>
-        
+
         	<config evaluator="node-type" condition="crlatti:attoDoc">
 		<property-sheet>
 			<show-property name="crlatti:organismiStatutari" />
@@ -914,12 +921,12 @@
 			<show-property name="crlatti:dataPubblicazioneBURL" />
 			<show-property name="crlatti:pubblico" />
 			<show-property name="crlatti:statoExportAttiIndirizzo" />
-			
+
 			<show-property name="crlatti:numeroDgrSeguito" />
 			<show-property name="crlatti:dataDgrSeguito" />
 			<show-property name="crlatti:attoProseguente" />
 		</property-sheet>
-	</config>			
+	</config>
 
 	<config evaluator="node-type" condition="crlatti:attoInp">
 		<property-sheet>
@@ -978,13 +985,13 @@
 			<show-property name="crlatti:dataPubblicazioneBURL" />
 			<show-property name="crlatti:pubblico" />
 			<show-property name="crlatti:statoExportAttiIndirizzo" />
-			
+
 			<show-property name="crlatti:numeroDgrSeguito" />
 			<show-property name="crlatti:dataDgrSeguito" />
 			<show-property name="crlatti:attoProseguente" />
 		</property-sheet>
 	</config>
-	
+
 	<config evaluator="node-type" condition="crlatti:attoPar">
 		<property-sheet>
 			<show-property name="crlatti:organismiStatutari" />
@@ -1042,13 +1049,13 @@
 			<show-property name="crlatti:dataPubblicazioneBURL" />
 			<show-property name="crlatti:pubblico" />
 			<show-property name="crlatti:statoExportAttiIndirizzo" />
-			
+
 			<show-property name="crlatti:numeroDgrSeguito" />
 			<show-property name="crlatti:dataDgrSeguito" />
 			<show-property name="crlatti:attoProseguente" />
 		</property-sheet>
 	</config>
-	
+
 	<config evaluator="node-type" condition="crlatti:attoPda">
 		<property-sheet>
 			<show-property name="crlatti:organismiStatutari" />
@@ -1106,13 +1113,13 @@
 			<show-property name="crlatti:dataPubblicazioneBURL" />
 			<show-property name="crlatti:pubblico" />
 			<show-property name="crlatti:statoExportAttiIndirizzo" />
-			
+
 			<show-property name="crlatti:numeroDgrSeguito" />
 			<show-property name="crlatti:dataDgrSeguito" />
 			<show-property name="crlatti:attoProseguente" />
 		</property-sheet>
 	</config>
-	
+
 	<config evaluator="node-type" condition="crlatti:attoPlp">
 		<property-sheet>
 			<show-property name="crlatti:organismiStatutari" />
@@ -1170,13 +1177,13 @@
 			<show-property name="crlatti:dataPubblicazioneBURL" />
 			<show-property name="crlatti:pubblico" />
 			<show-property name="crlatti:statoExportAttiIndirizzo" />
-			
+
 			<show-property name="crlatti:numeroDgrSeguito" />
 			<show-property name="crlatti:dataDgrSeguito" />
 			<show-property name="crlatti:attoProseguente" />
 		</property-sheet>
 	</config>
-	
+
 	<config evaluator="node-type" condition="crlatti:attoPre">
 		<property-sheet>
 			<show-property name="crlatti:organismiStatutari" />
@@ -1212,7 +1219,7 @@
 			<show-property name="crlatti:commCoreferente" />
 			<show-property name="crlatti:relatori" />
 			<show-property name="crlatti:redigente" />
-			
+
 			<show-property name="crlatti:deliberante" />
 
 			<show-property name="crlatti:numeroLcr" />
@@ -1235,13 +1242,13 @@
 			<show-property name="crlatti:dataPubblicazioneBURL" />
 			<show-property name="crlatti:pubblico" />
 			<show-property name="crlatti:statoExportAttiIndirizzo" />
-			
+
 			<show-property name="crlatti:numeroDgrSeguito" />
 			<show-property name="crlatti:dataDgrSeguito" />
 			<show-property name="crlatti:attoProseguente" />
 		</property-sheet>
 	</config>
-	
+
 	<config evaluator="node-type" condition="crlatti:attoRef">
 		<property-sheet>
 			<show-property name="crlatti:organismiStatutari" />
@@ -1299,13 +1306,13 @@
 			<show-property name="crlatti:dataPubblicazioneBURL" />
 			<show-property name="crlatti:pubblico" />
 			<show-property name="crlatti:statoExportAttiIndirizzo" />
-			
+
 			<show-property name="crlatti:numeroDgrSeguito" />
 			<show-property name="crlatti:dataDgrSeguito" />
 			<show-property name="crlatti:attoProseguente" />
 		</property-sheet>
 	</config>
-	
+
 	<config evaluator="node-type" condition="crlatti:attoRel">
 		<property-sheet>
 			<show-property name="crlatti:organismiStatutari" />
@@ -1363,7 +1370,7 @@
 			<show-property name="crlatti:dataPubblicazioneBURL" />
 			<show-property name="crlatti:pubblico" />
 			<show-property name="crlatti:statoExportAttiIndirizzo" />
-			
+
 			<show-property name="crlatti:numeroDgrSeguito" />
 			<show-property name="crlatti:dataDgrSeguito" />
 			<show-property name="crlatti:attoProseguente" />
@@ -1378,10 +1385,12 @@
 			<show-property name="crlatti:gruppoConsigliereAnagrafica" />
 		</property-sheet>
 	</config>
-	
+
 	<config evaluator="node-type" condition="crlatti:commissioneAnagrafica">
 		<property-sheet>
 			<show-property name="crlatti:numeroOrdinamentoCommissioneAnagrafica" />
+			<show-property name="crlatti:idCommissioneAnagrafica" />
+			<show-property name="cm:title" />
 		</property-sheet>
 	</config>
 
@@ -1444,9 +1453,9 @@
 			<show-property name="crltemplate:emailFirmatario" />
 		</property-sheet>
 	</config>
-	
-	
-	
+
+
+
 	<config evaluator="node-type" condition="crlatti:attoIndirizzo">
 		<property-sheet>
 			<show-property name="crlatti:IdAttoIndirizzo" />
@@ -1456,7 +1465,7 @@
 			<show-property name="crlatti:oggettoAttoIndirizzo" />
 		</property-sheet>
 	</config>
-	
+
 	<config evaluator="node-type" condition="crlatti:firmatarioAttoIndirizzo">
 		<property-sheet>
 			<show-property name="crlatti:IdFirmatarioAttoIndirizzo" />
@@ -1466,15 +1475,15 @@
 			<show-property name="crlatti:gruppoFirmatarioAttoIndirizzo" />
 		</property-sheet>
 	</config>
-	
+
 	<config evaluator="node-type" condition="crlatti:collegamentoAttoIndirizzo">
 		<property-sheet>
 			<show-property name="crlatti:descrizioneCollegamentoAttiIndirizzo" />
 			<show-property name="crlatti:attoAssociatoCollegamentoAttiIndirizzo" />
 		</property-sheet>
 	</config>
-	
-	
+
+
 
 
 	<config evaluator="string-compare" condition="Advanced Search">
