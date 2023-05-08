@@ -75,12 +75,12 @@
 
 		<init-param>
 			<param-name>spnego.preauth.username</param-name>
-			<param-value>geasvc</param-value>
+			<param-value>*****</param-value>
 		</init-param>
 
 		<init-param>
 			<param-name>spnego.preauth.password</param-name>
-			<param-value>Consiglio2019*</param-value>
+			<param-value>*******</param-value>
 		</init-param>
 
 		<init-param>
