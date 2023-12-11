@@ -147,6 +147,11 @@ public class AttoUtil {
 	public static final String PROP_DATA_LR = "dataLr";
 	public static final String PROP_NUMERO_LR = "numeroLr";
 
+	public static final String TESTO_TIPIZZABILE = "testoTipizzabile";
+	public static final String TIPOLOGIA_TESTO = "tipologiaTesto";
+	public static final QName ASPECT_TESTO_TIPIZZABILE = QName.createQName(CRL_ATTI_MODEL, TESTO_TIPIZZABILE);
+	public static final QName PROP_TIPOLOGIA_TESTO = QName.createQName(CRL_ATTI_MODEL, TIPOLOGIA_TESTO);
+
 	public static final QName PROP_STATO_ATTO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_STATO_ATTO);
 	public static final QName PROP_LEGISLATURA_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_LEGISLATURA);
 	public static final QName PROP_NUMERO_ATTO_QNAME = QName.createQName(CRL_ATTI_MODEL, PROP_NUM_ATTO);

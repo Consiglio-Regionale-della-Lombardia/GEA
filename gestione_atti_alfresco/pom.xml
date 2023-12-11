@@ -366,18 +366,6 @@
 					<archive>
 						<addMavenDescriptor>false</addMavenDescriptor>
 					</archive>
-					<overlays>
-						<!--
-                                This sample adds records management module in the finally built
-                                AMP <overlay> <groupId>org.org.alfresco</groupId>
-                                <artifactId>recordsmanagement</artifactId>
-                                <version>2.1.0</version> <type>amp</type> </overlay>
-                        -->
-						<!--
-                                The current AMP is always last in order to overwrite other
-                                modules' modules.properties <overlay></overlay>
-                        -->
-					</overlays>
 				</configuration>
 			</plugin>
 			<plugin>

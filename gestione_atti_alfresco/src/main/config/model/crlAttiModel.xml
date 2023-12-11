@@ -317,6 +317,7 @@
 			<parent>cm:content</parent>
 			<mandatory-aspects>
 				<aspect>crlatti:tipizzabile</aspect>
+				<aspect>crlatti:testoTipizzabile</aspect>
 				<aspect>crlatti:pubblicabile</aspect>
 				<aspect>crlatti:provenienzaAspect</aspect>
 				<aspect>crlatti:protocollato</aspect>
@@ -1415,6 +1416,21 @@
 			<title>Tipizzabile</title>
 			<properties>
 				<property name="crlatti:tipologia">
+					<title>Tipologia</title>
+					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+			</properties>
+		</aspect>
+
+		<aspect name="crlatti:testoTipizzabile">
+			<title>Testo Tipizzabile</title>
+			<properties>
+				<property name="crlatti:tipologiaTesto">
 					<title>Tipologia</title>
 					<type>d:text</type>
 					<index enabled="true">

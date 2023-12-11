@@ -100,6 +100,18 @@
 							</p:row>
 							<p:row>
 								<p:column>
+									<p:selectOneMenu id="tipologiaTesto" value="#{esameCommissioniController.tipologiaTesto}">
+										<f:selectItem itemLabel="Testo commissione referente" itemValue="testo_atto_votato_commissione" />
+										<f:selectItem itemLabel="Testo trasmesso in Aula" itemValue="testo_trasmesso_in_aula_esame_commissioni" />
+										<f:selectItem itemLabel="Relazione illustrativa e la relazione tecnico finanziaria" itemValue="testo_relazione_illustrativa_tecnico_finanziaria_esame_commissioni" />
+										<f:selectItem itemLabel="Scheda istruttoria del progetto di legge" itemValue="testo_scheda_istruttoria_progetto_legge_esame_commissioni" />
+										<f:selectItem itemLabel="Altro documento" itemValue="testo_altro_documento_esame_commissioni" />
+										<p:ajax event="change" listener="#{esameCommissioniController.handleChangeTipologiaTesto}" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
 									<p:fileUpload label="Sfoglia" uploadLabel="Carica"
 										cancelLabel="Cancella"
 										oncomplete="uploadFileAttributesVotazioneDialog.hide()"
@@ -298,8 +310,7 @@
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="si" rendered="#{testoAttoVotato.pubblico}" />
-									<h:outputText value="no"
-										rendered="#{!testoAttoVotato.pubblico}" />
+									<h:outputText value="no" rendered="#{!testoAttoVotato.pubblico}" />
 								</f:facet>
 								<f:facet name="input">
 									<p:selectBooleanCheckbox value="#{testoAttoVotato.pubblico}" />
@@ -307,8 +318,17 @@
 							</p:cellEditor>
 						</p:column>
 
+						<p:column sortBy="#{testoAttoVotato.tipologiaTesto}">
+							<f:facet name="header">Tipologia di testo</f:facet>
+							<h:outputText value="Testo trasmesso in Aula" rendered="#{testoAttoVotato.tipologiaTesto eq 'testo_trasmesso_in_aula_esame_commissioni'}"/>
+							<h:outputText value="Relazione illustrativa e la relazione tecnico finanziaria" rendered="#{testoAttoVotato.tipologiaTesto eq 'testo_relazione_illustrativa_tecnico_finanziaria_esame_commissioni'}"/>
+							<h:outputText value="Scheda istruttoria del progetto di legge" rendered="#{testoAttoVotato.tipologiaTesto eq 'testo_scheda_istruttoria_progetto_legge_esame_commissioni'}"/>
+							<h:outputText value="Altro documento" rendered="#{testoAttoVotato.tipologiaTesto eq 'testo_altro_documento_esame_commissioni'}"/>
+							<h:outputText value="Testo commissione referente" rendered="#{testoAttoVotato.tipologiaTesto eq 'testo_atto_votato_commissione'}"/>
+						</p:column>
+
 						<p:column sortBy="#{testoAttoVotato.pubblicoOpendata}">
-							<f:facet name="header">Pubblico Opendata</f:facet>
+							<f:facet name="header">Opendata</f:facet>
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="si" rendered="#{testoAttoVotato.pubblicoOpendata}" />
@@ -466,7 +486,7 @@
 		$('#blockedVotazione')
 				.block(
 						{
-							message : 'Pagina bloccata!<br />Prendere in carico per sbloccare.',
+							message : 'Pagina bloccata!&lt;br />Prendere in carico per sbloccare.',
 							css : {
 								width : '350px',
 								top : '10px',

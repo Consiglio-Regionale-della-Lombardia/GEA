@@ -26,8 +26,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
+import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 
@@ -98,6 +101,10 @@ public class EsameCommissioniController {
 	private boolean currentFilePubblico = true;
 
 	private boolean currentFilePubblicoOpendata = false;
+
+	private String tipologiaTesto;
+
+	private String testoTabella;
 
 	private Date currentDataSeduta;
 
@@ -1574,6 +1581,7 @@ public class EsameCommissioniController {
 			testoVotatoRet.setPubblicoOpendata(currentFilePubblicoOpendata);
 			testoVotatoRet.setCommissione(commissioneUser.getDescrizione());
 			testoVotatoRet.setPassaggio(attoBean.getLastPassaggio().getNome());
+			testoVotatoRet.setTipologiaTesto(tipologiaTesto);
 
 			try {
 
@@ -1594,6 +1602,18 @@ public class EsameCommissioniController {
 			testiAttoVotatoList.add(testoVotatoRet);
 		}
 	}
+
+	public void handleChangeTipologiaTesto(AjaxBehaviorEvent event) {
+
+        UIComponent component = event.getComponent(); // The component that triggered the event
+        if (component instanceof org.primefaces.component.selectonemenu.SelectOneMenu) {
+            SelectOneMenu selectOneMenu = (SelectOneMenu) component; 
+            String selectedTipologiaTesto = (String) selectOneMenu.getValue(); // The newly selected value
+
+			setTipologiaTesto(selectedTipologiaTesto);
+
+		}
+    }
 
 	/**
 	 * Verifica che il testo scelto sia presente nell'elenco dei testi degli atti
@@ -1650,7 +1670,17 @@ public class EsameCommissioniController {
 
 		TestoAtto allegato = (TestoAtto) event.getObject();
 
-		allegato.setTipoAllegato(TestoAtto.TESTO_ESAME_COMMISSIONE_VOTAZIONE);
+		if (allegato.isPubblicoOpendata()) {
+			
+			for (TestoAtto testoAtto : testiAttoVotatoList) {
+				if (!(testoAtto.getNome().equals(allegato.getNome())) && testoAtto.getTipologiaTesto().equals(allegato.getTipologiaTesto())) {
+					testoAtto.setPubblicoOpendata(false);
+				}
+			}
+
+		}
+
+		allegato.setTipoAllegato(allegato.getTipologiaTesto());
 		attoRecordServiceManager.updateTestoAtto(allegato);
 		attoBean.getWorkingCommissione(commissioneUser.getDescrizione())
 				.setTestiAttoVotatoEsameCommissioni(Clonator.cloneList(testiAttoVotatoList));
@@ -3106,6 +3136,14 @@ public class EsameCommissioniController {
 
 	public void setCurrentFilePubblico(boolean currentFilePubblico) {
 		this.currentFilePubblico = currentFilePubblico;
+	}
+
+	public String getTipologiaTesto() {
+		return tipologiaTesto;
+	}
+
+	public void setTipologiaTesto(String tipologiaTesto) {
+		this.tipologiaTesto = tipologiaTesto;
 	}
 
 	public boolean isCurrentFilePubblicoOpendata() {

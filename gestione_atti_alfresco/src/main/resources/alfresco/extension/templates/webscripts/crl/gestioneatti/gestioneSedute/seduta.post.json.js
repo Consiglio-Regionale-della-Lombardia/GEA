@@ -41,7 +41,21 @@ if(checkIsNotNull(provenienza)){
 		provenienzaFolderNode = gestioneSeduteFolderNode.createFolder(provenienza);
 		
 		// setting dei permessi sul nodo in base alla provenienza
-		provenienzaFolderNode.setPermission("Coordinator", "GROUP_"+provenienza);
+		var commissioniAnagraficaQuery = "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Commissioni/*\"";
+		logger.log("query commissioni -> " + commissioniAnagraficaQuery);
+		var commissioniAnagraficaResponse = search.luceneSearch(commissioniAnagraficaQuery);
+
+		if (commissioniAnagraficaResponse != null && commissioniAnagraficaResponse.length > 0) {
+			for (var j = 0; j < commissioniAnagraficaResponse.length; j++) {
+				if (commissioniAnagraficaResponse[j].properties["cm:title"] == provenienza) {
+					var permissionGroup = "GROUP_" + getLegislaturaCorrente() + "_" + commissioniAnagraficaResponse[j].properties["cm:name"];
+					logger.log("setPermission " + permissionGroup + " on " + provenienzaFolderNode.nodeRef);
+					provenienzaFolderNode.setPermission("Coordinator", permissionGroup);
+					break;
+				}
+			}
+		}
+
 	}
 
 	//creazione spazio anno

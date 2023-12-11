@@ -72,6 +72,7 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
             <version>${spring.version}</version>
+            <!--<version>3.0.0.RC3</version>-->
         </dependency>
 
         <dependency>
@@ -204,6 +205,12 @@
             <groupId>org.glassfish.web</groupId>
             <artifactId>el-impl</artifactId>
             <version>2.2</version>
+            <exclusions>
+			  <exclusion>
+			    <groupId>org.glassfish.web</groupId>
+			    <artifactId>el-api</artifactId>
+			  </exclusion>
+			</exclusions> 
         </dependency>
 
         <dependency>
@@ -233,7 +240,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
             <version>1.5.8</version>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -250,7 +256,6 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.14</version>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -340,13 +345,13 @@
                 <enabled>true</enabled>
             </snapshots>
             <id>1_central</id>
-            <url>http://repo1.maven.org/maven2</url>
+            <url>https://repo1.maven.org/maven2</url>
         </repository>
-        <repository>
+        <!--repository>
             <id>jspresso</id>
             <name>Jspresso Repository</name>
-            <url>http://repository.jspresso.org/maven2</url>
-        </repository>
+            <url>https://repository.jspresso.org/maven2</url>
+        </repository-->
         <repository>     
             <id>alfresco-public</id>      
             <url>https://artifacts.alfresco.com/nexus/content/groups/public</url>   
@@ -357,16 +362,16 @@
         <name>Pro-netics Repositories</name>
         <url>https://nexus.sourcesense.com/repository/maven-releases/</url>
         </repository>
-        <repository>
-        <id>4_sourcesense-maven-snapshots</id>
-        <name>Public Repositories</name>
-        <url>http://nexus.sourcesense.com/repository/maven-snapshots/</url>
-        </repository>
         -->
+        <repository>
+            <id>sourcesense</id>
+            <url>https://nexus.sourcesense.com/repository/alfresco_legacy/</url>
+        </repository>
+        
         <repository>
             <id>5_prime-repo</id>
             <name>PrimeFaces Maven Repository</name>
-            <url>http://repository.primefaces.org</url>
+            <url>https://repository.primefaces.org</url>
             <layout>default</layout>
         </repository>
     </repositories>

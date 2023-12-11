@@ -22,8 +22,10 @@ if(checkIsNotNull(id)){
 		var attoNode=attoRecordNode.parentAssocs["cm:contains"][0].parentAssocs["cm:contains"][0].parentAssocs["cm:contains"][0].parentAssocs["cm:contains"][0].parentAssocs["cm:contains"][0].parentAssocs["cm:contains"][0];
 		var attiPubbliciOpendata=attoNode.childrenByXPath("*//*[@crlatti:pubblicoOpendata='true']");
 		for each (attoPubblicoOpendata in attiPubbliciOpendata) {
+			if (attoPubblicoOpendata.properties["crlatti:tipologiaTesto"] != null && attoPubblicoOpendata.properties["crlatti:tipologiaTesto"] == tipologia) {
 				attoPubblicoOpendata.properties["crlatti:pubblicoOpendata"]=false;
 				attoPubblicoOpendata.save();
+			}
 		}
 		attoRecordNode.properties["crlatti:pubblicoOpendata"] = pubblicoOpendata;
 	} else if (!pubblicoOpendata){

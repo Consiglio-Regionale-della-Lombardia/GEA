@@ -393,6 +393,7 @@
 										 "nome" : "${testo.name}",
 										 "mimetype" : "${testo.mimetype}",
 										 "tipologia" : "<#if testo.properties["crlatti:tipologia"]?exists>${testo.properties["crlatti:tipologia"]}<#else></#if>",
+										 "tipologiaTesto" : "<#if testo.properties["crlatti:tipologiaTesto"]?exists>${testo.properties["crlatti:tipologiaTesto"]}<#else></#if>",
 										 "pubblico" : "<#if testo.properties["crlatti:pubblico"]?exists>${testo.properties["crlatti:pubblico"]?string("true","false")}<#else></#if>",
 										 "pubblicoOpendata" : "<#if testo.properties["crlatti:pubblicoOpendata"]?exists>${testo.properties["crlatti:pubblicoOpendata"]?string("true","false")}<#else>false</#if>",
 										 "provenienza" : "<#if testo.properties["crlatti:provenienza"]?exists>${testo.properties["crlatti:provenienza"]}<#else></#if>",

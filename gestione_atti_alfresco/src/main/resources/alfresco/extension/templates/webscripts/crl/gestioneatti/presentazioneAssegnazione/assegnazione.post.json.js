@@ -128,7 +128,21 @@ if(checkIsNotNull(id)){
 				commissioneNode.name = descrizione;
 			}
 			
-			attoNode.setPermission("Coordinator", "GROUP_"+getLegislaturaCorrente()+"_"+descrizione);
+			// setting dei permessi sul nodo in base alla descrizione
+			var commissioniAnagraficaQuery = "PATH:\"/app:company_home/cm:CRL/cm:Gestione_x0020_Atti/cm:Anagrafica/cm:Commissioni/*\"";
+			logger.log("query commissioni -> " + commissioniAnagraficaQuery + " , descrizione -> " + descrizione);
+			var commissioniAnagraficaResponse = search.luceneSearch(commissioniAnagraficaQuery);
+	
+			if (commissioniAnagraficaResponse != null && commissioniAnagraficaResponse.length > 0) {
+				for (var i = 0; i < commissioniAnagraficaResponse.length; i++) {
+					if (commissioniAnagraficaResponse[i].properties["cm:title"] == descrizione) {
+						var permissionGroup = "GROUP_" + getLegislaturaCorrente() + "_" + commissioniAnagraficaResponse[i].properties["cm:name"];
+						logger.log("setPermission " + permissionGroup + " on " + attoNode.nodeRef);
+						attoNode.setPermission("Coordinator", permissionGroup);
+						break;
+					}
+				}
+			}
 			
 		}
 		

@@ -144,7 +144,7 @@ public class CommissioneServiceManager implements ServiceManager {
 		return commissioneService.uploadTestoAtto(
 				urlBuilder.buildAlfrescoURL("alfresco_context_url", "alf_upload_testo_atto_commissione",
 						new String[] { atto.getId() }),
-				atto, stream, testoAtto, TestoAtto.TESTO_ESAME_COMMISSIONE_VOTAZIONE);
+				atto, stream, testoAtto, testoAtto.getTipologiaTesto());
 	}
 
 	/**

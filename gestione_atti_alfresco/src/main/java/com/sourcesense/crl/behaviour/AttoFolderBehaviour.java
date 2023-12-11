@@ -186,7 +186,8 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
     public void init() {
         this.beforeDeleteNode = new JavaBehaviour(this, "beforeDeleteNode", NotificationFrequency.EVERY_EVENT);
         this.policyComponent.bindClassBehaviour(NodeServicePolicies.BeforeDeleteNodePolicy.QNAME, ATTI_INDIRIZZO_ASPECT,
-                this.beforeDeleteNode); 
+                this.beforeDeleteNode);
+ 
         onUpdateProperties = new JavaBehaviour(this, "onUpdateProperties",
                 Behaviour.NotificationFrequency.TRANSACTION_COMMIT);
         onCreateNode = new JavaBehaviour(this, "onCreateNode", Behaviour.NotificationFrequency.TRANSACTION_COMMIT);
@@ -225,15 +226,20 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
         }
 
         String numeroAtto = (String) nodeService.getProperty(nodeRef, ContentModel.PROP_NAME);
-        String idAtto = (String) nodeService.getProperty(nodeRef, ContentModel.PROP_NODE_UUID);   
+        String idAtto = (String) nodeService.getProperty(nodeRef, ContentModel.PROP_NODE_UUID);
+ 
+ 
+ 
         String numeroLegislatura = (String) nodeService.getProperty(nodeRef,
-                QName.createQName(CRL_ATTI_MODEL, PROP_LEGISLATURA)); 
+                QName.createQName(CRL_ATTI_MODEL, PROP_LEGISLATURA));
+ 
         NodeRef legislatura = null;
         String idLegislatura = "";
 
         String legislaturaType = "{" + CRL_ATTI_MODEL + "}" + TYPE_LEGISLATURA;
 
-        StoreRef storeRef = new StoreRef("workspace://SpacesStore"); 
+        StoreRef storeRef = new StoreRef("workspace://SpacesStore");
+ 
         ResultSet legislatureNodes = null;
         try {
             legislatureNodes = searchService.query(storeRef, SearchService.LANGUAGE_LUCENE,
@@ -379,6 +385,14 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
                     val = openDataCommand.getLinkTestoAttoComReferente(childRef);
                     break;
                 }
+                case "{openDataCommand}linkTestoRelazioneIllustrativa": {
+                    val = openDataCommand.getLinkTestoRelazioneIllustrativa(childRef);
+                    break;
+                }
+                case "{openDataCommand}linkTestoSchedaIstruttoria": {
+                    val = openDataCommand.getLinkTestoSchedaIstruttoria(childRef);
+                    break;
+                }
                 case "{openDataCommand}getLinkVotoFinaleAula": {
                     val = openDataCommand.getLinkVotoFinaleAula(childRef);
                     break;
@@ -492,7 +506,8 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
                 logger.error("Impossibile notificare ad OpenData l'avvenuta modifica dell'atto ", e);
                 String idAtto = openDataCommand.getIdAtto(childAssocRef.getChildRef());
                 notifyOpenDataAdmin("Mancata creazione atto " + idAtto, null, getEmailTemplateNodeRef());
-            } catch (OpenDataAdminNotificationException e1) { 
+            } catch (OpenDataAdminNotificationException e1) {
+ 
                 logger.error("Impossibile inviare mail di notifica", e);
             }
         }
@@ -535,14 +550,21 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
                 	logger.debug("Mappatura proprietà AttoUtil: " + after.get(AttoUtil.PROP_LEGISLATURA_QNAME) + "; Numero atto:" + after.containsKey(AttoUtil.PROP_NUMERO_ATTO_QNAME) + "; Numero atto:" + after.get(AttoUtil.PROP_NUMERO_ATTO_QNAME)
                 	+ "; oggetto: " + after.get(AttoUtil.PROP_OGGETTO_ATTO_QNAME) + "; Data iniziativa " + after.get(AttoUtil.PROP_DATA_INIZIATIVA_ATTO_QNAME) + "; " + after.get(AttoUtil.PROP_STATO_ATTO_QNAME)
                 	+"; Referenti commissione: " + after.get(AttoUtil.PROP_COMMISSIONI_REFERENTI_QNAME) + "; Data Assegnazione:" + after.get(AttoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONI_REFERENTI_QNAME));
+                    
+                    boolean hasAspectTestoTipizzabile = nodeService.hasAspect(nodeRef, AttoUtil.ASPECT_TESTO_TIPIZZABILE);
+                    
+                    if (hasAspectTestoTipizzabile) {
+                        logger.debug("+++ hasAspectTestoTipizzabile: " + hasAspectTestoTipizzabile + " --> " + nodeRef.toString());
+                    }
+
                     if (
-                            after.containsKey(AttoUtil.PROP_LEGISLATURA_QNAME) && after.get(AttoUtil.PROP_LEGISLATURA_QNAME) != null && !((String) after.get(AttoUtil.PROP_LEGISLATURA_QNAME)).isEmpty()
+                            (after.containsKey(AttoUtil.PROP_LEGISLATURA_QNAME) && after.get(AttoUtil.PROP_LEGISLATURA_QNAME) != null && !((String) after.get(AttoUtil.PROP_LEGISLATURA_QNAME)).isEmpty()
                                     && after.containsKey(AttoUtil.PROP_NUMERO_ATTO_QNAME) && (after.get(AttoUtil.PROP_NUMERO_ATTO_QNAME)) != null
                                     && after.containsKey(AttoUtil.PROP_OGGETTO_ATTO_QNAME) && after.get(AttoUtil.PROP_OGGETTO_ATTO_QNAME) != null && !((String) after.get(AttoUtil.PROP_OGGETTO_ATTO_QNAME)).isEmpty()
                                     && after.containsKey(AttoUtil.PROP_DATA_INIZIATIVA_ATTO_QNAME) && after.get(AttoUtil.PROP_DATA_INIZIATIVA_ATTO_QNAME) != null 
                                     && after.containsKey(AttoUtil.PROP_STATO_ATTO_QNAME) && after.get(AttoUtil.PROP_STATO_ATTO_QNAME) != null && !((String) after.get(AttoUtil.PROP_STATO_ATTO_QNAME)).isEmpty()
                                     && after.containsKey(AttoUtil.PROP_COMMISSIONI_REFERENTI_QNAME) && after.get(AttoUtil.PROP_COMMISSIONI_REFERENTI_QNAME) != null && !((ArrayList)after.get(AttoUtil.PROP_COMMISSIONI_REFERENTI_QNAME)).isEmpty()
-                                    && after.containsKey(AttoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONI_REFERENTI_QNAME) && after.get(AttoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONI_REFERENTI_QNAME) != null 
+                                    && after.containsKey(AttoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONI_REFERENTI_QNAME) && after.get(AttoUtil.PROP_DATA_ASSEGNAZIONE_COMMISSIONI_REFERENTI_QNAME) != null ) || hasAspectTestoTipizzabile
 
                     ) {
                         logger.info("Notifica aggiornamento dell'atto " + nodeService.getType(attoNodeRef) + " "
@@ -560,7 +582,8 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
                         logger.error("Impossibile notificare ad OpenData l'avvenuta modifica dell'atto ", e);
                         String idAtto = openDataCommand.getIdAtto(attoNodeRef);
                         notifyOpenDataAdmin("Mancato aggiornamento atto " + idAtto, null, getEmailTemplateNodeRef());
-                    } catch (OpenDataAdminNotificationException e1) { 
+                    } catch (OpenDataAdminNotificationException e1) {
+ 
                         logger.error("Impossibile inviare mail di notifica", e);
                     }
                 }
@@ -578,7 +601,8 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
                 try {
                     logger.error("Impossibile notificare ad OpenData l'avvenuta cancellazione dell'atto ", e);
                     notifyOpenDataAdmin("Mancato cancellazione atto " + idAtto, null, getEmailTemplateNodeRef());
-                } catch (OpenDataAdminNotificationException e1) { 
+                } catch (OpenDataAdminNotificationException e1) {
+ 
                     logger.error("Impossibile inviare mail di notifica", e);
                 }
             }
@@ -591,7 +615,8 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
      * @param model parametri per il template
      * @param templateNodeRef il template per la mail.
      */
-    protected void notifyOpenDataAdmin(String subjectText, Map<String, Serializable> model, NodeRef templateNodeRef) { 
+    protected void notifyOpenDataAdmin(String subjectText, Map<String, Serializable> model, NodeRef templateNodeRef) {
+ 
         Action mail = actionService.createAction(MailActionExecuter.NAME);
 
         mail.setParameterValue(MailActionExecuter.PARAM_TO, openDataAdminMailAddress);
@@ -614,8 +639,11 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
                 "app:company_home/app:dictionary/app:email_templates/cm:opendata/cm:open-data-notify-email.html.ftl",
                 null, this.namespaceService, false);
 
-        if (nodeRefs.size() == 1) { 
-            NodeRef base = nodeRefs.get(0);  
+        if (nodeRefs.size() == 1) {
+ 
+            NodeRef base = nodeRefs.get(0);
+ 
+ 
             return base;
         } else {
             throw new OpenDataAdminNotificationException("Cannot find the email template!");
@@ -665,7 +693,8 @@ public class AttoFolderBehaviour implements NodeServicePolicies.BeforeDeleteNode
                     logger.error("Impossibile notificare ad OpenData l'avvenuta modifica dell'atto ", e);
                     String idAtto = openDataCommand.getIdAtto(attoNodeRef);
                     notifyOpenDataAdmin("Mancato aggiornamento atto " + idAtto, null, getEmailTemplateNodeRef());
-                } catch (OpenDataAdminNotificationException e1) { 
+                } catch (OpenDataAdminNotificationException e1) {
+ 
                     logger.error("Impossibile inviare mail di notifica", e);
                 }
             }

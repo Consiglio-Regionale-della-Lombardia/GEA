@@ -28,7 +28,7 @@ if(checkIsNotNull(idAtto)
 	
 	var testiFolderNode = commissioneFolderNode.childrenByXPath("*[@cm:name='Testi']")[0];
 	var records = testiFolderNode.getChildAssocsByType("crlatti:testo");
-	
+
 } else {
 	status.code = 400;
 	status.message = "id atto, passaggio o commissione non valorizzato";

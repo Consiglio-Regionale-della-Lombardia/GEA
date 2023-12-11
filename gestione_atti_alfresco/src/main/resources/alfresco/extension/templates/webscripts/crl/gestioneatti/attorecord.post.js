@@ -1,5 +1,6 @@
 var nodeRefAtto = "";
 var tipologia = "";
+var tipologiaTesto = "";
 var pubblico = false;
 var filename = "";
 var provenienza = "";
@@ -11,6 +12,8 @@ for each (field in formdata.fields)
     nodeRefAtto = field.value;
   } else if(field.name == "tipologia"){
 	tipologia = field.value;
+  } else if(field.name == "tipologiaTesto"){
+	tipologiaTesto = field.value;
   } else if(field.name == "pubblico"){
 	pubblico = field.value;
   } else if(field.name == "provenienza"){
@@ -52,6 +55,7 @@ if(nodeRefAtto == ""){
 		attoRecordNode = testiFolderNode.createFile(filename);
 		attoRecordNode.specializeType("crlatti:testo");
 		attoRecordNode.properties["crlatti:tipologia"] = tipologia;
+		attoRecordNode.properties["crlatti:tipologiaTesto"] = tipologiaTesto;
 		attoRecordNode.properties["crlatti:pubblico"] = pubblico;
 		attoRecordNode.properties["crlatti:provenienza"] = provenienza;
 		attoRecordNode.properties.content.write(content);

@@ -314,6 +314,7 @@ public class CommissioneService {
 			part.bodyPart(new StreamDataBodyPart("file", stream, testoAtto.getNome()));
 			part.field("id", atto.getId());
 			part.field("tipologia", tipologia);
+			part.field("tipologiaTesto", testoAtto.getTipologiaTesto());
 			part.field("commissione", testoAtto.getCommissione());
 			part.field("passaggio", testoAtto.getPassaggio());
 			part.field("pubblico", "" + testoAtto.isPubblico());

@@ -772,14 +772,70 @@ public class OpenDataCommand {
 	 * @return String il link al testo dell'atto referente commissione.
 	 */
 	public String getLinkTestoAttoComReferente(NodeRef attoNodeRef) {
-		List<NodeRef> pubbliciOpendataNoderefs = searchService.selectNodes(attoNodeRef,
-				"*//*[@crlatti:pubblicoOpendata='true']", null, this.namespaceService, false);
-		if (pubbliciOpendataNoderefs.size() > 0) {
-			MessageFormat mf = new MessageFormat(this.linkVotoFinale);
-			String parameterFormatting[] = new String[] {
-					(String) nodeService.getProperty(pubbliciOpendataNoderefs.get(0), ContentModel.PROP_NODE_UUID),
-					(String) nodeService.getProperty(pubbliciOpendataNoderefs.get(0), ContentModel.PROP_NAME) };
-			return mf.format(parameterFormatting);
+		// Per ovviare a problemi di retrocompatibilità sia la prop crlatti:tipologia che la prop crlatti:tipologiaTesto sono valorizzate con 'testo_atto_votato_commissione'
+		List<NodeRef> testiAttoComReferenteNodeRefs = searchService.selectNodes(attoNodeRef,
+				"*//*[@crlatti:tipologia='testo_atto_votato_commissione']", null, this.namespaceService, false);
+		 
+		if (testiAttoComReferenteNodeRefs.size() > 0) {
+			for (NodeRef testoAttoComReferenteNodeRef : testiAttoComReferenteNodeRefs) {
+				if (nodeService.getProperty(testoAttoComReferenteNodeRef, AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME) != null &&
+					(Boolean) nodeService.getProperty(testoAttoComReferenteNodeRef, AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME)) {
+					
+					MessageFormat mf = new MessageFormat(this.linkVotoFinale);
+					String parameterFormatting[] = new String[] {
+							(String) nodeService.getProperty(testoAttoComReferenteNodeRef, ContentModel.PROP_NODE_UUID),
+							(String) nodeService.getProperty(testoAttoComReferenteNodeRef, ContentModel.PROP_NAME) };
+					return mf.format(parameterFormatting);
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Trova il link al testo della relazione illustrativa dell'atto. Seleziona i nodi che abbiano la proprietà crlatti:tipologiaTesto='Relazione Illustrativa'
+	 * @param attoNodeRef atto
+	 */
+	public String getLinkTestoRelazioneIllustrativa(NodeRef attoNodeRef) {
+		List<NodeRef> testiRelazioneIllustrativaNodeRefs = searchService.selectNodes(attoNodeRef,
+				"*//*[@crlatti:tipologiaTesto='testo_relazione_illustrativa_tecnico_finanziaria_esame_commissioni']", null, this.namespaceService, false);
+
+		if (testiRelazioneIllustrativaNodeRefs.size() > 0) {
+			for (NodeRef testoRelazioneIllustrativaNodeRef : testiRelazioneIllustrativaNodeRefs) {
+				if (nodeService.getProperty(testoRelazioneIllustrativaNodeRef, AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME) != null &&
+					(Boolean) nodeService.getProperty(testoRelazioneIllustrativaNodeRef, AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME)) {
+					
+					MessageFormat mf = new MessageFormat(this.linkVotoFinale);
+					String parameterFormatting[] = new String[] {
+							(String) nodeService.getProperty(testoRelazioneIllustrativaNodeRef, ContentModel.PROP_NODE_UUID),
+							(String) nodeService.getProperty(testoRelazioneIllustrativaNodeRef, ContentModel.PROP_NAME) };
+					return mf.format(parameterFormatting);
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Trova il link al testo della scheda istruttoria dell'atto. Seleziona i nodi che abbiano la proprietà crlatti:tipologiaTesto='Scheda Istruttoria'
+	 * @param attoNodeRef atto
+	 */
+	public String getLinkTestoSchedaIstruttoria(NodeRef attoNodeRef) {
+		List<NodeRef> testiSchedaIstruttoriaNodeRefs = searchService.selectNodes(attoNodeRef,
+				"*//*[@crlatti:tipologiaTesto='testo_scheda_istruttoria_progetto_legge_esame_commissioni']", null, this.namespaceService, false);
+
+		if (testiSchedaIstruttoriaNodeRefs.size() > 0) {
+			for (NodeRef testoSchedaIstruttoriaNodeRef : testiSchedaIstruttoriaNodeRefs) {
+				if (nodeService.getProperty(testoSchedaIstruttoriaNodeRef, AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME) != null &&
+					(Boolean) nodeService.getProperty(testoSchedaIstruttoriaNodeRef, AttoUtil.PROP_PUBBLICO_OPENDATA_QNAME)) {
+					
+					MessageFormat mf = new MessageFormat(this.linkVotoFinale);
+					String parameterFormatting[] = new String[] {
+							(String) nodeService.getProperty(testoSchedaIstruttoriaNodeRef, ContentModel.PROP_NODE_UUID),
+							(String) nodeService.getProperty(testoSchedaIstruttoriaNodeRef, ContentModel.PROP_NAME) };
+					return mf.format(parameterFormatting);
+				}
+			}
 		}
 		return null;
 	}

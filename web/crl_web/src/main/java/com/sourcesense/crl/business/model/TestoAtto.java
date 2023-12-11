@@ -34,8 +34,12 @@ import org.pojomatic.annotations.AutoProperty;
 public class TestoAtto implements Cloneable {
 
 	public static final String TESTO_PRESENTAZIONE_ASSEGNAZIONE = "testo_atto";
-	public static final String TESTO_ESAME_COMMISSIONE_VOTAZIONE = "testo_atto_votato_commissione";
 	public static final String TESTO_ESAME_AULA_VOTAZIONE = "testo_atto_votato_aula";
+	public static final String TESTO_ESAME_COMMISSIONE_VOTAZIONE = "testo_atto_votato_commissione";
+	public static final String TESTO_TRASMESSO_IN_AULA = "testo_trasmesso_in_aula_esame_commissioni";
+	public static final String RELAZIONE_ILLUSTRATIVA_E_LA_RELAZIONE_TECNICO_FINANZIARIA = "testo_relazione_illustrativa_tecnico_finanziaria_esame_commissioni";
+	public static final String SCHEDA_ISTRUTTORIA_DEL_PROGETTO_DI_LEGGE = "testo_scheda_istruttoria_progetto_legge_esame_commissioni";
+	public static final String ALTRO_DOCUMENTO = "testo_altro_documento_esame_commissioni";
 
 	private String id;
 	private String nome;
@@ -46,6 +50,7 @@ public class TestoAtto implements Cloneable {
 	private boolean pubblicoOpendata;
 	private String tipoAllegato;
 	private String tipologia;
+	private String tipologiaTesto;
 	private String provenienza;
 	private String dataSeduta;
 	private String passaggio;
@@ -162,6 +167,14 @@ public class TestoAtto implements Cloneable {
 
 	public void setCommissione(String commissione) {
 		this.commissione = commissione;
+	}
+
+	public String getTipologiaTesto() {
+		return tipologiaTesto;
+	}
+
+	public void setTipologiaTesto(String tipologiaTesto) {
+		this.tipologiaTesto = tipologiaTesto;
 	}
 
 }

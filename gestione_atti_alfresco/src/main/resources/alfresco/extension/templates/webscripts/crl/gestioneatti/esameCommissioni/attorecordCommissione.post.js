@@ -2,6 +2,7 @@
 
 var nodeRefAtto = "";
 var tipologia = "";
+var tipologiaTesto = "";
 var pubblico = false;
 var pubblicoOpendata = false;
 var filename = "";
@@ -14,6 +15,8 @@ for each (field in formdata.fields) {
     nodeRefAtto = field.value;
   } else if(field.name == "tipologia"){
 	tipologia = field.value;
+  } else if(field.name == "tipologiaTesto"){
+	tipologiaTesto = field.value;
   } else if(field.name == "pubblico"){
 	pubblico = field.value;
   } else if(field.name == "pubblicoOpendata"){
@@ -75,12 +78,15 @@ if(nodeRefAtto == ""){
 		attoRecordNode = testiFolderNode.createFile(filename);
 		attoRecordNode.specializeType("crlatti:testo");
 		attoRecordNode.properties["crlatti:tipologia"] = tipologia;
+		attoRecordNode.properties["crlatti:tipologiaTesto"] = tipologiaTesto;
 		attoRecordNode.properties["crlatti:pubblico"] = pubblico;
 		if (pubblicoOpendata) {
 			var attiPubbliciOpendata=attoNode.childrenByXPath("*//*[@crlatti:pubblicoOpendata='true']");
 			for each (attoPubblicoOpendata in attiPubbliciOpendata) {
+				if (attoPubblicoOpendata.properties["crlatti:tipologiaTesto"] != null && attoPubblicoOpendata.properties["crlatti:tipologiaTesto"] == tipologiaTesto) {
 					attoPubblicoOpendata.properties["crlatti:pubblicoOpendata"]=false;
 					attoPubblicoOpendata.save();
+				}
 			}
 			attoRecordNode.properties["crlatti:pubblicoOpendata"] = pubblicoOpendata;
 		}
