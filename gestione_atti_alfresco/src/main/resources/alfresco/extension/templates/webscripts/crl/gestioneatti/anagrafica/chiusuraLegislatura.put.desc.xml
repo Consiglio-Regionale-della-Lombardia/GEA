@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Legislature Atti</shortname>
+  <description>Restituisce l'elenco degli atti della legislature disponibili</description>
+  <url>/crl/anagrafica/legislature/chiusuraLegislatura?data={data}</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction>required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

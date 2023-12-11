@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Commissioni New</shortname>
+  <description>Restituisce l'elenco di tutte le commissioni con nominativo nel titolo</description>
+  <url>/crl/anagrafica/atto/commissioninew</url>
+  <format default="json"/>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <family>CRL - Gestione Atti</family>
+</webscript>

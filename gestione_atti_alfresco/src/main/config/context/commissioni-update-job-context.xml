@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+
+<beans>
+    <bean id="commissioniUpdateJobTrigger" class="org.alfresco.util.CronTriggerBean">
+        <property name="jobDetail">
+            <bean id="commissioniUpdateJobBean" class="org.springframework.scheduling.quartz.JobDetailBean">
+                <property name="jobClass">
+                    <value>com.sourcesense.crl.job.CommissioniUpdateJob</value>
+                </property>
+				<property name="jobDataAsMap">
+					<map>
+						<entry key="serviceRegistry" >
+							<ref bean="ServiceRegistry" />
+						</entry>
+                        <entry key="searchUtil" >
+							<ref bean="SearchUtil" />
+						</entry>
+					</map>
+				</property>
+            </bean>
+        </property>
+        <property name="scheduler">
+            <ref bean="schedulerFactory" />
+        </property>
+        <property name="cronExpression">
+            <!-- ogni giorno alle 01:30 -->
+			<!-- <value>0 30 1 ? * * *</value> -->
+            <!-- ogni 6 minuti -->
+            <value>0 0/6 * ? * *</value>
+		</property>
+    </bean>
+</beans>
